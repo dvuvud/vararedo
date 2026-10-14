@@ -105,12 +105,19 @@
     },
     "address": {
       "label": "Din adress",
-      "hint": "Vi använder den bara för att hitta närmaste skyddsrum.",
-      "placeholder": "Gata och ort",
+      "hint": "Skriv gatuadress eller bara postnummer och tryck Sök. Välj sedan din adress i listan. Vi använder den bara för att hitta närmaste skyddsrum.",
+      "placeholder": "Gatuadress eller postnummer",
       "useLocation": "Använd min position",
       "locating": "Hämtar position...",
       "located": "Position hittad",
-      "locationFailed": "Det gick inte att hämta din position. Skriv adressen i stället."
+      "locationFailed": "Det gick inte att hämta din position. Skriv adressen i stället.",
+      "search": "Sök",
+      "searching": "Söker...",
+      "pickPrompt": "Välj din adress:",
+      "change": "Ändra",
+      "noResults": "Vi hittade ingen adress. Prova med postnummer, eller lägg till ort.",
+      "searchFailed": "Sökningen misslyckades. Försök igen, eller använd din position.",
+      "pickRequired": "Tryck Sök och välj din adress i listan, eller rensa fältet."
     },
     "adults": {
       "label": "Hur många vuxna bor hemma?"

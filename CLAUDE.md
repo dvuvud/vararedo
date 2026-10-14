@@ -173,8 +173,8 @@ Fakta om hemberedskap hämtas från MCF:s råd (vatten, mat, värme, information
 ## Status och API-kontrakt (uppdatera när något ändras)
 
 Kontraktet mellan spåren ligger i `lib/ai/schemas.ts`. Ändra det inte utan att säga till.
-Byggt och testat live: steg 1 (projekt, scheman), `/api/plan`, `/api/followups`, `/api/shelters`, `lib/calc/*`,
-`lib/data/shelters.ts`, `lib/form/rules.ts`, cache.
+Byggt och testat live: steg 1 (projekt, scheman), `/api/plan`, `/api/followups`, `/api/shelters`, `/api/geocode`,
+`lib/calc/*`, `lib/data/shelters.ts`, `lib/form/rules.ts`, cache. Frontend finns (landning, formulär, resultat).
 Frontend (spår B): landning, formulär i steg (`components/form/PlanWizard.tsx`, använder `lib/form/rules.ts`),
 resultatsida (`components/result/ResultView.tsx`), svensk ordlista i `messages/sv.json` (övriga språk faller tillbaka på svenska).
 Inte byggt än: `/api/save`, cron, karta, översättningar.
@@ -216,6 +216,24 @@ Planen får redan närmaste skyddsrum i `facts.nearestShelters`, så anropa dett
 ### GET /api/geocode?q=<adress>
 Nominatim (OpenStreetMap), bara Sverige. Svar `{ lat, lon }`, 404 om adressen inte hittas, 502 vid nätverksfel.
 Formuläret anropar den när man skickar in om det finns en adress men ingen position. Cachas i minnet, max 1 anrop/s mot Nominatim.
+
+### GET /api/geocode (adress och postnummer)
+Ingen AI, Nominatim med kö (1 anrop per sekund) och cache. Tre lägen:
+- `?q=Storgatan 1, Uppsala` ger `{ lat, lon }` (första träffen, gissar, använd inte för användarinmatning).
+- `?q=Linnégatan 12&suggest=5` ger `{ candidates: [{ label, lat, lon }] }`. `label` är t.ex. `Linnégatan 12, 413 04 Göteborg`,
+  så dubbletter i olika städer går att skilja åt. Postnummer fungerar i `q` (`41301` och `413 01` ger `413 01, Haga, Göteborg`).
+  404 om inget hittas. Anropa bara vid Enter eller knapptryckning, aldrig per tangenttryckning (Nominatims villkor).
+- `?lat=&lon=` ger `{ address }` (omvänd uppslagning, används av "Använd min position" och skyddsrumskorten).
+
+UX-beslut för adressen: ett fält för adress eller postnummer, explicit sökning, användaren väljer sin adress i listan
+(`components/form/AddressSearch.tsx`). Inskriven men ovald adress blockerar steget "area", så vi gissar aldrig fel stad.
+Position från enheten visas som läsbar adress via omvänd uppslagning. Nya `form.address.*`-nycklar ligger bara i `sv.json`,
+övriga språk faller tillbaka på svenska tills de översatts.
+
+### Integritet och cache
+Adress och koordinater skickas aldrig till modellen (`aiSafeProfile` i `lib/ai/prompts.ts`). Modellen ser bara
+`area.kind` och `facts.nearestShelters`. Cache-nyckeln (`profileHash(profile, facts)`) bygger på profilen utan adress
+plus närmaste skyddsrums id och avstånd, så två hushåll med samma profil och position delar cachad plan oavsett adresstext.
 
 ### Skyddsrum
 `Shelter` har `property` (fastighetsbeteckning, ingen gatuadress finns i MCF-datan), `capacity`, `limited`

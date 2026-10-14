@@ -1,10 +1,15 @@
-// Ingen AI. Två lägen mot Nominatim (OpenStreetMap):
-//   GET /api/geocode?q=Storgatan 1, Uppsala  ->  { lat, lon }   (adress till position)
-//   GET /api/geocode?lat=57.7&lon=11.97      ->  { address }    (position till adress, t.ex. för skyddsrum)
+// Ingen AI. Tre lägen mot Nominatim (OpenStreetMap):
+//   GET /api/geocode?q=Storgatan 1, Uppsala  ->  { lat, lon }        (adress till position, första träffen)
+//   GET /api/geocode?q=Linnégatan 12&suggest=5 -> { candidates: [{ label, lat, lon }] }
+//                                                  (flera kandidater, användaren väljer. Postnummer fungerar i q)
+//   GET /api/geocode?lat=57.7&lon=11.97      ->  { address }         (position till adress, t.ex. för skyddsrum)
 // 404 om inget hittas, 502 vid nätverksfel.
+// Kandidatsökningen ska bara anropas på explicit sökning (Enter eller knapp), aldrig per tangenttryckning:
+// Nominatims användarvillkor förbjuder autocomplete medan man skriver.
 // Nominatim kräver en egen User-Agent och högst ett anrop per sekund, så anropen köas och svaren cachas.
 
-type Hit = { lat: number; lon: number } | { address: string } | null;
+export type Candidate = { label: string; lat: number; lon: number };
+type Hit = { lat: number; lon: number } | { address: string } | { candidates: Candidate[] } | null;
 const cache = new Map<string, Hit>();
 
 let queue: Promise<unknown> = Promise.resolve();
@@ -54,9 +59,40 @@ function formatAddress(r: ReverseResult): string | null {
   return [street, place].filter(Boolean).join(", ") || null;
 }
 
+type SearchResult = {
+  lat: string;
+  lon: string;
+  display_name: string;
+  type?: string;
+  name?: string;
+  address?: ReverseResult["address"] & { postcode?: string; municipality?: string };
+};
+
+// "Linnégatan 12, 413 04 Göteborg" eller "413 01, Haga, Göteborg". Postnummer och ort gör dubbletter åtskiljbara.
+function candidateLabel(r: SearchResult): string {
+  const a = r.address;
+  const place = a?.city ?? a?.town ?? a?.village ?? a?.municipality ?? a?.suburb;
+  if (r.type === "postcode") {
+    return [r.name ?? a?.postcode, a?.suburb && a.suburb !== place ? a.suburb : undefined, place].filter(Boolean).join(", ");
+  }
+  const street = [a?.road ?? a?.pedestrian, a?.house_number].filter(Boolean).join(" ");
+  if (street) {
+    const tail = [a?.postcode, place].filter(Boolean).join(" ");
+    return [street, tail].filter(Boolean).join(", ");
+  }
+  // Ort, stadsdel eller liknande utan gata: de första delarna av namnet räcker
+  return r.display_name.split(",").slice(0, 3).map((x) => x.trim()).join(", ");
+}
+
+// "41301" och "413 01" ska båda fungera som postnummer
+function normalizeQuery(q: string): string {
+  return /^\d{3}\s?\d{2}$/.test(q) ? `${q.replace(/\s/g, "").slice(0, 3)} ${q.replace(/\s/g, "").slice(3)}` : q;
+}
+
 export async function GET(req: Request) {
   const params = new URL(req.url).searchParams;
-  const q = params.get("q")?.trim().replace(/\s+/g, " ").slice(0, 200) ?? "";
+  const q = normalizeQuery(params.get("q")?.trim().replace(/\s+/g, " ").slice(0, 200) ?? "");
+  const suggest = Math.min(8, Math.max(0, Number(params.get("suggest") ?? 0) || 0));
   const lat = Number(params.get("lat"));
   const lon = Number(params.get("lon"));
   const isReverse = params.has("lat") && params.has("lon");
@@ -66,7 +102,11 @@ export async function GET(req: Request) {
   }
 
   // 5 decimaler räcker (ca 1 m) och gör att samma skyddsrum alltid träffar cachen
-  const key = isReverse ? `rev:${lat.toFixed(5)},${lon.toFixed(5)}` : `q:${q.toLowerCase()}`;
+  const key = isReverse
+    ? `rev:${lat.toFixed(5)},${lon.toFixed(5)}`
+    : suggest > 0
+      ? `s${suggest}:${q.toLowerCase()}`
+      : `q:${q.toLowerCase()}`;
   if (!cache.has(key)) {
     try {
       const hit: Hit = await throttled(async () => {
@@ -74,6 +114,25 @@ export async function GET(req: Request) {
           const r = await nominatim<ReverseResult>("reverse", { lat: String(lat), lon: String(lon), zoom: "18", addressdetails: "1" });
           const address = formatAddress(r);
           return address ? { address } : null;
+        }
+        if (suggest > 0) {
+          // Hämta lite fler än vi visar, eftersom OSM ofta har samma adress flera gånger
+          const hits = await nominatim<SearchResult[]>("search", {
+            q,
+            limit: String(Math.min(10, suggest * 2)),
+            countrycodes: "se",
+            addressdetails: "1",
+          });
+          const seen = new Set<string>();
+          const candidates: Candidate[] = [];
+          for (const h of hits) {
+            const label = candidateLabel(h);
+            if (!label || seen.has(label)) continue;
+            seen.add(label);
+            candidates.push({ label, lat: Number(h.lat), lon: Number(h.lon) });
+            if (candidates.length === suggest) break;
+          }
+          return candidates.length > 0 ? { candidates } : null;
         }
         const hits = await nominatim<{ lat: string; lon: string }[]>("search", { q, limit: "1", countrycodes: "se" });
         return hits[0] ? { lat: Number(hits[0].lat), lon: Number(hits[0].lon) } : null;

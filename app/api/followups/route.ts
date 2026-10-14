@@ -1,6 +1,6 @@
 import { generateText, Output } from "ai";
 import { FOLLOWUP_MODEL_ID, hasApiKey, modelSettings } from "@/lib/ai/model";
-import { followUpSystemPrompt } from "@/lib/ai/prompts";
+import { aiSafeProfile, followUpSystemPrompt } from "@/lib/ai/prompts";
 import { followUpSchema, profileSchema, type FollowUp } from "@/lib/ai/schemas";
 import { z } from "zod";
 
@@ -23,7 +23,7 @@ export async function POST(req: Request) {
       ...modelSettings(FOLLOWUP_MODEL_ID),
       output: Output.object({ schema: followUpSchema }),
       system: followUpSystemPrompt(profile.lang),
-      prompt: JSON.stringify({ profile }, null, 1),
+      prompt: JSON.stringify({ profile: aiSafeProfile(profile) }, null, 1),
       maxOutputTokens: 800,
       maxRetries: 1,
     });

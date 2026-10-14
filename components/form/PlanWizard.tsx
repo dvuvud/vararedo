@@ -11,7 +11,6 @@ import {
   Home,
   Loader2,
   LocateFixed,
-  MapPin,
   Plus,
   Tractor,
   Trash2,
@@ -24,6 +23,7 @@ import { fill } from "@/lib/format";
 import { EMPTY_DRAFT, toProfile, type Draft } from "@/lib/form/draft";
 import { pruneAnswers, visibleRules, type FormState, type RuleAnswer, type RuleQuestion } from "@/lib/form/rules";
 import { DRAFT_KEY, PROFILE_KEY } from "@/lib/form/storage";
+import { AddressSearch } from "./AddressSearch";
 import { ChoiceCards, CheckCard, Question, Stepper, YesNo } from "./fields";
 
 
@@ -104,6 +104,8 @@ function validate(step: Step, d: Draft): Errors {
       rulesAnswered("housing");
       break;
     case "area":
+      // En inskriven adress måste vara vald i listan, annars gissar vi fel stad
+      need("address", !(d.address.trim() && d.lat === undefined));
       need("areaKind", !!d.areaKind);
       rulesAnswered("area");
       break;
@@ -197,26 +199,9 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
   const setRule = (id: string, v: RuleAnswer) => choose({ ruleAnswers: { ...draft.ruleAnswers, [id]: v } });
   const err = (id: string) => (errors[id] ? c.answerRequired : undefined);
 
-  // Inskriven adress utan position: slå upp koordinater så att planen kan visa närmaste skyddsrum.
-  // Misslyckas uppslagningen blir planen ändå klar, bara utan skyddsrum.
-  const geocode = async (d: Draft): Promise<Draft> => {
-    if (d.lat !== undefined || !d.address.trim()) return d;
-    try {
-      const res = await fetch(`/api/geocode?q=${encodeURIComponent(d.address.trim())}`, {
-        signal: AbortSignal.timeout(10000),
-      });
-      if (!res.ok) return d;
-      const { lat, lon } = (await res.json()) as { lat: number; lon: number };
-      set({ lat, lon });
-      return { ...d, lat, lon };
-    } catch {
-      return d;
-    }
-  };
-
   const submit = async (draftIn: Draft) => {
     setBusy(true);
-    const d = await geocode(draftIn);
+    const d = draftIn;
     const profile = profileSchema.parse(toProfile({ ...d, ruleAnswers: pruneAnswers(formState(d), d.ruleAnswers) }, lang));
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
     router.push(`/${lang}/plan/result`);
@@ -285,8 +270,14 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
     setLocating("busy");
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        set({ lat: pos.coords.latitude, lon: pos.coords.longitude });
+        const { latitude: lat, longitude: lon } = pos.coords;
+        set({ lat, lon, address: "" });
         setLocating("ok");
+        // Visa en läsbar adress så att användaren ser att positionen stämmer. Misslyckas det visas "Position hittad".
+        fetch(`/api/geocode?lat=${lat}&lon=${lon}`, { signal: AbortSignal.timeout(10000) })
+          .then((r) => (r.ok ? (r.json() as Promise<{ address?: string }>) : null))
+          .then((j) => j?.address && set({ address: j.address }))
+          .catch(() => undefined);
       },
       () => setLocating("fail"),
       { timeout: 10000 },
@@ -408,7 +399,12 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
 
           {step === "area" && (
             <>
-              <Question id="address" label={t.address.label} hint={t.address.hint}>
+              <Question
+                id="address"
+                label={t.address.label}
+                hint={t.address.hint}
+                error={errors.address ? t.address.pickRequired : undefined}
+              >
                 <div className="space-y-3">
                   <button
                     type="button"
@@ -423,29 +419,24 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
                     )}
                     {locating === "busy" ? t.address.locating : t.address.useLocation}
                   </button>
-                  {locating === "ok" && (
-                    <p role="status" className="flex items-center gap-2 text-base font-medium text-success">
-                      <MapPin aria-hidden className="size-5" />
-                      {t.address.located}
-                    </p>
-                  )}
                   {locating === "fail" && (
                     <p role="alert" className="text-base text-destructive">
                       {t.address.locationFailed}
                     </p>
                   )}
-                  <input
-                    type="text"
-                    autoComplete="street-address"
-                    aria-label={t.address.label}
-                    placeholder={t.address.placeholder}
-                    value={draft.address}
-                    // Ny adress ersätter en tidigare hämtad position
-                    onChange={(e) => {
-                      set({ address: e.target.value, lat: undefined, lon: undefined });
+                  <AddressSearch
+                    t={t.address}
+                    query={draft.address}
+                    confirmed={draft.lat !== undefined}
+                    // Ny text ersätter en tidigare vald eller hämtad position
+                    onQueryChange={(q) => {
+                      set({ address: q, lat: undefined, lon: undefined });
                       setLocating("idle");
                     }}
-                    className="h-14 w-full rounded-xl border-2 border-input bg-card px-4 text-lg placeholder:text-muted-foreground"
+                    onPick={(a) => {
+                      set({ address: a.label, lat: a.lat, lon: a.lon });
+                      setLocating("idle");
+                    }}
                   />
                 </div>
               </Question>

@@ -44,12 +44,20 @@ REGLER (följ strikt):
 Viktiga nummer visas för användaren av appen separat (${CONTACTS.map((c) => c.id).join(", ")}). Skriv inte ut egna nummerlistor.`;
 }
 
+/**
+ * Profilen som modellen får se. Adress och koordinater tas bort: planen får redan närmaste skyddsrum i
+ * facts, och en hemadress ska inte skickas till ett externt AI-anrop utan att behövas.
+ */
+export function aiSafeProfile(profile: Profile): Profile {
+  return { ...profile, area: { kind: profile.area.kind } };
+}
+
 export function planUserPrompt(profile: Profile, facts: ComputedFacts): string {
   // Färdiga åldersetiketter så att modellen inte räknar om bråkdelar av år till månader.
   const childrenAgeLabels = profile.household.childrenAges.map((a) =>
     a < 3 ? `${Math.round(a * 12)} månader` : `${Math.floor(a)} år`,
   );
-  return JSON.stringify({ profile, childrenAgeLabels, facts }, null, 1);
+  return JSON.stringify({ profile: aiSafeProfile(profile), childrenAgeLabels, facts }, null, 1);
 }
 
 export function followUpSystemPrompt(lang: Lang): string {

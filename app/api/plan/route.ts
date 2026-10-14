@@ -45,7 +45,7 @@ export async function POST(req: Request) {
   const profile = normalizeProfile(parsed.data.profile);
   const wantStream = parsed.data.stream;
   const facts = computeFacts(profile);
-  const key = profileHash(profile);
+  const key = profileHash(profile, facts);
 
   // Utveckling utan API-nyckel: hårdkodad plan så att frontend kan jobba.
   const useMock = !hasApiKey() && process.env.NODE_ENV !== "production";

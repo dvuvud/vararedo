@@ -1,5 +1,5 @@
 import { createHash } from "node:crypto";
-import type { Plan, Profile } from "./schemas";
+import type { ComputedFacts, Plan, Profile } from "./schemas";
 
 // Sorterade nycklar så att samma innehåll alltid ger samma sträng.
 function stable(value: unknown): unknown {
@@ -29,8 +29,18 @@ export function normalizeProfile(p: Profile): Profile {
   };
 }
 
-export function profileHash(p: Profile): string {
-  return createHash("sha256").update(JSON.stringify(stable(normalizeProfile(p)))).digest("hex");
+/**
+ * Nyckeln bygger på det modellen faktiskt ser: profilen utan adress och koordinater, plus närmaste
+ * skyddsrum. Två hushåll med samma profil får då samma nyckel oavsett vad de skrev i adressfältet.
+ */
+export function profileHash(p: Profile, facts?: ComputedFacts): string {
+  const n = normalizeProfile(p);
+  const input = {
+    ...n,
+    area: { kind: n.area.kind },
+    shelters: (facts?.nearestShelters ?? []).map((s) => `${s.id}:${s.distanceMeters}`),
+  };
+  return createHash("sha256").update(JSON.stringify(stable(input))).digest("hex");
 }
 
 // In-memory lokalt. Överlever hot reload i dev via globalThis. Redis i produktion om tid finns.
