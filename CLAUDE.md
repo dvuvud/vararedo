@@ -39,16 +39,16 @@ Längre strömavbrott, IT-/betalsystem och mobilnät nere, vattenavbrott, extrem
 
 Tio språk (ungefär de vanligaste i Sverige, justera vid behov):
 `sv` svenska, `en` engelska, `ar` arabiska, `fi` finska, `fa` persiska, `so` somaliska,
-`bs` bosniska/kroatiska/serbiska, `pl` polska, `ku` kurdiska (sorani), `uk` ukrainska.
+`bs` bosniska/kroatiska/serbiska, `pl` polska, `ku` kurdiska (sorani), `uk` ukrainska, `ch`kinesiska
 
 - UI-texter: JSON-ordlistor i `messages/<lang>.json`. Svenska är källan, övriga AI-översätts i förväg
-  och granskas snabbt.
+  och granskas snabbtm, inga em dashes.
 - `ar`, `fa`, `ku` är höger-till-vänster: sätt `dir="rtl"` på `<html>`.
 - AI-output genereras direkt på valt språk. Telefonnummer, adresser och siffror ändras aldrig.
 
 ## Användarflöde
 
-1. Landningssida: värdeerbjudande, språkväljare, "Skapa min plan".
+1. Landningssida: allt ska vara en one page.
 2. Formulär i steg med progress-indikator (se nedan).
 3. Adaptiva följdfrågor från AI (max 3, hoppas över om inget behövs).
 4. Resultatsida: dynamisk mall (se skill `resultatmall`).
