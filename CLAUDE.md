@@ -37,12 +37,13 @@ Längre strömavbrott, IT-/betalsystem och mobilnät nere, vattenavbrott, extrem
 
 ## Språk
 
-Tio språk (ungefär de vanligaste i Sverige, justera vid behov):
+Elva språk (ungefär de vanligaste i Sverige, justera vid behov):
 `sv` svenska, `en` engelska, `ar` arabiska, `fi` finska, `fa` persiska, `so` somaliska,
-`bs` bosniska/kroatiska/serbiska, `pl` polska, `ku` kurdiska (sorani), `uk` ukrainska, `ch`kinesiska
+`bs` bosniska/kroatiska/serbiska, `pl` polska, `ku` kurdiska (sorani), `uk` ukrainska, `zh` kinesiska (förenklad).
+  Språklistan bor i `lib/langs.ts`. OBS `zh`, inte `ch` (`ch` är chamorro).
 
 - UI-texter: JSON-ordlistor i `messages/<lang>.json`. Svenska är källan, övriga AI-översätts i förväg
-  och granskas snabbtm, inga em dashes.
+  och granskas snabbt, inga em dashes.
 - `ar`, `fa`, `ku` är höger-till-vänster: sätt `dir="rtl"` på `<html>`.
 - AI-output genereras direkt på valt språk. Telefonnummer, adresser och siffror ändras aldrig.
 
@@ -61,7 +62,7 @@ Tio språk (ungefär de vanligaste i Sverige, justera vid behov):
 - Område (storstad/mindre ort/landsbygd), adress eller "använd min position"
 - Hushåll: antal vuxna, barn med åldrar, personer över 70, husdjur
 - Särskilda behov som kryssrutor: medicin som kräver kyla, hjälpmedel som kräver ström,
-  rörelsenedsättning, specialkost. Inga diagnoser i fritext.
+  rörelsenedsättning, specialkost. Fritextfältet uppmuntrar sjukdomar och funktionsnedsättningar, och säger att AI läser texten.
 - Uppvärmning: fjärrvärme/el/ved/annat
 - Bil, kontanter hemma, batteri- eller vevradio (ja/nej)
 - Vilka kriser man vill förbereda sig för
@@ -175,9 +176,11 @@ Fakta om hemberedskap hämtas från MCF:s råd (vatten, mat, värme, information
 Kontraktet mellan spåren ligger i `lib/ai/schemas.ts`. Ändra det inte utan att säga till.
 Byggt och testat live: steg 1 (projekt, scheman), `/api/plan`, `/api/followups`, `/api/shelters`, `/api/geocode`,
 `lib/calc/*`, `lib/data/shelters.ts`, `lib/form/rules.ts`, cache. Frontend finns (landning, formulär, resultat).
+Språkval: `proxy.ts` skickar `/` till rätt språk (cookie `lang`, annars `Accept-Language`, annars `sv`). Landningssidan har
+synliga språkchips (`components/LangChips.tsx`). Språkväljaren sätter cookien via `rememberLang`.
 Frontend (spår B): landning, formulär i steg (`components/form/PlanWizard.tsx`, använder `lib/form/rules.ts`),
 resultatsida (`components/result/ResultView.tsx`), svensk ordlista i `messages/sv.json` (övriga språk är översatta med `scripts/translate-messages.mjs`).
-Inte byggt än: `/api/save`, cron, karta. Översättningar finns för alla tio språk (maskinöversatta, ej språkgranskade).
+Inte byggt än: `/api/save`, cron, karta. Översättningar finns för alla elva språk (maskinöversatta, ej språkgranskade).
 
 ### POST /api/plan
 Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard). Typer: `PlanRequest`, `PlanResponse`, `PlanStreamEvent`.
@@ -197,7 +200,13 @@ Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard
 ### POST /api/followups
 Body: `{ profile }`. Svar: `FollowUp` (`extractedNeeds`, `questions`). Tom fritext, saknad nyckel eller fel ger
 `{extractedNeeds:[], questions:[]}` med status 200, så frontend ska hoppa över steget när `questions` är tom.
-Tar ca 8 s (Haiku 4.5). Frågornas `id` är modellens egna (t.ex. `q1`), svaren går till `profile.followUpAnswers[id]`.
+Tar ca 4 till 6 s (Haiku 4.5). Frågornas `id` är modellens egna (t.ex. `q1`) och inte stabila, så svaren sparas i
+`profile.followUpAnswers` med **frågetexten som nyckel** (planen får då veta vad som frågades).
+Body kan även ha `alreadyAsked: string[]` (frågetexter från tidigare omgångar, t.ex. om man gått bakåt och framåt).
+Upprepade frågor stoppas i tre led: (1) prompten får `alreadyAskedInForm` (alla fasta formulärämnen och regelfrågor, se
+`lib/ai/askedTopics.ts`) och `alreadyAskedAsFollowUps`, (2) exakta dubbletter tas bort i kod, (3) ett snabbt domaranrop
+(`dropSameTopic`) tar bort frågor som rör samma ämne med andra ord. Misslyckas domaren behålls frågorna. Nya fasta
+formulärfrågor ska läggas i `FIXED_TOPICS` där, annars kan AI:n fråga om dem igen.
 Rendera efter `type`: `yesno` (ja/nej), `number`, `choice` (`options`, 2-5 st) eller `text`.
 
 ### Regelstyrda frågor (`lib/form/rules.ts`)
@@ -241,6 +250,15 @@ Adress och koordinater skickas aldrig till modellen (`aiSafeProfile` i `lib/ai/p
 `area.kind` och `facts.nearestShelters`. Cache-nyckeln (`profileHash(profile, facts)`) bygger på profilen utan adress
 plus närmaste skyddsrums id och avstånd, så två hushåll med samma profil och position delar cachad plan oavsett adresstext.
 
+### Resultatsidans prioritering (`components/result/ResultView.tsx`)
+Ordningen är avsiktlig, och sidan ska inte bli för lång:
+1. Läget i korthet (poäng och sammanfattning i ett kort).
+2. "Gör det här först": faserna `now` och `first_hour`.
+3. "Det här saknar ni": de 5 viktigaste (prioritet 1 först), resten bakom "Visa {n} till" (`MISSING_LIMIT`).
+4. Skyddsrum och viktiga nummer.
+5. Hopfällt: "Det här gör ni längre fram" (`first_day`, `first_week`) och riskbedömningen.
+Utskrift visar allt öppet (`hidden print:block`). Lägg nya sektioner efter samma princip: det man gör i en kris överst.
+
 ### Skyddsrum
 `Shelter` har `property` (fastighetsbeteckning, ingen gatuadress finns i MCF-datan), `capacity`, `limited`
 (tillfällig begränsning), `distanceMeters`, `lat`, `lon`. Visa "Kontrollera skyltning på plats. Data från MCF."
@@ -257,7 +275,7 @@ plus närmaste skyddsrums id och avstånd, så två hushåll med samma profil oc
 - Testa API:t: `npm run dev`, sedan `curl -X POST localhost:3000/api/plan -H 'content-type: application/json' -d @docs/exempelprofil.json`.
 
 ### Översättningar (`messages/<lang>.json`)
-Alla tio språk är fullt översatta (184 nycklar), men av AI och inte granskade av någon som kan språket. Granska särskilt
+Alla elva språk är fullt översatta (189 nycklar), men av AI och inte granskade av någon som kan språket. Granska särskilt
 `so`, `ku` och `bs` före demo. Svenska (`sv.json`) är källan och `lib/i18n.ts` faller tillbaka på svenska för nycklar som saknas.
 - Lägg alltid nya texter i `sv.json` först. Kör sedan `node --env-file=.env.local scripts/translate-messages.mjs`
   (alla språk) eller med språkkoder, t.ex. `... ar fa`. Utan `--force` översätts bara nycklar som saknas. `--force` översätter om allt.

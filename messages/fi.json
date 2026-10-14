@@ -14,7 +14,7 @@
     "optional": "Vapaaehtoinen",
     "stepOf": "Vaihe {current}/{total}",
     "answerRequired": "Valitse tästä vastaus, niin pääset eteenpäin.",
-    "fixErrors": "Yhdestä kysymyksestä puuttuu vastaus. Se on merkitty punaisella.",
+    "fixErrors": "Johonkin kysymykseen puuttuu vastaus. Etsi kysymys, jossa on varoituskuvake.",
     "startOver": "Aloita alusta",
     "decrease": "Vähennä",
     "increase": "Lisää",
@@ -202,8 +202,9 @@
     },
     "freeText": {
       "label": "Kerro jostain kotitaloudessasi, mitä emme ole kysyneet.",
-      "hint": "Esimerkiksi jotain, mikä tekee kriisistä teille vaikeamman. Älä kirjoita diagnooseja tai nimiä.",
-      "placeholder": "Kirjoita tähän tai paina Seuraava ohittaaksesi."
+      "hint": "Esimerkiksi sairaus, vamma tai jokin muu asia, joka tekee kriisistä teille vaikeamman.",
+      "placeholder": "Kirjoita tähän tai paina Seuraava ohittaaksesi.",
+      "aiNote": "Käytämme tekoälyä, jotta suunnitelmasta tulee henkilökohtaisempi. Tekoäly lukee sen, mitä kirjoitat tähän, sekä lomakkeen vastauksesi. Osoitettasi ei koskaan lähetetä tekoälylle."
     },
     "followUps": {
       "loading": "Tarkastelemme vastauksiasi...",
@@ -264,7 +265,11 @@
     "shelterLimited": "Tilapäinen rajoitus",
     "shelterNote": "Tarkista opasteet paikan päällä. Tiedot MCF:ltä.",
     "contactsTitle": "Tärkeät numerot",
-    "call": "Soita {number}"
+    "call": "Soita {number}",
+    "firstTitle": "Tee tämä ensin",
+    "laterTitle": "Tämän teette myöhemmin",
+    "showMore": "Näytä {n} lisää",
+    "showLess": "Näytä vähemmän"
   },
   "contacts": {
     "emergency": "Hätänumero, hengenvaarassa",

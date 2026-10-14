@@ -1,0 +1,283 @@
+{
+  "meta": {
+    "title": "Vararedo:你的危机应对计划",
+    "description": "回答几个简单的问题,获得一份专属计划,了解你的家庭如何应对危机。"
+  },
+  "common": {
+    "appName": "Vararedo",
+    "language": "语言",
+    "next": "下一步",
+    "back": "返回",
+    "done": "查看我的计划",
+    "yes": "是",
+    "no": "否",
+    "optional": "选填",
+    "stepOf": "第 {current} 步,共 {total} 步",
+    "answerRequired": "请在这里选择一个答案,才能继续。",
+    "fixErrors": "有问题还没有回答。请找到带有警告图标的问题。",
+    "startOver": "从头开始",
+    "decrease": "减少",
+    "increase": "增加",
+    "startOverConfirm": "你的所有答案都会被删除。要重新开始吗?",
+    "startOverYes": "是,重新开始",
+    "cancel": "取消"
+  },
+  "landing": {
+    "title": "你的家庭能在没有电或水的情况下坚持一周吗?",
+    "lead": "回答几个关于你家的简单问题。你会得到一份专属于你们的计划:家里需要准备什么,以及首先该做什么。",
+    "cta": "制定我的计划",
+    "ctaNote": "大约需要 5 分钟。免费。无需登录。",
+    "howTitle": "使用方法",
+    "how": [
+      {
+        "title": "回答问题",
+        "text": "关于你的住所、家里有哪些人,以及你们已有的物品。"
+      },
+      {
+        "title": "获得你的计划",
+        "text": "一份清单,列出你们缺少的物品,以及发生情况时该怎么做。"
+      },
+      {
+        "title": "一次做一件事",
+        "text": "逐项勾选,并打印计划。把它贴在冰箱上。"
+      }
+    ],
+    "whyTitle": "为什么需要专属计划?",
+    "whyText": "主管部门给所有人的建议是一样的。但有婴儿的家庭、独居在乡下的老人和大学生,需要的东西各不相同。这份计划以你们的家庭为出发点。",
+    "crisesTitle": "可能发生的情况",
+    "numbersTitle": "重要电话"
+  },
+  "footer": {
+    "disclaimer": "Vararedo 是主管部门信息的补充,而不是替代。请始终遵循主管部门和你所在市政府的建议。",
+    "source": "这些建议基于民防局(MCF)提供的信息。"
+  },
+  "crisis": {
+    "power_outage": {
+      "title": "长时间停电",
+      "text": "连续几天没有电。供暖、电梯和供水可能停止运行。"
+    },
+    "it_payment_mobile": {
+      "title": "支付和手机无法使用",
+      "text": "银行卡、Swish 和手机网络可能中断。"
+    },
+    "water_outage": {
+      "title": "水龙头没有水",
+      "text": "自来水可能中断,或变得不能饮用。"
+    },
+    "extreme_weather": {
+      "title": "恶劣天气",
+      "text": "风暴、洪水、热浪或森林火灾。"
+    },
+    "war_heightened": {
+      "title": "战争或提高戒备",
+      "text": "瑞典可能陷入战争,或进入提高戒备状态。"
+    }
+  },
+  "form": {
+    "steps": {
+      "housing": "你的住所",
+      "area": "你住在哪里?",
+      "household": "家里有哪些人?",
+      "needs": "特殊需求",
+      "home": "你们已有的物品",
+      "crises": "你想为什么情况做准备?",
+      "supplies": "家中的水和食物",
+      "readiness": "照明、取暖和计划",
+      "freeText": "还有什么我们应该了解的吗?",
+      "followUps": "最后几个问题"
+    },
+    "housingType": {
+      "label": "你住在哪种住所?",
+      "apartment": "公寓",
+      "house": "独栋住宅或联排住宅",
+      "farm": "农场",
+      "other": "其他"
+    },
+    "floor": {
+      "label": "你住在几楼?",
+      "ground": "一楼"
+    },
+    "elevator": {
+      "label": "有电梯吗?"
+    },
+    "areaKind": {
+      "label": "你住在什么样的地区?",
+      "city": "城市",
+      "town": "小镇",
+      "rural": "乡村"
+    },
+    "address": {
+      "label": "你的地址",
+      "hint": "输入街道地址或邮政编码,然后在列表中选择你的地址。我们只用它来查找最近的防空避难所(skyddsrum)。",
+      "placeholder": "街道地址或邮政编码",
+      "useLocation": "使用我的位置",
+      "locating": "正在获取位置...",
+      "located": "已找到位置",
+      "locationFailed": "无法获取你的位置。请改为输入地址。",
+      "searching": "正在搜索...",
+      "pickPrompt": "请选择你的地址:",
+      "change": "更改",
+      "noResults": "我们没有找到该地址。请尝试输入邮政编码,或加上城市名称。",
+      "searchFailed": "搜索失败。请重试,或使用你的位置。",
+      "pickRequired": "请点击搜索并在列表中选择你的地址,或清空该栏。"
+    },
+    "adults": {
+      "label": "家里有几位成年人?"
+    },
+    "seniors": {
+      "label": "这些成年人中有几位年满 70 岁?"
+    },
+    "children": {
+      "label": "家里有 18 岁以下的孩子吗?",
+      "add": "添加一个孩子",
+      "remove": "删除",
+      "age": "年龄",
+      "child": "孩子 {n}",
+      "newborn": "不满 1 个月",
+      "oneMonth": "1 个月",
+      "months": "{n} 个月",
+      "years": "{n} 岁"
+    },
+    "pets": {
+      "label": "你们养宠物吗?",
+      "which": "是什么动物?",
+      "dog": "狗",
+      "cat": "猫",
+      "other": "其他动物"
+    },
+    "needs": {
+      "label": "家里有人符合下面的情况吗?",
+      "hint": "请选择所有符合的选项。",
+      "medicineNeedsCooling": "需要冷藏保存的药物",
+      "powerDependentAids": "需要用电的辅助设备",
+      "reducedMobility": "行走或爬楼梯有困难",
+      "specialDiet": "特殊饮食,例如过敏",
+      "none": "都没有"
+    },
+    "heating": {
+      "label": "你家用什么方式取暖?",
+      "district": "集中供暖",
+      "electric": "电暖",
+      "wood": "木柴或柴炉",
+      "other": "其他或不清楚"
+    },
+    "car": {
+      "label": "你们有车吗?"
+    },
+    "cash": {
+      "label": "家里有现金吗?"
+    },
+    "radio": {
+      "label": "你们有电池或手摇收音机吗?"
+    },
+    "crises": {
+      "label": "请选择一项或多项。",
+      "all": "以上全部"
+    },
+    "days": {
+      "none": "没有额外储备",
+      "oneTwo": "1-2 天",
+      "threeSix": "3-6 天",
+      "week": "一周或更久"
+    },
+    "waterDays": {
+      "label": "你们家里的饮用水能用多久?",
+      "hint": "只算瓶装或桶装的水,不算自来水。"
+    },
+    "foodDays": {
+      "label": "家里的食物不去采购还能吃多久?"
+    },
+    "alternativeHeat": {
+      "label": "没有电时你们能保暖吗?",
+      "hint": "例如毯子、睡袋或柴炉。"
+    },
+    "lightAndPower": {
+      "label": "你们有手电筒和充电宝吗?"
+    },
+    "householdPlan": {
+      "label": "你们是否已商定在哪里会合,以及谁给谁打电话?"
+    },
+    "knowsShelter": {
+      "label": "你知道最近的防空避难所(skyddsrum)在哪里吗?"
+    },
+    "freeText": {
+      "label": "请告诉我们家里有什么我们没有问到的情况。",
+      "hint": "例如疾病、残障,或其他会让危机对你们更困难的情况。",
+      "placeholder": "在这里填写,或点击下一步跳过。",
+      "aiNote": "我们使用 AI 让计划更贴合你们的情况。AI 会读取你在这里写的内容和你在表单中的答案。你的地址永远不会发送给 AI。"
+    },
+    "followUps": {
+      "loading": "我们正在查看你的答案...",
+      "intro": "根据你写的内容,我们还有几个问题。"
+    }
+  },
+  "rules": {
+    "toddler_supplies_week": "家里是否备有至少一周用量的代乳品或婴儿米糊,以及尿布?",
+    "has_well": "你们有自家的水井吗?",
+    "well_pump_needs_power": "水井的水泵需要用电才能运转吗?",
+    "has_backup_power": "你们有备用电源吗,例如发电机?",
+    "pet_food_week": "你们是否备有至少一周用量的宠物食物?"
+  },
+  "result": {
+    "title": "你们的计划",
+    "loading": "我们正在制定你们的计划。需要几秒钟。",
+    "writing": "我们正在撰写你们的计划。大约需要 20 秒。计划生成的同时,你们可以开始阅读。",
+    "error": "目前无法生成计划。请稍后再试。",
+    "retry": "重试",
+    "noProfile": "我们没有找到任何答案。请先回答问题。",
+    "goToForm": "前往问题",
+    "print": "打印计划",
+    "edit": "修改我的答案",
+    "scoreTitle": "你们的准备程度",
+    "scoreOf": "满分 100",
+    "scoreLow": "还有很多事要做。请从清单最前面的开始。",
+    "scoreMid": "你们有了一个好的开始。还缺少一些重要的东西。",
+    "scoreHigh": "你们准备得很充分。请每年检查一次清单。",
+    "summaryTitle": "对你们最重要的事",
+    "missingTitle": "你们还缺少这些",
+    "missingHint": "备齐一样就勾选一样。",
+    "missingDone": "已完成 {done} 项,共 {total} 项",
+    "priority": {
+      "1": "最先准备",
+      "2": "接着准备",
+      "3": "最好也有"
+    },
+    "actionTitle": "发生情况时这样做",
+    "phase": {
+      "now": "现在就做",
+      "first_hour": "第一个小时",
+      "first_day": "第一天",
+      "first_week": "第一周"
+    },
+    "riskTitle": "你们的脆弱程度",
+    "level": {
+      "low": "低风险",
+      "medium": "中等风险",
+      "high": "高风险"
+    },
+    "shelterTitle": "最近的防空避难所(skyddsrum)",
+    "shelterDistance": "距离约 {distance}",
+    "shelterAddressLoading": "正在获取地址...",
+    "shelterProperty": "地产 {property}",
+    "shelterDirections": "查看前往路线",
+    "shelterCapacity": "{n} 个位置",
+    "shelterMissing": "我们不知道你们住在哪里,所以无法显示最近的防空避难所(skyddsrum)。请修改你们的答案并输入地址,或点击使用我的位置。",
+    "shelterLimited": "暂时受限",
+    "shelterNote": "请在现场确认标识。数据来自 MCF。",
+    "contactsTitle": "重要电话",
+    "call": "拨打 {number}",
+    "firstTitle": "请先做这些",
+    "laterTitle": "以后再做这些",
+    "showMore": "再显示 {n} 项",
+    "showLess": "收起"
+  },
+  "contacts": {
+    "emergency": "紧急电话,危及生命时拨打",
+    "crisis_info": "事故和危机信息",
+    "healthcare": "医疗咨询",
+    "police": "警察,非紧急情况",
+    "poison": "毒物信息中心",
+    "p4": "瑞典广播 P4,危机时请收听",
+    "krisinformation": "Krisinformation.se,主管部门的信息"
+  }
+}

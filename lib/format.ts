@@ -15,4 +15,14 @@ export const LANG_NAMES = {
   pl: "Polski",
   ku: "کوردی",
   uk: "Українська",
+  zh: "中文",
 } as const;
+
+// Kom ihåg språkvalet, så att nästa besök på "/" går till samma språk (läses av proxy.ts).
+export function rememberLang(lang: string) {
+  try {
+    document.cookie = `lang=${lang}; path=/; max-age=31536000; samesite=lax`;
+  } catch {
+    // Cookies blockerade: då gäller webbläsarens språk nästa gång
+  }
+}

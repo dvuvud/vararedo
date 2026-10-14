@@ -14,7 +14,7 @@
     "optional": "Optional",
     "stepOf": "Step {current} of {total}",
     "answerRequired": "Choose an answer here to continue.",
-    "fixErrors": "A question is missing an answer. It is marked in red.",
+    "fixErrors": "One or more questions are missing an answer. Look for the question with the warning icon.",
     "startOver": "Start over from the beginning",
     "decrease": "Decrease",
     "increase": "Increase",
@@ -202,8 +202,9 @@
     },
     "freeText": {
       "label": "Tell us about anything in your household that we have not asked about.",
-      "hint": "For example, something that would make a crisis harder for you. Do not write diagnoses or names.",
-      "placeholder": "Write here, or press Next to skip."
+      "hint": "For example an illness, a disability or something else that makes a crisis harder for you.",
+      "placeholder": "Write here, or press Next to skip.",
+      "aiNote": "We use AI to make the plan more personal. The AI reads what you write here and your answers in the form. Your address is never sent to the AI."
     },
     "followUps": {
       "loading": "We are looking at your answers...",
@@ -264,7 +265,11 @@
     "shelterLimited": "Temporary restriction",
     "shelterNote": "Check the signs on site. Data from MCF.",
     "contactsTitle": "Important numbers",
-    "call": "Call {number}"
+    "call": "Call {number}",
+    "firstTitle": "Do this first",
+    "laterTitle": "Do this later",
+    "showMore": "Show {n} more",
+    "showLess": "Show fewer"
   },
   "contacts": {
     "emergency": "Emergency number, if life is in danger",

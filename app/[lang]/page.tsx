@@ -5,6 +5,7 @@ import { CRISIS_TYPES } from "@/lib/ai/schemas";
 import { getDictionary, isLang } from "@/lib/i18n";
 import { SiteFooter, SiteHeader } from "@/components/SiteChrome";
 import { ContactList } from "@/components/ContactList";
+import { LangChips } from "@/components/LangChips";
 
 const CRISIS_ICONS = {
   power_outage: Zap,
@@ -38,7 +39,8 @@ export default async function Landing({ params }: { params: Promise<{ lang: stri
       <main className="flex-1">
         <section className="bg-primary text-primary-foreground">
           <div className="mx-auto max-w-3xl px-4 py-10 sm:py-16">
-            <h1 className="text-3xl font-bold leading-tight text-balance sm:text-4xl">{t.title}</h1>
+            <LangChips lang={lang} label={dict.common.language} />
+            <h1 className="mt-8 text-3xl font-bold leading-tight text-balance sm:text-4xl">{t.title}</h1>
             <p className="mt-4 text-lg leading-relaxed text-primary-foreground/90">{t.lead}</p>
             <div className="mt-8">
               <Link

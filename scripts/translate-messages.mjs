@@ -17,6 +17,7 @@ const LANGS = {
   pl: "polska",
   ku: "kurdiska, sorani (arabisk skrift)",
   uk: "ukrainska",
+  zh: "kinesiska (förenklad kinesiska, 简体中文)",
 };
 
 const MODEL = process.env.TRANSLATE_MODEL ?? "claude-sonnet-5-5";

@@ -14,7 +14,7 @@
     "optional": "Ikhtiyaari",
     "stepOf": "Tallaabada {current} ee {total}",
     "answerRequired": "Halkan dooro jawaab si aad u sii socoto.",
-    "fixErrors": "Su'aal ayaa jawaab ka maqan tahay. Waxaa lagu calaamadiyay casaan.",
+    "fixErrors": "Weydiin ama su'aalo qaar jawaab ma laha. Raadi su'aasha leh calaamadda digniinta.",
     "startOver": "Dib u bilow bilowga",
     "decrease": "Dhimi",
     "increase": "Kordhi",
@@ -202,8 +202,9 @@
     },
     "freeText": {
       "label": "Noo sheeg wax ku saabsan qoyskaaga oo aynaan weydiin.",
-      "hint": "Tusaale wax ka dhigaya xaalad degdeg ah mid kuu ka adag. Ha qorin cudurro ama magacyo.",
-      "placeholder": "Halkan qor, ama taabo Xiga si aad u dhaafto."
+      "hint": "Tusaale ahaan cudur, naafonimo ama wax kale oo ka dhigaya xaaladda degdegga ah mid adag oo idiin ah.",
+      "placeholder": "Halkan qor, ama taabo Xiga si aad u dhaafto.",
+      "aiNote": "Waxaan isticmaalnaa AI si aan qorshaha ugu habayno adiga. AI-gu waxa uu akhriyaa wixii aad halkan ku qorto iyo jawaabahaaga foomka. Cinwaankaaga weligii looma diro AI-ga."
     },
     "followUps": {
       "loading": "Waxaan eegaynaa jawaabahaaga...",
@@ -264,7 +265,11 @@
     "shelterLimited": "Xaddidaad ku meel gaar ah",
     "shelterNote": "Hubi calaamadaha goobta. Xogta waa MCF.",
     "contactsTitle": "Lambarro muhiim ah",
-    "call": "Wac {number}"
+    "call": "Wac {number}",
+    "firstTitle": "Kan marka hore samee",
+    "laterTitle": "Kuwan waxaad samayn doontaan mar dambe",
+    "showMore": "Muuji {n} kale",
+    "showLess": "Muuji wax yar"
   },
   "contacts": {
     "emergency": "Lambarka degdegga ah, marka nolosha khatar ku jirto",

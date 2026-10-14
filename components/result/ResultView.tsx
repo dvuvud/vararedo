@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useId, useState } from "react";
 import Link from "next/link";
-import { AlertTriangle, Check, Loader2, MapPin, Pencil, Printer } from "lucide-react";
+import { AlertTriangle, Check, ChevronDown, Loader2, MapPin, Pencil, Printer } from "lucide-react";
 import {
   PHASES,
   type ComputedFacts,
@@ -77,12 +77,16 @@ const LEVEL_STYLE = {
   low: "bg-success/10 text-success",
 } as const;
 
+const MISSING_LIMIT = 5;
+
 export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict: Dict; contacts: React.ReactNode }) {
   const t = dict.result;
   const [profile] = useState(loadProfile);
   const [state, setState] = useState<State>({ kind: "loading" });
   const [attempt, setAttempt] = useState(0);
   const [checked, setChecked] = useState<string[]>(() => loadChecked(profile));
+  // Bara de viktigaste sakerna visas först. Resten ligger bakom en knapp, men skrivs alltid ut.
+  const [showAllMissing, setShowAllMissing] = useState(false);
 
   // NDJSON från /api/plan: först fakta (poäng, mängder, skyddsrum), sedan planen bit för bit.
   useEffect(() => {
@@ -179,6 +183,29 @@ export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict:
   const itemKey = (m: (typeof plan.missing)[number]) => `${m.category}:${m.item}`;
   const doneCount = plan.missing.filter((m) => checked.includes(itemKey(m))).length;
   const priorities = (["1", "2", "3"] as const).filter((p) => plan.missing.some((m) => m.priority === p));
+  // Prioritet 1 först. Sorteringen är stabil, så modellens egen ordning bevaras inom varje prioritet.
+  const sortedMissing = [...plan.missing].sort((a, b) => Number(a.priority) - Number(b.priority));
+  const phaseActions = (ph: (typeof PHASES)[number]) => plan.actionPlan.find((a) => a.phase === ph)?.actions ?? [];
+  const firstPhases = ["now", "first_hour"] as const;
+  const laterPhases = ["first_day", "first_week"] as const;
+  const renderPhases = (phases: readonly (typeof PHASES)[number][]) => (
+    <ol className="space-y-4">
+      {phases.map((phase) => {
+        const actions = phaseActions(phase);
+        if (actions.length === 0) return null;
+        return (
+          <li key={phase} className="rounded-2xl border border-border bg-card p-5 print:break-inside-avoid">
+            <h3 className="text-lg font-bold text-primary">{t.phase[phase]}</h3>
+            <ul className="mt-3 list-disc space-y-2 ps-6 text-lg marker:text-primary">
+              {actions.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          </li>
+        );
+      })}
+    </ol>
+  );
 
   return (
     <main className="mx-auto w-full max-w-3xl flex-1 space-y-10 px-4 py-6 print:space-y-6 print:py-0">
@@ -225,20 +252,26 @@ export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict:
         </div>
       )}
 
-      <Section title={t.scoreTitle}>
-        <div className="flex flex-col items-center gap-4 rounded-2xl border border-border bg-card p-5 sm:flex-row sm:items-center">
-          <ScoreRing score={score} label={t.scoreOf} />
-          <p className="text-lg">{scoreText}</p>
+      {/* 1. Läget i korthet: poäng och det viktigaste, på en och samma plats */}
+      <Section title={t.summaryTitle}>
+        <div className="space-y-4 rounded-2xl border border-border bg-card p-5">
+          <div className="flex flex-col items-center gap-4 sm:flex-row">
+            <ScoreRing score={score} label={t.scoreOf} />
+            <p className="text-lg">{scoreText}</p>
+          </div>
+          {plan.summary && <p className="rounded-xl bg-secondary p-4 text-lg leading-relaxed">{plan.summary}</p>}
         </div>
       </Section>
 
-      {plan.summary && (
-        <Section title={t.summaryTitle}>
-          <p className="rounded-2xl bg-secondary p-5 text-lg leading-relaxed">{plan.summary}</p>
+      {/* 2. Gör det här först: det som kan göras direkt och den första timmen */}
+      {firstPhases.some((ph) => phaseActions(ph).length > 0) && (
+        <Section title={t.firstTitle}>
+          {renderPhases(firstPhases)}
         </Section>
       )}
 
-      {plan.missing.length > 0 && (
+      {/* 3. Det här saknar ni: de viktigaste först, resten på begäran */}
+      {sortedMissing.length > 0 && (
         <Section title={t.missingTitle}>
           <p className="text-base text-muted-foreground print:hidden">
             {t.missingHint}{" "}
@@ -246,23 +279,20 @@ export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict:
               {fill(t.missingDone, { done: doneCount, total: plan.missing.length })}
             </strong>
           </p>
-          {priorities.map((p) => (
-            <div key={p} className="space-y-3">
-              <h3 className="text-lg font-semibold">{t.priority[p]}</h3>
-              <ul className="space-y-3">
-                {plan.missing
-                  .filter((m) => m.priority === p)
-                  .map((m) => {
+          {priorities.map((p) => {
+            const group = sortedMissing.map((m, idx) => ({ m, idx })).filter((x) => x.m.priority === p);
+            const groupShown = showAllMissing || group.some((x) => x.idx < MISSING_LIMIT);
+            return (
+              <div key={p} className={cn("space-y-3", !groupShown && "hidden print:block")}>
+                <h3 className="text-lg font-semibold">{t.priority[p]}</h3>
+                <ul className="space-y-3">
+                  {group.map(({ m, idx }) => {
                     const key = itemKey(m);
                     const isDone = checked.includes(key);
                     const qty = m.quantityRef ? facts.quantities[m.quantityRef] : undefined;
                     return (
-                      <li key={key}>
-                        <label
-                          className={cn(
-                            "group flex cursor-pointer gap-3 rounded-xl border-2 border-border bg-card p-4 has-checked:border-success has-checked:bg-success/5 has-focus-visible:ring-3 has-focus-visible:ring-ring",
-                          )}
-                        >
+                      <li key={key} className={cn(!showAllMissing && idx >= MISSING_LIMIT && "hidden print:block")}>
+                        <label className="group flex cursor-pointer gap-3 rounded-xl border-2 border-border bg-card p-4 has-checked:border-success has-checked:bg-success/5 has-focus-visible:ring-3 has-focus-visible:ring-ring">
                           <input
                             type="checkbox"
                             className="sr-only"
@@ -293,51 +323,25 @@ export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict:
                       </li>
                     );
                   })}
-              </ul>
-            </div>
-          ))}
+                </ul>
+              </div>
+            );
+          })}
+          {sortedMissing.length > MISSING_LIMIT && (
+            <button
+              type="button"
+              aria-expanded={showAllMissing}
+              onClick={() => setShowAllMissing((v) => !v)}
+              className="flex min-h-14 w-full items-center justify-center gap-2 rounded-xl border-2 border-primary bg-card text-lg font-semibold text-primary hover:bg-secondary print:hidden"
+            >
+              {showAllMissing ? t.showLess : fill(t.showMore, { n: sortedMissing.length - MISSING_LIMIT })}
+              <ChevronDown aria-hidden className={cn("size-5 transition-transform", showAllMissing && "rotate-180")} />
+            </button>
+          )}
         </Section>
       )}
 
-      {plan.actionPlan.length > 0 && (
-        <Section title={t.actionTitle}>
-          <ol className="space-y-4">
-            {PHASES.map((phase) => {
-              const block = plan.actionPlan.find((a) => a.phase === phase);
-              if (!block || block.actions.length === 0) return null;
-              return (
-                <li key={phase} className="rounded-2xl border border-border bg-card p-5 print:break-inside-avoid">
-                  <h3 className="text-lg font-bold text-primary">{t.phase[phase]}</h3>
-                  <ul className="mt-3 list-disc space-y-2 ps-6 text-lg marker:text-primary">
-                    {block.actions.map((a) => (
-                      <li key={a}>{a}</li>
-                    ))}
-                  </ul>
-                </li>
-              );
-            })}
-          </ol>
-        </Section>
-      )}
-
-      {plan.riskProfile.length > 0 && (
-        <Section title={t.riskTitle}>
-          <ul className="space-y-3">
-            {plan.riskProfile.map((r) => (
-              <li key={r.crisis} className="rounded-2xl border border-border bg-card p-5 print:break-inside-avoid">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <h3 className="text-lg font-semibold">{dict.crisis[r.crisis].title}</h3>
-                  <span className={cn("rounded-full px-3 py-1 text-base font-semibold", LEVEL_STYLE[r.level])}>
-                    {t.level[r.level]}
-                  </span>
-                </div>
-                <p className="mt-2 text-base text-muted-foreground">{r.why}</p>
-              </li>
-            ))}
-          </ul>
-        </Section>
-      )}
-
+      {/* 4. Skyddsrum och nummer: det man behöver vid en kris */}
       <Section title={t.shelterTitle}>
         {plan.shelterAdvice && <p className="text-lg">{plan.shelterAdvice}</p>}
         {/* Utan adress eller position finns inga skyddsrum att visa: säg det och visa hur man fixar det */}
@@ -362,7 +366,57 @@ export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict:
       </Section>
 
       <Section title={t.contactsTitle}>{contacts}</Section>
+
+      {/* 5. Mer att läsa: hopfällt så att sidan inte blir för lång, men med i utskriften */}
+      {laterPhases.some((ph) => phaseActions(ph).length > 0) && (
+        <Collapsible title={t.laterTitle}>
+          {renderPhases(laterPhases)}
+        </Collapsible>
+      )}
+
+      {plan.riskProfile.length > 0 && (
+        <Collapsible title={t.riskTitle}>
+          <ul className="space-y-3">
+            {plan.riskProfile.map((r) => (
+              <li key={r.crisis} className="rounded-2xl border border-border bg-card p-5 print:break-inside-avoid">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <h3 className="text-lg font-semibold">{dict.crisis[r.crisis].title}</h3>
+                  <span className={cn("rounded-full px-3 py-1 text-base font-semibold", LEVEL_STYLE[r.level])}>
+                    {t.level[r.level]}
+                  </span>
+                </div>
+                <p className="mt-2 text-base text-muted-foreground">{r.why}</p>
+              </li>
+            ))}
+          </ul>
+        </Collapsible>
+      )}
     </main>
+  );
+}
+
+// Hopfällbar sektion. Skrivs alltid ut öppen, och knappen döljs i utskriften.
+function Collapsible({ title, children }: { title: string; children: React.ReactNode }) {
+  const [open, setOpen] = useState(false);
+  const id = useId();
+  return (
+    <section className="space-y-4">
+      <h2 className="text-2xl font-bold text-primary">
+        <button
+          type="button"
+          aria-expanded={open}
+          aria-controls={id}
+          onClick={() => setOpen((o) => !o)}
+          className="flex min-h-14 w-full items-center justify-between gap-3 text-start"
+        >
+          {title}
+          <ChevronDown aria-hidden className={cn("size-6 shrink-0 transition-transform print:hidden", open && "rotate-180")} />
+        </button>
+      </h2>
+      <div id={id} className={cn(!open && "hidden print:block")}>
+        {children}
+      </div>
+    </section>
   );
 }
 

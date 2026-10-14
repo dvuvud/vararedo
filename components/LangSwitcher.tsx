@@ -4,7 +4,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { Globe } from "lucide-react";
 import { SelectField } from "@/components/form/fields";
 import { LANGS, type Lang } from "@/lib/ai/schemas";
-import { LANG_NAMES } from "@/lib/format";
+import { LANG_NAMES, rememberLang } from "@/lib/format";
 
 // Vanlig <select>: fungerar likadant på alla telefoner och med skärmläsare.
 export function LangSwitcher({ lang, label }: { lang: Lang; label: string }) {
@@ -18,7 +18,10 @@ export function LangSwitcher({ lang, label }: { lang: Lang; label: string }) {
       <SelectField
         size="md"
         value={lang}
-        onChange={(v) => router.push(pathname.replace(/^\/[^/]+/, `/${v}`))}
+        onChange={(v) => {
+          rememberLang(v);
+          router.push(pathname.replace(/^\/[^/]+/, `/${v}`));
+        }}
       >
         {LANGS.map((l) => (
           <option key={l} value={l}>

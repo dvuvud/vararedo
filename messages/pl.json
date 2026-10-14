@@ -14,7 +14,7 @@
     "optional": "Nieobowiązkowe",
     "stepOf": "Krok {current} z {total}",
     "answerRequired": "Wybierz odpowiedź, aby przejść dalej.",
-    "fixErrors": "Brakuje odpowiedzi na jedno z pytań. Jest zaznaczone na czerwono.",
+    "fixErrors": "Brakuje odpowiedzi na jedno z pytań. Poszukaj pytania z ikoną ostrzeżenia.",
     "startOver": "Zacznij od początku",
     "decrease": "Zmniejsz",
     "increase": "Zwiększ",
@@ -202,8 +202,9 @@
     },
     "freeText": {
       "label": "Opowiedz nam o czymś w twoim gospodarstwie domowym, o co nie zapytaliśmy.",
-      "hint": "Na przykład o czymś, co utrudniłoby wam kryzys. Nie podawaj diagnoz ani imion i nazwisk.",
-      "placeholder": "Napisz tutaj albo naciśnij Dalej, aby pominąć."
+      "hint": "Na przykład choroba, niepełnosprawność lub coś innego, co utrudnia wam sytuację kryzysową.",
+      "placeholder": "Napisz tutaj albo naciśnij Dalej, aby pominąć.",
+      "aiNote": "Używamy sztucznej inteligencji, aby plan był bardziej osobisty. AI czyta to, co tu wpiszesz, oraz twoje odpowiedzi w formularzu. Twój adres nigdy nie jest wysyłany do AI."
     },
     "followUps": {
       "loading": "Przeglądamy twoje odpowiedzi...",
@@ -264,7 +265,11 @@
     "shelterLimited": "Tymczasowe ograniczenie",
     "shelterNote": "Sprawdźcie oznaczenia na miejscu. Dane z MCF.",
     "contactsTitle": "Ważne numery",
-    "call": "Zadzwoń pod {number}"
+    "call": "Zadzwoń pod {number}",
+    "firstTitle": "Zrób to najpierw",
+    "laterTitle": "To zrobicie później",
+    "showMore": "Pokaż jeszcze {n}",
+    "showLess": "Pokaż mniej"
   },
   "contacts": {
     "emergency": "Numer alarmowy, gdy zagrożone jest życie",

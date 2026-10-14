@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { LANGS, RTL_LANGS, type Lang } from "@/lib/langs";
 
 /**
  * Kontraktet mellan spår A (backend/AI) och spår B (frontend).
@@ -7,9 +8,8 @@ import { z } from "zod";
 
 // ---------- Konstanter ----------
 
-export const LANGS = ["sv", "en", "ar", "fi", "fa", "so", "bs", "pl", "ku", "uk"] as const;
-export type Lang = (typeof LANGS)[number];
-export const RTL_LANGS: readonly Lang[] = ["ar", "fa", "ku"];
+// Språklistan bor i lib/langs.ts (används även av proxy.ts) och exporteras här så att befintliga importer fungerar.
+export { LANGS, RTL_LANGS, type Lang };
 
 export const CRISIS_TYPES = [
   "power_outage",

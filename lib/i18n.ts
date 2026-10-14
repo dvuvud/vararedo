@@ -15,6 +15,7 @@ const loaders: Record<Lang, () => Promise<{ default: unknown }>> = {
   pl: () => import("@/messages/pl.json"),
   ku: () => import("@/messages/ku.json"),
   uk: () => import("@/messages/uk.json"),
+  zh: () => import("@/messages/zh.json"),
 };
 
 // Svenska är källan: nycklar som saknas i en översättning faller tillbaka på svenska.

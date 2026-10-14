@@ -12,6 +12,7 @@ import {
   Loader2,
   LocateFixed,
   Plus,
+  Sparkles,
   Tractor,
   Trash2,
   Trees,
@@ -213,10 +214,12 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
     setBusy(true);
     try {
       const profile = toProfile({ ...draft, followUpAnswers: {} }, lang);
+      // Det som redan frågats i tidigare omgångar (om man gått tillbaka och framåt) ska inte frågas igen
+      const alreadyAsked = [...new Set([...Object.keys(draft.followUpAnswers), ...followUps.map((q) => q.question)])];
       const res = await fetch("/api/followups", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ profile }),
+        body: JSON.stringify({ profile, alreadyAsked }),
         signal: AbortSignal.timeout(15000),
       });
       const parsed = res.ok ? followUpSchema.safeParse(await res.json()) : null;
@@ -669,6 +672,10 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
                 {t.freeText.label} <span className="font-normal text-muted-foreground">({c.optional})</span>
               </label>
               <p className="text-base text-muted-foreground">{t.freeText.hint}</p>
+              <p className="flex items-start gap-2 rounded-xl bg-secondary p-3 text-base">
+                <Sparkles aria-hidden className="mt-0.5 size-5 shrink-0 text-primary" />
+                {t.freeText.aiNote}
+              </p>
               <textarea
                 id="freeText"
                 rows={5}
@@ -685,9 +692,11 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
             <>
               <p className="text-lg">{t.followUps.intro}</p>
               {followUps.map((q) => {
-                const value = draft.followUpAnswers[q.id];
+                // Svaren nycklas på frågetexten: modellens id:n (q1, q2) är inte stabila mellan genereringar,
+                // och planen behöver veta vad som frågades.
+                const value = draft.followUpAnswers[q.question];
                 const setAnswer = (v: boolean | number | string) =>
-                  set({ followUpAnswers: { ...draft.followUpAnswers, [q.id]: v } });
+                  set({ followUpAnswers: { ...draft.followUpAnswers, [q.question]: v } });
                 return (
                   <Question key={q.id} id={`fu-${q.id}`} label={q.question}>
                     {q.type === "yesno" && (

@@ -14,7 +14,7 @@
     "optional": "Neobavezno",
     "stepOf": "Korak {current} od {total}",
     "answerRequired": "Odaberite odgovor da biste nastavili.",
-    "fixErrors": "Na jedno pitanje nije odgovoreno. Označeno je crvenom bojom.",
+    "fixErrors": "Na neko pitanje nije odgovoreno. Potražite pitanje s ikonom upozorenja.",
     "startOver": "Počni ispočetka",
     "decrease": "Smanji",
     "increase": "Povećaj",
@@ -202,8 +202,9 @@
     },
     "freeText": {
       "label": "Recite nam nešto o vašem domaćinstvu o čemu nismo pitali.",
-      "hint": "Na primjer nešto što vam čini krizu težom. Ne pišite dijagnoze ni imena.",
-      "placeholder": "Pišite ovdje ili pritisnite Dalje da preskočite."
+      "hint": "Na primjer bolest, invaliditet ili nešto drugo zbog čega vam je kriza teža.",
+      "placeholder": "Pišite ovdje ili pritisnite Dalje da preskočite.",
+      "aiNote": "Koristimo umjetnu inteligenciju (AI) da bismo plan učinili ličnijim. AI čita ono što ovdje napišete i vaše odgovore u obrascu. Vaša adresa se nikada ne šalje AI-ju."
     },
     "followUps": {
       "loading": "Pregledamo vaše odgovore...",
@@ -264,7 +265,11 @@
     "shelterLimited": "Privremeno ograničenje",
     "shelterNote": "Provjerite oznake na licu mjesta. Podaci iz MCF-a.",
     "contactsTitle": "Važni brojevi",
-    "call": "Nazovi {number}"
+    "call": "Nazovi {number}",
+    "firstTitle": "Uradite ovo prvo",
+    "laterTitle": "Ovo radite kasnije",
+    "showMore": "Prikaži još {n}",
+    "showLess": "Prikaži manje"
   },
   "contacts": {
     "emergency": "Broj za hitne slučajeve, kada je život u opasnosti",

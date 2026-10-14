@@ -14,7 +14,7 @@
     "optional": "Frivilligt",
     "stepOf": "Steg {current} av {total}",
     "answerRequired": "Välj ett svar här för att gå vidare.",
-    "fixErrors": "Någon fråga saknar svar. Den är markerad med rött.",
+    "fixErrors": "Någon fråga saknar svar. Leta efter frågan med varningsikonen.",
     "startOver": "Börja om från början",
     "decrease": "Minska",
     "increase": "Öka",
@@ -202,8 +202,9 @@
     },
     "freeText": {
       "label": "Berätta om något i ditt hushåll som vi inte har frågat om.",
-      "hint": "Till exempel något som gör en kris svårare för er. Skriv inga diagnoser eller namn.",
-      "placeholder": "Skriv här, eller tryck Nästa för att hoppa över."
+      "hint": "Till exempel en sjukdom, en funktionsnedsättning eller något annat som gör en kris svårare för er.",
+      "placeholder": "Skriv här, eller tryck Nästa för att hoppa över.",
+      "aiNote": "Vi använder AI för att göra planen mer personlig. AI:n läser det du skriver här och dina svar i formuläret. Din adress skickas aldrig till AI:n."
     },
     "followUps": {
       "loading": "Vi tittar på dina svar...",
@@ -264,7 +265,11 @@
     "shelterLimited": "Tillfällig begränsning",
     "shelterNote": "Kontrollera skyltning på plats. Data från MCF.",
     "contactsTitle": "Viktiga nummer",
-    "call": "Ring {number}"
+    "call": "Ring {number}",
+    "firstTitle": "Gör det här först",
+    "laterTitle": "Det här gör ni längre fram",
+    "showMore": "Visa {n} till",
+    "showLess": "Visa färre"
   },
   "contacts": {
     "emergency": "Nödnummer, vid fara för liv",
