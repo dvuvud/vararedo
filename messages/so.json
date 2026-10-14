@@ -1,1 +1,278 @@
-{}
+{
+  "meta": {
+    "title": "Vararedo: qorshahaaga xilliga xaaladda degdegga ah",
+    "description": "Ka jawaab dhowr su'aalood oo fudud oo hel qorshe gaar ah oo muujinaya sida qoyskaagu u maareyn karo xaalad degdeg ah."
+  },
+  "common": {
+    "appName": "Vararedo",
+    "language": "Luqad",
+    "next": "Xiga",
+    "back": "Dib u noqo",
+    "done": "Tus qorshahayga",
+    "yes": "Haa",
+    "no": "Maya",
+    "optional": "Ikhtiyaari",
+    "stepOf": "Tallaabada {current} ee {total}",
+    "answerRequired": "Halkan dooro jawaab si aad u sii socoto.",
+    "fixErrors": "Su'aal ayaa jawaab ka maqan tahay. Waxaa lagu calaamadiyay casaan.",
+    "startOver": "Dib u bilow bilowga",
+    "decrease": "Dhimi",
+    "increase": "Kordhi",
+    "startOverConfirm": "Dhammaan jawaabahaaga waa la tirtiri doonaa. Ma rabtaa inaad dib u bilowdo?",
+    "startOverYes": "Haa, dib u bilow",
+    "cancel": "Jooji"
+  },
+  "landing": {
+    "title": "Ma u adkaysan kartaa qoyskaagu hal usbuuc korontada ama biyaha la'aantooda?",
+    "lead": "Ka jawaab dhowr su'aalood oo fudud oo ku saabsan gurigaaga. Waxaad heli doontaa qorshe adiga kuu gaar ah: waxa guriga ku haysan lahaydeen iyo waxa marka hore sameyn lahaydeen.",
+    "cta": "Samee qorshahayga",
+    "ctaNote": "Waxay qaadataa ilaa 5 daqiiqo. Bilaash. Looma baahna inaad gasho.",
+    "howTitle": "Sida ay u shaqeyso",
+    "how": [
+      {
+        "title": "Ka jawaab su'aalaha",
+        "text": "Ku saabsan guriga aad degan tahay, kuwa guriga ku nool iyo waxa aad haysataan."
+      },
+      {
+        "title": "Hel qorshahaaga",
+        "text": "Liis muujinaysa waxa aad ka maqan tihiin iyo waxa aad samayn lahayd haddii wax dhacaan."
+      },
+      {
+        "title": "Hal shay mar kasta samee",
+        "text": "Calaamadee waxa la sameeyay oo qorshaha daabac. Ku dhaji qaboojiyaha."
+      }
+    ],
+    "whyTitle": "Waa maxay sababta qorshe gaar ah loo baahan yahay?",
+    "whyText": "Hay'adaha waxay dhammaan siiyaan talo isku mid ah. Laakiin qoys leh ilmo yar, qof da' ah oo keligiis ku nool miyiga iyo arday waxay u baahan yihiin waxyaabo kala duwan. Qorshuhu wuxuu ku salaysan yahay qoyskaaga.",
+    "crisesTitle": "Kuwan ayaa dhici kara",
+    "numbersTitle": "Lambarro muhiim ah"
+  },
+  "footer": {
+    "disclaimer": "Vararedo waa dheeraad ku dar macluumaadka hay'adaha, ma aha beddel. Mar walba raac talooyinka hay'adaha iyo degmadaada.",
+    "source": "Talooyinku waxay ku salaysan yihiin macluumaadka Hay'adda Difaaca Rayidka (MCF)."
+  },
+  "crisis": {
+    "power_outage": {
+      "title": "Korontada oo muddo dheer go'da",
+      "text": "Koronto la'aan maalmo badan. Kulaylka, wiishka iyo biyuhu way joogsan karaan."
+    },
+    "it_payment_mobile": {
+      "title": "Lacag bixinta iyo mobilka ma shaqeynayaan",
+      "text": "Kaarka, Swish iyo shabakadda mobilka way go'i karaan."
+    },
+    "water_outage": {
+      "title": "Biyo ma imaanayaan tuubada",
+      "text": "Biyuhu way dhammaan karaan ama way noqon karaan kuwo aan la cabbi karin."
+    },
+    "extreme_weather": {
+      "title": "Cimilo xun",
+      "text": "Duufaan, daad, hirar kulayl ama dab kaymaha ku dhaca."
+    },
+    "war_heightened": {
+      "title": "Dagaal ama xaalad digniin sare",
+      "text": "Iswiidhan waxay geli kartaa dagaal ama xaalad digniin sare."
+    }
+  },
+  "form": {
+    "steps": {
+      "housing": "Gurigaaga",
+      "area": "Xaggee ku nooshahay?",
+      "household": "Yaa guriga ku nool?",
+      "needs": "Baahiyo gaar ah",
+      "home": "Waxan ayaad haysataan",
+      "crises": "Muxuu rabaa inaad is-diyaarisid?",
+      "supplies": "Biyo iyo cunto guriga ku jirta",
+      "readiness": "Iftiin, kulayl iyo qorshe",
+      "freeText": "Wax kale oo aan ogaano ma jiraan?",
+      "followUps": "Dhowr su'aalood oo ugu dambeeya"
+    },
+    "housingType": {
+      "label": "Sidee ku nooshahay?",
+      "apartment": "Guri dabaq ah (apartment)",
+      "house": "Villa ama guri safaf ah",
+      "farm": "Beer",
+      "other": "Mid kale"
+    },
+    "floor": {
+      "label": "Dabaqkee ku nooshahay?",
+      "ground": "Dabaqa hoose"
+    },
+    "elevator": {
+      "label": "Wiish ma jiraa?"
+    },
+    "areaKind": {
+      "label": "Aaggee ku nooshahay?",
+      "city": "Magaalo",
+      "town": "Tuulo yar",
+      "rural": "Miyi"
+    },
+    "address": {
+      "label": "Cinwaankaaga",
+      "hint": "Qor cinwaanka waddada ama koodhka boostada oo liiska ka dooro cinwaankaaga. Waxaan u isticmaalaynaa oo keliya inaan helno meesha ugu dhow ee dhuumaalaysiga (skyddsrum).",
+      "placeholder": "Cinwaanka waddada ama koodhka boostada",
+      "useLocation": "Isticmaal goobtayda",
+      "locating": "Goobta ayaa la helayaa...",
+      "located": "Goobta waa la helay",
+      "locationFailed": "Lama helin goobtaada. Halkii cinwaanka qor.",
+      "searching": "Waa la raadinayaa...",
+      "pickPrompt": "Dooro cinwaankaaga:",
+      "change": "Beddel",
+      "noResults": "Cinwaan lama helin. Isku day koodhka boostada, ama ku dar magaalada.",
+      "searchFailed": "Raadintu way fashilantay. Mar kale isku day, ama isticmaal goobtaada.",
+      "pickRequired": "Taabo Raadi oo liiska ka dooro cinwaankaaga, ama meesha faaruqi."
+    },
+    "adults": {
+      "label": "Imisa qof oo weyn ayaa guriga ku nool?"
+    },
+    "seniors": {
+      "label": "Imisa ka mid ah dadka waaweyn ayaa ka weyn 70 sano?"
+    },
+    "children": {
+      "label": "Ilmo ka yar 18 sano ma ku nool yihiin guriga?",
+      "add": "Ku dar ilmo",
+      "remove": "Ka saar",
+      "age": "Da'da",
+      "child": "Ilmaha {n}",
+      "newborn": "Ka yar 1 bil",
+      "oneMonth": "1 bil",
+      "months": "{n} bilood",
+      "years": "{n} sano"
+    },
+    "pets": {
+      "label": "Xayawaan guriga lagu hayo ma haysataan?",
+      "which": "Muxuu yahay xayawaanka?",
+      "dog": "Eey",
+      "cat": "Bisad",
+      "other": "Xayawaan kale"
+    },
+    "needs": {
+      "label": "Mid ka mid ah kuwan ma quseeyaa qof ka mid ah qoyska?",
+      "hint": "Dooro waxa dhan oo run ah.",
+      "medicineNeedsCooling": "Dawo u baahan in la qaboojiyo",
+      "powerDependentAids": "Qalab caawimaad oo koronto u baahan",
+      "reducedMobility": "Socodku way adag yahay ama jaranjarooyinka fuulistoodu",
+      "specialDiet": "Cunto gaar ah, tusaale xasaasiyad",
+      "none": "Midna kuwan ma jiro"
+    },
+    "heating": {
+      "label": "Sidee loo kululeeyaa gurigaaga?",
+      "district": "Kulayl dhexe oo degmada (fjärrvärme)",
+      "electric": "Koronto",
+      "wood": "Qori ama foorno qori",
+      "other": "Mid kale ama ma aqaan"
+    },
+    "car": {
+      "label": "Baabuur ma haysataan?"
+    },
+    "cash": {
+      "label": "Lacag caddaan ah ma haysataan guriga?"
+    },
+    "radio": {
+      "label": "Raadiyo batari ku shaqeysa ama gacan lagu wareejiyo ma haysataan?"
+    },
+    "crises": {
+      "label": "Dooro mid ama in ka badan.",
+      "all": "Dhammaan kuwan"
+    },
+    "days": {
+      "none": "Wax dheeraad ah ma jiraan",
+      "oneTwo": "1-2 maalmood",
+      "threeSix": "3-6 maalmood",
+      "week": "Hal usbuuc ama in ka badan"
+    },
+    "waterDays": {
+      "label": "Intee in le'eg ayay biyaha cabbitaanka ee guriga ku jira ku filan yihiin?",
+      "hint": "Tiri oo keliya biyaha dhalooyinka ama jerikanka ku jira, ma aha tuubada."
+    },
+    "foodDays": {
+      "label": "Intee in le'eg ayay cuntada guriga ku jirta ku filan tahay iyadoo aan wax la iibsan?"
+    },
+    "alternativeHeat": {
+      "label": "Ma u adkaysan kartaan kulaylka koronto la'aan?",
+      "hint": "Tusaale buste, bacaha hurdada ama foorno qori."
+    },
+    "lightAndPower": {
+      "label": "Toorjo iyo powerbank ma haysataan?"
+    },
+    "householdPlan": {
+      "label": "Ma go'aansateen meesha aad kulmeysaan iyo cidda cidda wacaysa?"
+    },
+    "knowsShelter": {
+      "label": "Ma ogtahay halka ay ku taal meesha ugu dhow ee dhuumaalaysiga (skyddsrum)?"
+    },
+    "freeText": {
+      "label": "Noo sheeg wax ku saabsan qoyskaaga oo aynaan weydiin.",
+      "hint": "Tusaale wax ka dhigaya xaalad degdeg ah mid kuu ka adag. Ha qorin cudurro ama magacyo.",
+      "placeholder": "Halkan qor, ama taabo Xiga si aad u dhaafto."
+    },
+    "followUps": {
+      "loading": "Waxaan eegaynaa jawaabahaaga...",
+      "intro": "Iyadoo la raacayo wixii aad qortay, waxaan haysannaa dhowr su'aalood oo kale."
+    }
+  },
+  "rules": {
+    "toddler_supplies_week": "Caano bedel ama bur-cunno iyo xafaayad ma haysataan guriga ugu yaraan hal usbuuc?",
+    "has_well": "Ceel gaar ah ma haysataan?",
+    "well_pump_needs_power": "Biyo-qaadka ceelku ma u baahan yahay koronto si uu u shaqeeyo?",
+    "has_backup_power": "Koronto kaydka ah ma haysataan, tusaale makiinad koronto?",
+    "pet_food_week": "Cunto xayawaanka guriga ugu yaraan hal usbuuc ma haysataan?"
+  },
+  "result": {
+    "title": "Qorshahaaga",
+    "loading": "Waxaan samaynaynaa qorshahaaga. Waxay qaadataa dhowr ilbiriqsi.",
+    "writing": "Waxaan qorayaa qorshahaaga. Waxay qaadataa ilaa 20 ilbiriqsi. Waad bilaabi kartaa akhrinta intii la qorayo.",
+    "error": "Hadda lama sameyn karin qorshaha. Mar kale isku day wax yar ka dib.",
+    "retry": "Mar kale isku day",
+    "noProfile": "Jawaab ma helin. Ku bilow inaad ka jawaabto su'aalaha.",
+    "goToForm": "U gudub su'aalaha",
+    "print": "Daabac qorshaha",
+    "edit": "Beddel jawaabahayga",
+    "scoreTitle": "Sida aad u diyaarsan tahay",
+    "scoreOf": "ee 100",
+    "scoreLow": "Wax badan ayaa kuu hadhay. Ku bilow waxa liiska ugu horreeya.",
+    "scoreMid": "Bilow wanaagsan ayaad samaysay. Dhowr shay oo muhiim ah ayaa maqan.",
+    "scoreHigh": "Si fiican ayaad u diyaarsan tahay. Liiska hubi hal mar sanadkii.",
+    "summaryTitle": "Waxa ugu muhiimsan adiga",
+    "missingTitle": "Waxan ayaa kaa maqan",
+    "missingHint": "Calaamadee marka aad wax hesho.",
+    "missingDone": "{done} ee {total} waa la dhammeeyay",
+    "priority": {
+      "1": "Marka hore hel",
+      "2": "Kadib hel",
+      "3": "Wanaagsan in la hayo"
+    },
+    "actionTitle": "Sidan yeel haddii wax dhaco",
+    "phase": {
+      "now": "Hadda",
+      "first_hour": "Saacadda ugu horreysa",
+      "first_day": "Maalinta ugu horreysa",
+      "first_week": "Usbuuca ugu horreeya"
+    },
+    "riskTitle": "Sida aad u nugul tahay",
+    "level": {
+      "low": "Khatar yar",
+      "medium": "Khatar dhexdhexaad",
+      "high": "Khatar sare"
+    },
+    "shelterTitle": "Meesha ugu dhow ee dhuumaalaysiga (skyddsrum)",
+    "shelterDistance": "qiyaastii {distance} u jirta",
+    "shelterAddressLoading": "Cinwaanka ayaa la helayaa...",
+    "shelterProperty": "Guriga {property}",
+    "shelterDirections": "Tus jidka halkaas",
+    "shelterCapacity": "{n} meelood",
+    "shelterMissing": "Ma ogin meesha aad degan tahay, sidaas darteed ma tusi karno meesha ugu dhow ee dhuumaalaysiga (skyddsrum). Beddel jawaabahaaga oo qor cinwaankaaga, ama taabo Isticmaal goobtayda.",
+    "shelterLimited": "Xaddidaad ku meel gaar ah",
+    "shelterNote": "Hubi calaamadaha goobta. Xogta waa MCF.",
+    "contactsTitle": "Lambarro muhiim ah",
+    "call": "Wac {number}"
+  },
+  "contacts": {
+    "emergency": "Lambarka degdegga ah, marka nolosha khatar ku jirto",
+    "crisis_info": "Macluumaadka shilalka iyo xaaladaha degdegga ah",
+    "healthcare": "Talo caafimaad",
+    "police": "Booliska, marka aanay degdeg ahayn",
+    "poison": "Xarunta macluumaadka sunta",
+    "p4": "Sveriges Radio P4, dhegayso xilliga xaaladda degdegga ah",
+    "krisinformation": "Krisinformation.se, macluumaadka hay'adaha"
+  }
+}

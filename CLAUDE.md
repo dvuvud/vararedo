@@ -176,8 +176,8 @@ Kontraktet mellan spåren ligger i `lib/ai/schemas.ts`. Ändra det inte utan att
 Byggt och testat live: steg 1 (projekt, scheman), `/api/plan`, `/api/followups`, `/api/shelters`, `/api/geocode`,
 `lib/calc/*`, `lib/data/shelters.ts`, `lib/form/rules.ts`, cache. Frontend finns (landning, formulär, resultat).
 Frontend (spår B): landning, formulär i steg (`components/form/PlanWizard.tsx`, använder `lib/form/rules.ts`),
-resultatsida (`components/result/ResultView.tsx`), svensk ordlista i `messages/sv.json` (övriga språk faller tillbaka på svenska).
-Inte byggt än: `/api/save`, cron, karta, översättningar.
+resultatsida (`components/result/ResultView.tsx`), svensk ordlista i `messages/sv.json` (övriga språk är översatta med `scripts/translate-messages.mjs`).
+Inte byggt än: `/api/save`, cron, karta. Översättningar finns för alla tio språk (maskinöversatta, ej språkgranskade).
 
 ### POST /api/plan
 Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard). Typer: `PlanRequest`, `PlanResponse`, `PlanStreamEvent`.
@@ -255,6 +255,16 @@ plus närmaste skyddsrums id och avstånd, så två hushåll med samma profil oc
 - Åldrar skickas till modellen som färdiga etiketter (`childrenAgeLabels`), så modellen räknar aldrig om dem.
 - Next 16: `params` är en `Promise`, läs `node_modules/next/dist/docs/` innan ni gör något ovanligt. `AGENTS.md` säger samma sak.
 - Testa API:t: `npm run dev`, sedan `curl -X POST localhost:3000/api/plan -H 'content-type: application/json' -d @docs/exempelprofil.json`.
+
+### Översättningar (`messages/<lang>.json`)
+Alla tio språk är fullt översatta (184 nycklar), men av AI och inte granskade av någon som kan språket. Granska särskilt
+`so`, `ku` och `bs` före demo. Svenska (`sv.json`) är källan och `lib/i18n.ts` faller tillbaka på svenska för nycklar som saknas.
+- Lägg alltid nya texter i `sv.json` först. Kör sedan `node --env-file=.env.local scripts/translate-messages.mjs`
+  (alla språk) eller med språkkoder, t.ex. `... ar fa`. Utan `--force` översätts bara nycklar som saknas. `--force` översätter om allt.
+- Skriptet validerar att platshållare (`{n}`, `{total}` m.fl.) är oförändrade och att inga tankstreck används. Avvisade strängar
+  försöks en gång till, och ligger annars kvar på svenska och listas i utskriften. Modell: `TRANSLATE_MODEL`, standard `claude-sonnet-5-5`.
+- Gränssnittet visar aldrig serverns felmeddelanden (de är på svenska). `ResultView` använder alltid `result.error` ur ordlistan.
+  Lägg samma princip på nya felvägar: servern returnerar kod eller status, texten kommer från ordlistan.
 
 ## Skills
 

@@ -1,1 +1,278 @@
-{}
+{
+  "meta": {
+    "title": "Vararedo: twój plan na wypadek kryzysu",
+    "description": "Odpowiedz na kilka prostych pytań i otrzymaj osobisty plan, jak twoje gospodarstwo domowe poradzi sobie w kryzysie."
+  },
+  "common": {
+    "appName": "Vararedo",
+    "language": "Język",
+    "next": "Dalej",
+    "back": "Wstecz",
+    "done": "Pokaż mój plan",
+    "yes": "Tak",
+    "no": "Nie",
+    "optional": "Nieobowiązkowe",
+    "stepOf": "Krok {current} z {total}",
+    "answerRequired": "Wybierz odpowiedź, aby przejść dalej.",
+    "fixErrors": "Brakuje odpowiedzi na jedno z pytań. Jest zaznaczone na czerwono.",
+    "startOver": "Zacznij od początku",
+    "decrease": "Zmniejsz",
+    "increase": "Zwiększ",
+    "startOverConfirm": "Wszystkie twoje odpowiedzi zostaną usunięte. Czy chcesz zacząć od nowa?",
+    "startOverYes": "Tak, zacznij od nowa",
+    "cancel": "Anuluj"
+  },
+  "landing": {
+    "title": "Czy twoje gospodarstwo domowe poradzi sobie tydzień bez prądu lub wody?",
+    "lead": "Odpowiedz na kilka prostych pytań o swój dom. Otrzymasz plan dla was: co warto mieć w domu i co zrobić najpierw.",
+    "cta": "Stwórz mój plan",
+    "ctaNote": "Zajmuje około 5 minut. Za darmo. Nie musisz się logować.",
+    "howTitle": "Jak to działa",
+    "how": [
+      {
+        "title": "Odpowiedz na pytania",
+        "text": "O twoim mieszkaniu, o osobach mieszkających w domu i o tym, co już macie."
+      },
+      {
+        "title": "Otrzymaj swój plan",
+        "text": "Lista rzeczy, których wam brakuje, i wskazówki, co robić, gdy coś się wydarzy."
+      },
+      {
+        "title": "Rób jedną rzecz naraz",
+        "text": "Odhaczaj punkty i wydrukuj plan. Powieś go na lodówce."
+      }
+    ],
+    "whyTitle": "Po co własny plan?",
+    "whyText": "Urzędy dają wszystkim te same rady. Ale rodzina z niemowlęciem, starsza osoba mieszkająca sama na wsi i student potrzebują różnych rzeczy. Plan opiera się na waszym gospodarstwie domowym.",
+    "crisesTitle": "Tak może się zdarzyć",
+    "numbersTitle": "Ważne numery"
+  },
+  "footer": {
+    "disclaimer": "Vararedo uzupełnia informacje od urzędów, ale ich nie zastępuje. Zawsze stosuj się do zaleceń władz i swojej gminy.",
+    "source": "Rady opierają się na informacjach Myndigheten för civilt försvar (MCF)."
+  },
+  "crisis": {
+    "power_outage": {
+      "title": "Długa przerwa w dostawie prądu",
+      "text": "Brak prądu przez kilka dni. Ogrzewanie, winda i woda mogą przestać działać."
+    },
+    "it_payment_mobile": {
+      "title": "Nie działają płatności ani telefon",
+      "text": "Karty, Swish i sieć komórkowa mogą być niedostępne."
+    },
+    "water_outage": {
+      "title": "Brak wody w kranie",
+      "text": "Woda może zniknąć lub nie nadawać się do picia."
+    },
+    "extreme_weather": {
+      "title": "Ekstremalna pogoda",
+      "text": "Burza, powódź, fala upałów lub pożar lasu."
+    },
+    "war_heightened": {
+      "title": "Wojna lub podwyższona gotowość",
+      "text": "Szwecja może znaleźć się w stanie wojny lub podwyższonej gotowości."
+    }
+  },
+  "form": {
+    "steps": {
+      "housing": "Twoje mieszkanie",
+      "area": "Gdzie mieszkasz?",
+      "household": "Kto mieszka w domu?",
+      "needs": "Szczególne potrzeby",
+      "home": "Co już macie",
+      "crises": "Na co chcesz się przygotować?",
+      "supplies": "Woda i jedzenie w domu",
+      "readiness": "Światło, ciepło i plan",
+      "freeText": "Czy jest coś jeszcze, co powinniśmy wiedzieć?",
+      "followUps": "Jeszcze kilka pytań"
+    },
+    "housingType": {
+      "label": "Jak mieszkasz?",
+      "apartment": "Mieszkanie",
+      "house": "Dom wolnostojący lub szeregowy",
+      "farm": "Gospodarstwo",
+      "other": "Inne"
+    },
+    "floor": {
+      "label": "Na którym piętrze mieszkasz?",
+      "ground": "Parter"
+    },
+    "elevator": {
+      "label": "Czy jest winda?"
+    },
+    "areaKind": {
+      "label": "W jakiej okolicy mieszkasz?",
+      "city": "Miasto",
+      "town": "Mniejsza miejscowość",
+      "rural": "Wieś"
+    },
+    "address": {
+      "label": "Twój adres",
+      "hint": "Wpisz ulicę i numer lub kod pocztowy i wybierz swój adres z listy. Użyjemy go tylko do znalezienia najbliższego schronu.",
+      "placeholder": "Ulica i numer lub kod pocztowy",
+      "useLocation": "Użyj mojej lokalizacji",
+      "locating": "Pobieranie lokalizacji...",
+      "located": "Znaleziono lokalizację",
+      "locationFailed": "Nie udało się pobrać twojej lokalizacji. Wpisz adres.",
+      "searching": "Szukanie...",
+      "pickPrompt": "Wybierz swój adres:",
+      "change": "Zmień",
+      "noResults": "Nie znaleźliśmy adresu. Spróbuj wpisać kod pocztowy lub dodaj miejscowość.",
+      "searchFailed": "Wyszukiwanie nie powiodło się. Spróbuj ponownie lub użyj swojej lokalizacji.",
+      "pickRequired": "Naciśnij Szukaj i wybierz swój adres z listy albo wyczyść pole."
+    },
+    "adults": {
+      "label": "Ile dorosłych osób mieszka w domu?"
+    },
+    "seniors": {
+      "label": "Ile z tych dorosłych osób ma ponad 70 lat?"
+    },
+    "children": {
+      "label": "Czy w domu mieszkają dzieci poniżej 18 lat?",
+      "add": "Dodaj dziecko",
+      "remove": "Usuń",
+      "age": "Wiek",
+      "child": "Dziecko {n}",
+      "newborn": "Poniżej 1 miesiąca",
+      "oneMonth": "1 miesiąc",
+      "months": "{n} mies.",
+      "years": "{n} lat"
+    },
+    "pets": {
+      "label": "Czy macie zwierzęta domowe?",
+      "which": "Jakie zwierzęta?",
+      "dog": "Pies",
+      "cat": "Kot",
+      "other": "Inne zwierzę"
+    },
+    "needs": {
+      "label": "Czy coś z tego dotyczy kogoś w domu?",
+      "hint": "Wybierz wszystko, co pasuje.",
+      "medicineNeedsCooling": "Leki, które trzeba przechowywać w chłodzie",
+      "powerDependentAids": "Sprzęt pomocniczy wymagający prądu",
+      "reducedMobility": "Trudności z chodzeniem lub wchodzeniem po schodach",
+      "specialDiet": "Specjalna dieta, na przykład z powodu alergii",
+      "none": "Nic z tego"
+    },
+    "heating": {
+      "label": "Jak ogrzewany jest twój dom?",
+      "district": "Ciepło sieciowe",
+      "electric": "Prąd",
+      "wood": "Drewno lub piec kominkowy",
+      "other": "Inne lub nie wiem"
+    },
+    "car": {
+      "label": "Czy macie samochód?"
+    },
+    "cash": {
+      "label": "Czy macie w domu gotówkę?"
+    },
+    "radio": {
+      "label": "Czy macie radio na baterie lub na korbkę?"
+    },
+    "crises": {
+      "label": "Wybierz jedną lub więcej opcji.",
+      "all": "Wszystko to"
+    },
+    "days": {
+      "none": "Nic dodatkowego",
+      "oneTwo": "1-2 dni",
+      "threeSix": "3-6 dni",
+      "week": "Tydzień lub dłużej"
+    },
+    "waterDays": {
+      "label": "Na jak długo wystarczy wody pitnej, którą macie w domu?",
+      "hint": "Policz tylko wodę w butelkach lub kanistrach, nie z kranu."
+    },
+    "foodDays": {
+      "label": "Na jak długo wystarczy jedzenia w domu bez robienia zakupów?"
+    },
+    "alternativeHeat": {
+      "label": "Czy potraficie utrzymać ciepło bez prądu?",
+      "hint": "Na przykład koce, śpiwory lub piec."
+    },
+    "lightAndPower": {
+      "label": "Czy macie latarkę i powerbank?"
+    },
+    "householdPlan": {
+      "label": "Czy ustaliliście, gdzie się spotkacie i kto do kogo dzwoni?"
+    },
+    "knowsShelter": {
+      "label": "Czy wiesz, gdzie jest najbliższy schron?"
+    },
+    "freeText": {
+      "label": "Opowiedz nam o czymś w twoim gospodarstwie domowym, o co nie zapytaliśmy.",
+      "hint": "Na przykład o czymś, co utrudniłoby wam kryzys. Nie podawaj diagnoz ani imion i nazwisk.",
+      "placeholder": "Napisz tutaj albo naciśnij Dalej, aby pominąć."
+    },
+    "followUps": {
+      "loading": "Przeglądamy twoje odpowiedzi...",
+      "intro": "Na podstawie tego, co napisałeś, mamy jeszcze kilka pytań."
+    }
+  },
+  "rules": {
+    "toddler_supplies_week": "Czy macie w domu mleko modyfikowane lub kaszkę oraz pieluchy na co najmniej tydzień?",
+    "has_well": "Czy macie własną studnię?",
+    "well_pump_needs_power": "Czy pompa studni potrzebuje prądu do działania?",
+    "has_backup_power": "Czy macie zasilanie awaryjne, na przykład agregat prądotwórczy?",
+    "pet_food_week": "Czy macie karmę dla zwierząt domowych na co najmniej tydzień?"
+  },
+  "result": {
+    "title": "Wasz plan",
+    "loading": "Tworzymy wasz plan. To potrwa kilka sekund.",
+    "writing": "Piszemy wasz plan. To potrwa około 20 sekund. Możecie zacząć czytać, gdy się pisze.",
+    "error": "Nie udało się teraz stworzyć planu. Spróbujcie ponownie za chwilę.",
+    "retry": "Spróbuj ponownie",
+    "noProfile": "Nie znaleźliśmy żadnych odpowiedzi. Zacznij od odpowiedzi na pytania.",
+    "goToForm": "Do pytań",
+    "print": "Wydrukuj plan",
+    "edit": "Zmień moje odpowiedzi",
+    "scoreTitle": "Jak bardzo jesteście przygotowani",
+    "scoreOf": "na 100",
+    "scoreLow": "Macie jeszcze dużo do zrobienia. Zacznijcie od tego, co jest na początku listy.",
+    "scoreMid": "Macie dobry początek. Brakuje kilku ważnych rzeczy.",
+    "scoreHigh": "Jesteście dobrze przygotowani. Sprawdzajcie listę raz w roku.",
+    "summaryTitle": "Najważniejsze dla was",
+    "missingTitle": "Tego wam brakuje",
+    "missingHint": "Odhaczaj, gdy coś zdobędziecie.",
+    "missingDone": "{done} z {total} gotowe",
+    "priority": {
+      "1": "Zdobądźcie najpierw",
+      "2": "Zdobądźcie potem",
+      "3": "Dobrze mieć"
+    },
+    "actionTitle": "Tak postępujcie, gdy coś się wydarzy",
+    "phase": {
+      "now": "Już teraz",
+      "first_hour": "Pierwsza godzina",
+      "first_day": "Pierwsza doba",
+      "first_week": "Pierwszy tydzień"
+    },
+    "riskTitle": "Jak bardzo jesteście narażeni",
+    "level": {
+      "low": "Niskie ryzyko",
+      "medium": "Średnie ryzyko",
+      "high": "Wysokie ryzyko"
+    },
+    "shelterTitle": "Najbliższy schron",
+    "shelterDistance": "ok. {distance} stąd",
+    "shelterAddressLoading": "Pobieranie adresu...",
+    "shelterProperty": "Nieruchomość {property}",
+    "shelterDirections": "Pokaż drogę",
+    "shelterCapacity": "{n} miejsc",
+    "shelterMissing": "Nie wiemy, gdzie mieszkacie, więc nie możemy pokazać najbliższego schronu. Zmieńcie odpowiedzi i wpiszcie adres albo naciśnijcie Użyj mojej lokalizacji.",
+    "shelterLimited": "Tymczasowe ograniczenie",
+    "shelterNote": "Sprawdźcie oznaczenia na miejscu. Dane z MCF.",
+    "contactsTitle": "Ważne numery",
+    "call": "Zadzwoń pod {number}"
+  },
+  "contacts": {
+    "emergency": "Numer alarmowy, gdy zagrożone jest życie",
+    "crisis_info": "Informacje o wypadkach i kryzysach",
+    "healthcare": "Porady zdrowotne",
+    "police": "Policja, gdy sytuacja nie jest nagła",
+    "poison": "Centrum Informacji Toksykologicznej",
+    "p4": "Sveriges Radio P4, słuchaj w czasie kryzysu",
+    "krisinformation": "Krisinformation.se, informacje od władz"
+  }
+}

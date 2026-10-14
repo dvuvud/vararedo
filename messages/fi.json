@@ -1,1 +1,278 @@
-{}
+{
+  "meta": {
+    "title": "Vararedo: sinun suunnitelmasi kriisin varalle",
+    "description": "Vastaa muutamaan helppoon kysymykseen ja saat henkilökohtaisen suunnitelman siitä, miten kotitaloutesi selviää kriisistä."
+  },
+  "common": {
+    "appName": "Vararedo",
+    "language": "Kieli",
+    "next": "Seuraava",
+    "back": "Takaisin",
+    "done": "Näytä suunnitelmani",
+    "yes": "Kyllä",
+    "no": "Ei",
+    "optional": "Vapaaehtoinen",
+    "stepOf": "Vaihe {current}/{total}",
+    "answerRequired": "Valitse tästä vastaus, niin pääset eteenpäin.",
+    "fixErrors": "Yhdestä kysymyksestä puuttuu vastaus. Se on merkitty punaisella.",
+    "startOver": "Aloita alusta",
+    "decrease": "Vähennä",
+    "increase": "Lisää",
+    "startOverConfirm": "Kaikki vastauksesi poistetaan. Haluatko aloittaa alusta?",
+    "startOverYes": "Kyllä, aloita alusta",
+    "cancel": "Peruuta"
+  },
+  "landing": {
+    "title": "Selviääkö kotitaloutesi viikon ilman sähköä tai vettä?",
+    "lead": "Vastaa muutamaan helppoon kysymykseen kodistasi. Saat suunnitelman juuri teille: mitä teidän tulee pitää kotona ja mitä teette ensin.",
+    "cta": "Tee suunnitelmani",
+    "ctaNote": "Kestää noin 5 minuuttia. Ilmainen. Kirjautumista ei tarvita.",
+    "howTitle": "Näin se toimii",
+    "how": [
+      {
+        "title": "Vastaa kysymyksiin",
+        "text": "Asumisestasi, kotona asuvista ja siitä, mitä teillä on."
+      },
+      {
+        "title": "Saat suunnitelmasi",
+        "text": "Lista siitä, mitä teiltä puuttuu, ja ohjeet siihen, mitä teette, jos jotain tapahtuu."
+      },
+      {
+        "title": "Tee yksi asia kerrallaan",
+        "text": "Merkitse tehdyt asiat ja tulosta suunnitelma. Kiinnitä se jääkaapin oveen."
+      }
+    ],
+    "whyTitle": "Miksi oma suunnitelma?",
+    "whyText": "Viranomaiset antavat samat neuvot kaikille. Mutta vauvaperhe, yksin maaseudulla asuva iäkäs ihminen ja opiskelija tarvitsevat eri asioita. Suunnitelma perustuu teidän kotitalouteenne.",
+    "crisesTitle": "Näin voi käydä",
+    "numbersTitle": "Tärkeät numerot"
+  },
+  "footer": {
+    "disclaimer": "Vararedo täydentää viranomaisten tietoja, mutta ei korvaa niitä. Noudata aina viranomaisten ja kuntasi neuvoja.",
+    "source": "Neuvot perustuvat Myndigheten för civilt försvarin (MCF) tietoihin."
+  },
+  "crisis": {
+    "power_outage": {
+      "title": "Pitkä sähkökatko",
+      "text": "Ei sähköä usean päivän ajan. Lämmitys, hissi ja vesi voivat lakata toimimasta."
+    },
+    "it_payment_mobile": {
+      "title": "Maksaminen ja matkapuhelin eivät toimi",
+      "text": "Kortit, Swish ja matkapuhelinverkko voivat olla poissa käytöstä."
+    },
+    "water_outage": {
+      "title": "Hanasta ei tule vettä",
+      "text": "Vesi voi loppua tai muuttua juomakelvottomaksi."
+    },
+    "extreme_weather": {
+      "title": "Ankara sää",
+      "text": "Myrsky, tulva, helleaalto tai metsäpalo."
+    },
+    "war_heightened": {
+      "title": "Sota tai kohonnut valmius",
+      "text": "Ruotsi voi joutua sotaan tai kohonneeseen valmiuteen."
+    }
+  },
+  "form": {
+    "steps": {
+      "housing": "Asumisesi",
+      "area": "Missä asut?",
+      "household": "Ketkä asuvat kotona?",
+      "needs": "Erityistarpeet",
+      "home": "Tämä teillä on",
+      "crises": "Miltä haluat varautua?",
+      "supplies": "Vesi ja ruoka kotona",
+      "readiness": "Valo, lämpö ja suunnitelma",
+      "freeText": "Pitäisikö meidän tietää vielä jotain?",
+      "followUps": "Muutama viimeinen kysymys"
+    },
+    "housingType": {
+      "label": "Millainen asuntosi on?",
+      "apartment": "Kerrostalo",
+      "house": "Omakotitalo tai rivitalo",
+      "farm": "Maatila",
+      "other": "Muu"
+    },
+    "floor": {
+      "label": "Missä kerroksessa asut?",
+      "ground": "Pohjakerros"
+    },
+    "elevator": {
+      "label": "Onko talossa hissi?"
+    },
+    "areaKind": {
+      "label": "Millä alueella asut?",
+      "city": "Kaupunki",
+      "town": "Pienempi taajama",
+      "rural": "Maaseutu"
+    },
+    "address": {
+      "label": "Osoitteesi",
+      "hint": "Kirjoita katuosoite tai postinumero ja valitse osoitteesi luettelosta. Käytämme sitä vain lähimmän suojan (skyddsrum) löytämiseen.",
+      "placeholder": "Katuosoite tai postinumero",
+      "useLocation": "Käytä sijaintiani",
+      "locating": "Haetaan sijaintia...",
+      "located": "Sijainti löytyi",
+      "locationFailed": "Sijaintiasi ei voitu hakea. Kirjoita sen sijaan osoite.",
+      "searching": "Haetaan...",
+      "pickPrompt": "Valitse osoitteesi:",
+      "change": "Muuta",
+      "noResults": "Emme löytäneet osoitetta. Kokeile postinumeroa tai lisää paikkakunta.",
+      "searchFailed": "Haku epäonnistui. Yritä uudelleen tai käytä sijaintiasi.",
+      "pickRequired": "Paina Hae ja valitse osoitteesi luettelosta tai tyhjennä kenttä."
+    },
+    "adults": {
+      "label": "Kuinka monta aikuista asuu kotona?"
+    },
+    "seniors": {
+      "label": "Kuinka moni aikuisista on yli 70-vuotias?"
+    },
+    "children": {
+      "label": "Asuuko kotona alle 18-vuotiaita lapsia?",
+      "add": "Lisää lapsi",
+      "remove": "Poista",
+      "age": "Ikä",
+      "child": "Lapsi {n}",
+      "newborn": "Alle 1 kuukausi",
+      "oneMonth": "1 kuukausi",
+      "months": "{n} kuukautta",
+      "years": "{n} vuotta"
+    },
+    "pets": {
+      "label": "Onko teillä lemmikkejä?",
+      "which": "Mitä eläimiä?",
+      "dog": "Koira",
+      "cat": "Kissa",
+      "other": "Muu eläin"
+    },
+    "needs": {
+      "label": "Koskeeko jokin näistä jotakuta kotitaloudessa?",
+      "hint": "Valitse kaikki, jotka pitävät paikkansa.",
+      "medicineNeedsCooling": "Lääke, jota täytyy säilyttää kylmässä",
+      "powerDependentAids": "Apuvälineet, jotka tarvitsevat sähköä",
+      "reducedMobility": "Vaikeus kävellä tai kulkea portaita",
+      "specialDiet": "Erityisruokavalio, esimerkiksi allergia",
+      "none": "Ei mikään näistä"
+    },
+    "heating": {
+      "label": "Miten kotisi lämmitetään?",
+      "district": "Kaukolämpö",
+      "electric": "Sähkö",
+      "wood": "Puu tai kamiina",
+      "other": "Muu tai en tiedä"
+    },
+    "car": {
+      "label": "Onko teillä auto?"
+    },
+    "cash": {
+      "label": "Onko teillä käteistä kotona?"
+    },
+    "radio": {
+      "label": "Onko teillä paristoilla tai kammella toimiva radio?"
+    },
+    "crises": {
+      "label": "Valitse yksi tai useampi.",
+      "all": "Kaikki nämä"
+    },
+    "days": {
+      "none": "Ei lisäystä",
+      "oneTwo": "1-2 päivää",
+      "threeSix": "3-6 päivää",
+      "week": "Viikko tai enemmän"
+    },
+    "waterDays": {
+      "label": "Kuinka pitkään kotona oleva juomavesi riittää?",
+      "hint": "Laske vain pulloissa tai kanistereissa oleva vesi, ei hanavettä."
+    },
+    "foodDays": {
+      "label": "Kuinka pitkään kotona oleva ruoka riittää ilman kaupassa käyntiä?"
+    },
+    "alternativeHeat": {
+      "label": "Pysyykö teillä lämmin ilman sähköä?",
+      "hint": "Esimerkiksi huovat, makuupussit tai kamiina."
+    },
+    "lightAndPower": {
+      "label": "Onko teillä taskulamppu ja varavirtalähde?"
+    },
+    "householdPlan": {
+      "label": "Oletteko sopineet, missä tapaatte ja kuka soittaa kenelle?"
+    },
+    "knowsShelter": {
+      "label": "Tiedätkö, missä lähin suoja (skyddsrum) on?"
+    },
+    "freeText": {
+      "label": "Kerro jostain kotitaloudessasi, mitä emme ole kysyneet.",
+      "hint": "Esimerkiksi jotain, mikä tekee kriisistä teille vaikeamman. Älä kirjoita diagnooseja tai nimiä.",
+      "placeholder": "Kirjoita tähän tai paina Seuraava ohittaaksesi."
+    },
+    "followUps": {
+      "loading": "Tarkastelemme vastauksiasi...",
+      "intro": "Kirjoittamasi perusteella meillä on vielä muutama kysymys."
+    }
+  },
+  "rules": {
+    "toddler_supplies_week": "Onko teillä kotona äidinmaidonkorviketta tai puuroa ja vaippoja vähintään viikoksi?",
+    "has_well": "Onko teillä oma kaivo?",
+    "well_pump_needs_power": "Tarvitseeko kaivopumppu sähköä toimiakseen?",
+    "has_backup_power": "Onko teillä varavoimaa, esimerkiksi sähkögeneraattori?",
+    "pet_food_week": "Onko teillä ruokaa lemmikeillenne vähintään viikoksi?"
+  },
+  "result": {
+    "title": "Teidän suunnitelmanne",
+    "loading": "Teemme suunnitelmaanne. Se kestää muutaman sekunnin.",
+    "writing": "Kirjoitamme suunnitelmaanne. Se kestää noin 20 sekuntia. Voitte alkaa lukea sitä, kun sitä kirjoitetaan.",
+    "error": "Suunnitelmaa ei voitu tehdä juuri nyt. Yrittäkää uudelleen hetken kuluttua.",
+    "retry": "Yritä uudelleen",
+    "noProfile": "Emme löydä vastauksia. Aloita vastaamalla kysymyksiin.",
+    "goToForm": "Kysymyksiin",
+    "print": "Tulosta suunnitelma",
+    "edit": "Muuta vastauksiani",
+    "scoreTitle": "Näin valmiita olette",
+    "scoreOf": "/ 100",
+    "scoreLow": "Teillä on paljon tekemistä. Aloittakaa listan ensimmäisistä asioista.",
+    "scoreMid": "Teillä on hyvä alku. Muutama tärkeä asia puuttuu.",
+    "scoreHigh": "Olette hyvin valmistautuneita. Tarkistakaa lista kerran vuodessa.",
+    "summaryTitle": "Tärkeintä teille",
+    "missingTitle": "Tämä teiltä puuttuu",
+    "missingHint": "Merkitse tehdyksi, kun olet hankkinut jotain.",
+    "missingDone": "{done}/{total} valmiina",
+    "priority": {
+      "1": "Hanki ensin",
+      "2": "Hanki sitten",
+      "3": "Hyvä olla"
+    },
+    "actionTitle": "Toimi näin, jos jotain tapahtuu",
+    "phase": {
+      "now": "Jo nyt",
+      "first_hour": "Ensimmäinen tunti",
+      "first_day": "Ensimmäinen vuorokausi",
+      "first_week": "Ensimmäinen viikko"
+    },
+    "riskTitle": "Kuinka haavoittuvia olette",
+    "level": {
+      "low": "Pieni riski",
+      "medium": "Keskitason riski",
+      "high": "Suuri riski"
+    },
+    "shelterTitle": "Lähin suoja (skyddsrum)",
+    "shelterDistance": "noin {distance} päässä",
+    "shelterAddressLoading": "Haetaan osoitetta...",
+    "shelterProperty": "Kiinteistö {property}",
+    "shelterDirections": "Näytä reitti",
+    "shelterCapacity": "{n} paikkaa",
+    "shelterMissing": "Emme tiedä, missä asutte, joten emme voi näyttää lähintä suojaa. Muuttakaa vastauksianne ja kirjoittakaa osoitteenne tai painakaa Käytä sijaintiani.",
+    "shelterLimited": "Tilapäinen rajoitus",
+    "shelterNote": "Tarkista opasteet paikan päällä. Tiedot MCF:ltä.",
+    "contactsTitle": "Tärkeät numerot",
+    "call": "Soita {number}"
+  },
+  "contacts": {
+    "emergency": "Hätänumero, hengenvaarassa",
+    "crisis_info": "Tietoa onnettomuuksista ja kriiseistä",
+    "healthcare": "Terveydenhuollon neuvonta",
+    "police": "Poliisi, kun asia ei ole kiireellinen",
+    "poison": "Myrkytystietokeskus",
+    "p4": "Sveriges Radio P4, kuuntele kriisin aikana",
+    "krisinformation": "Krisinformation.se, viranomaisten tiedotus"
+  }
+}

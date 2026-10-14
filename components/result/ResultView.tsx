@@ -93,11 +93,9 @@ export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict:
       else if (ev.type === "partial") setState((s) => (s.kind === "ok" ? { ...s, plan: normalize(ev.plan) } : s));
       else if (ev.type === "done")
         setState((s) => (s.kind === "ok" ? { ...s, plan: normalize(ev.plan), done: true } : s));
-      // Meddelandet från servern är redan användarvänligt
+      // Servern skriver sina felmeddelanden på svenska. Vi visar alltid ordlistans text på användarens språk.
       else if (ev.type === "error")
-        setState((s) =>
-          s.kind === "ok" ? { ...s, done: true, error: ev.message } : { kind: "error", message: ev.message },
-        );
+        setState((s) => (s.kind === "ok" ? { ...s, done: true, error: t.error } : { kind: "error" }));
     };
     (async () => {
       const res = await fetch("/api/plan", {
@@ -162,7 +160,7 @@ export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict:
       <Centered>
         <AlertTriangle aria-hidden className="size-10 text-warning" />
         <p role="alert" className="text-lg">
-          {state.message ?? t.error}
+          {t.error}
         </p>
         <button
           type="button"

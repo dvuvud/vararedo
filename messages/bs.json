@@ -1,1 +1,278 @@
-{}
+{
+  "meta": {
+    "title": "Vararedo: vaš plan za krizu",
+    "description": "Odgovorite na nekoliko jednostavnih pitanja i dobijte lični plan kako vaše domaćinstvo može preživjeti krizu."
+  },
+  "common": {
+    "appName": "Vararedo",
+    "language": "Jezik",
+    "next": "Dalje",
+    "back": "Nazad",
+    "done": "Prikaži moj plan",
+    "yes": "Da",
+    "no": "Ne",
+    "optional": "Neobavezno",
+    "stepOf": "Korak {current} od {total}",
+    "answerRequired": "Odaberite odgovor da biste nastavili.",
+    "fixErrors": "Na jedno pitanje nije odgovoreno. Označeno je crvenom bojom.",
+    "startOver": "Počni ispočetka",
+    "decrease": "Smanji",
+    "increase": "Povećaj",
+    "startOverConfirm": "Svi vaši odgovori će biti obrisani. Želite li početi ispočetka?",
+    "startOverYes": "Da, počni ispočetka",
+    "cancel": "Otkaži"
+  },
+  "landing": {
+    "title": "Može li vaše domaćinstvo preživjeti sedmicu bez struje ili vode?",
+    "lead": "Odgovorite na nekoliko jednostavnih pitanja o vašem domu. Dobit ćete plan baš za vas: šta trebate imati kod kuće i šta činite prvo.",
+    "cta": "Napravi moj plan",
+    "ctaNote": "Traje otprilike 5 minuta. Besplatno. Ne morate se prijavljivati.",
+    "howTitle": "Kako to funkcioniše",
+    "how": [
+      {
+        "title": "Odgovorite na pitanja",
+        "text": "O vašem stanovanju, ko živi kod kuće i šta već imate."
+      },
+      {
+        "title": "Dobijte svoj plan",
+        "text": "Popis onoga što vam nedostaje i šta činite ako se nešto dogodi."
+      },
+      {
+        "title": "Radite jednu stvar po jednu",
+        "text": "Označavajte urađeno i odštampajte plan. Okačite ga na frižider."
+      }
+    ],
+    "whyTitle": "Zašto lični plan?",
+    "whyText": "Vlasti daju iste savjete svima. Ali porodica s bebom, starija osoba koja živi sama na selu i student trebaju različite stvari. Plan polazi od vašeg domaćinstva.",
+    "crisesTitle": "Ovo se može dogoditi",
+    "numbersTitle": "Važni brojevi"
+  },
+  "footer": {
+    "disclaimer": "Vararedo je dopuna informacijama vlasti, a ne njihova zamjena. Uvijek slijedite savjete vlasti i vaše općine.",
+    "source": "Savjeti se zasnivaju na informacijama Myndigheten för civilt försvar (MCF)."
+  },
+  "crisis": {
+    "power_outage": {
+      "title": "Dugotrajan nestanak struje",
+      "text": "Nema struje nekoliko dana. Grijanje, lift i voda mogu prestati raditi."
+    },
+    "it_payment_mobile": {
+      "title": "Plaćanje i mobitel ne rade",
+      "text": "Kartice, Swish i mobilna mreža mogu biti van funkcije."
+    },
+    "water_outage": {
+      "title": "Nema vode iz slavine",
+      "text": "Voda može nestati ili postati neispravna za piće."
+    },
+    "extreme_weather": {
+      "title": "Teško vrijeme",
+      "text": "Oluja, poplava, toplotni talas ili šumski požar."
+    },
+    "war_heightened": {
+      "title": "Rat ili povišena pripravnost",
+      "text": "Švedska može biti u ratu ili u povišenoj pripravnosti."
+    }
+  },
+  "form": {
+    "steps": {
+      "housing": "Vaše stanovanje",
+      "area": "Gdje živite?",
+      "household": "Ko živi kod kuće?",
+      "needs": "Posebne potrebe",
+      "home": "Ovo već imate",
+      "crises": "Za šta se želite pripremiti?",
+      "supplies": "Voda i hrana kod kuće",
+      "readiness": "Svjetlo, toplota i plan",
+      "freeText": "Još nešto što bismo trebali znati?",
+      "followUps": "Još nekoliko pitanja"
+    },
+    "housingType": {
+      "label": "Kako stanujete?",
+      "apartment": "Stan",
+      "house": "Kuća ili kuća u nizu",
+      "farm": "Seosko imanje",
+      "other": "Drugo"
+    },
+    "floor": {
+      "label": "Na kojem spratu stanujete?",
+      "ground": "Prizemlje"
+    },
+    "elevator": {
+      "label": "Ima li lift?"
+    },
+    "areaKind": {
+      "label": "U kakvom području stanujete?",
+      "city": "Grad",
+      "town": "Manje mjesto",
+      "rural": "Selo"
+    },
+    "address": {
+      "label": "Vaša adresa",
+      "hint": "Upišite ulicu i broj ili poštanski broj i odaberite svoju adresu s popisa. Koristimo je samo da pronađemo najbliže skloništo.",
+      "placeholder": "Ulica i broj ili poštanski broj",
+      "useLocation": "Koristi moju lokaciju",
+      "locating": "Određujem lokaciju...",
+      "located": "Lokacija pronađena",
+      "locationFailed": "Nije moguće odrediti vašu lokaciju. Umjesto toga upišite adresu.",
+      "searching": "Tražim...",
+      "pickPrompt": "Odaberite svoju adresu:",
+      "change": "Promijeni",
+      "noResults": "Nismo pronašli adresu. Probajte s poštanskim brojem ili dodajte mjesto.",
+      "searchFailed": "Pretraga nije uspjela. Pokušajte ponovo ili koristite svoju lokaciju.",
+      "pickRequired": "Pritisnite Traži i odaberite svoju adresu s popisa ili obrišite polje."
+    },
+    "adults": {
+      "label": "Koliko odraslih živi kod kuće?"
+    },
+    "seniors": {
+      "label": "Koliko od odraslih ima više od 70 godina?"
+    },
+    "children": {
+      "label": "Žive li kod kuće djeca mlađa od 18 godina?",
+      "add": "Dodaj dijete",
+      "remove": "Ukloni",
+      "age": "Starost",
+      "child": "Dijete {n}",
+      "newborn": "Mlađe od 1 mjesec",
+      "oneMonth": "1 mjesec",
+      "months": "{n} mjeseci",
+      "years": "{n} god."
+    },
+    "pets": {
+      "label": "Imate li kućne ljubimce?",
+      "which": "Koje životinje?",
+      "dog": "Pas",
+      "cat": "Mačka",
+      "other": "Druga životinja"
+    },
+    "needs": {
+      "label": "Odnosi li se nešto od ovoga na nekoga u domaćinstvu?",
+      "hint": "Odaberite sve što se odnosi na vas.",
+      "medicineNeedsCooling": "Lijekovi koji se moraju držati na hladnom",
+      "powerDependentAids": "Pomagala kojima je potrebna struja",
+      "reducedMobility": "Otežano hodanje ili penjanje stepenicama",
+      "specialDiet": "Posebna prehrana, na primjer zbog alergije",
+      "none": "Ništa od navedenog"
+    },
+    "heating": {
+      "label": "Kako se grije vaš dom?",
+      "district": "Daljinsko grijanje",
+      "electric": "Struja",
+      "wood": "Drva ili peć",
+      "other": "Drugo ili ne znam"
+    },
+    "car": {
+      "label": "Imate li automobil?"
+    },
+    "cash": {
+      "label": "Imate li gotovinu kod kuće?"
+    },
+    "radio": {
+      "label": "Imate li radio na baterije ili na ručno navijanje?"
+    },
+    "crises": {
+      "label": "Odaberite jedno ili više.",
+      "all": "Sve ovo"
+    },
+    "days": {
+      "none": "Ništa dodatno",
+      "oneTwo": "1-2 dana",
+      "threeSix": "3-6 dana",
+      "week": "Sedmicu ili duže"
+    },
+    "waterDays": {
+      "label": "Koliko dugo vam traje voda za piće koju imate kod kuće?",
+      "hint": "Računajte samo vodu u bocama ili kanisterima, ne iz slavine."
+    },
+    "foodDays": {
+      "label": "Koliko dugo vam traje hrana kod kuće bez kupovine?"
+    },
+    "alternativeHeat": {
+      "label": "Možete li se grijati bez struje?",
+      "hint": "Na primjer pokrivačima, vrećama za spavanje ili pećom."
+    },
+    "lightAndPower": {
+      "label": "Imate li lampu i prijenosnu bateriju (powerbank)?"
+    },
+    "householdPlan": {
+      "label": "Jeste li se dogovorili gdje se nalazite i ko koga zove?"
+    },
+    "knowsShelter": {
+      "label": "Znate li gdje je najbliže skloništo?"
+    },
+    "freeText": {
+      "label": "Recite nam nešto o vašem domaćinstvu o čemu nismo pitali.",
+      "hint": "Na primjer nešto što vam čini krizu težom. Ne pišite dijagnoze ni imena.",
+      "placeholder": "Pišite ovdje ili pritisnite Dalje da preskočite."
+    },
+    "followUps": {
+      "loading": "Pregledamo vaše odgovore...",
+      "intro": "Na osnovu onoga što ste napisali imamo još nekoliko pitanja."
+    }
+  },
+  "rules": {
+    "toddler_supplies_week": "Imate li zamjensko mlijeko ili kašicu i pelene kod kuće za najmanje sedmicu?",
+    "has_well": "Imate li vlastiti bunar?",
+    "well_pump_needs_power": "Treba li pumpa u bunaru struju da bi radila?",
+    "has_backup_power": "Imate li rezervno napajanje, na primjer agregat?",
+    "pet_food_week": "Imate li hranu za svoje kućne ljubimce za najmanje sedmicu?"
+  },
+  "result": {
+    "title": "Vaš plan",
+    "loading": "Pravimo vaš plan. Traje nekoliko sekundi.",
+    "writing": "Pišemo vaš plan. Traje otprilike 20 sekundi. Možete početi čitati dok se piše.",
+    "error": "Trenutno nije moguće napraviti plan. Pokušajte ponovo za malo.",
+    "retry": "Pokušaj ponovo",
+    "noProfile": "Ne nalazimo nikakve odgovore. Počnite tako što ćete odgovoriti na pitanja.",
+    "goToForm": "Na pitanja",
+    "print": "Odštampaj plan",
+    "edit": "Promijeni moje odgovore",
+    "scoreTitle": "Koliko ste pripremljeni",
+    "scoreOf": "od 100",
+    "scoreLow": "Ostalo vam je dosta posla. Počnite s onim što je prvo na popisu.",
+    "scoreMid": "Imate dobar početak. Nedostaje nekoliko važnih stvari.",
+    "scoreHigh": "Dobro ste pripremljeni. Provjerite popis jednom godišnje.",
+    "summaryTitle": "Najvažnije za vas",
+    "missingTitle": "Ovo vam nedostaje",
+    "missingHint": "Označite kad nešto nabavite.",
+    "missingDone": "{done} od {total} gotovo",
+    "priority": {
+      "1": "Nabavite prvo",
+      "2": "Nabavite zatim",
+      "3": "Dobro je imati"
+    },
+    "actionTitle": "Postupite ovako ako se nešto dogodi",
+    "phase": {
+      "now": "Već sada",
+      "first_hour": "Prvi sat",
+      "first_day": "Prvi dan",
+      "first_week": "Prva sedmica"
+    },
+    "riskTitle": "Koliko ste ranjivi",
+    "level": {
+      "low": "Nizak rizik",
+      "medium": "Srednji rizik",
+      "high": "Visok rizik"
+    },
+    "shelterTitle": "Najbliže skloništo",
+    "shelterDistance": "oko {distance} udaljeno",
+    "shelterAddressLoading": "Dohvaćam adresu...",
+    "shelterProperty": "Nekretnina {property}",
+    "shelterDirections": "Prikaži put do tamo",
+    "shelterCapacity": "{n} mjesta",
+    "shelterMissing": "Ne znamo gdje stanujete pa ne možemo prikazati najbliže skloništo. Promijenite svoje odgovore i upišite adresu ili pritisnite Koristi moju lokaciju.",
+    "shelterLimited": "Privremeno ograničenje",
+    "shelterNote": "Provjerite oznake na licu mjesta. Podaci iz MCF-a.",
+    "contactsTitle": "Važni brojevi",
+    "call": "Nazovi {number}"
+  },
+  "contacts": {
+    "emergency": "Broj za hitne slučajeve, kada je život u opasnosti",
+    "crisis_info": "Informacije o nesrećama i krizama",
+    "healthcare": "Zdravstveni savjeti",
+    "police": "Policija, kada nije hitno",
+    "poison": "Centar za informacije o trovanjima",
+    "p4": "Sveriges Radio P4, slušajte u krizi",
+    "krisinformation": "Krisinformation.se, informacije vlasti"
+  }
+}

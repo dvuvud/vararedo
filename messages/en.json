@@ -1,1 +1,278 @@
-{}
+{
+  "meta": {
+    "title": "Vararedo: your plan for a crisis",
+    "description": "Answer a few simple questions and get a personal plan for how your household can handle a crisis."
+  },
+  "common": {
+    "appName": "Vararedo",
+    "language": "Language",
+    "next": "Next",
+    "back": "Back",
+    "done": "Show my plan",
+    "yes": "Yes",
+    "no": "No",
+    "optional": "Optional",
+    "stepOf": "Step {current} of {total}",
+    "answerRequired": "Choose an answer here to continue.",
+    "fixErrors": "A question is missing an answer. It is marked in red.",
+    "startOver": "Start over from the beginning",
+    "decrease": "Decrease",
+    "increase": "Increase",
+    "startOverConfirm": "All your answers will be deleted. Do you want to start over?",
+    "startOverYes": "Yes, start over",
+    "cancel": "Cancel"
+  },
+  "landing": {
+    "title": "Could your household manage a week without electricity or water?",
+    "lead": "Answer a few simple questions about your home. You get a plan made for your household: what you need to have at home and what to do first.",
+    "cta": "Make my plan",
+    "ctaNote": "Takes about 5 minutes. Free. You do not need to log in.",
+    "howTitle": "How it works",
+    "how": [
+      {
+        "title": "Answer questions",
+        "text": "About your home, who lives there and what you already have."
+      },
+      {
+        "title": "Get your plan",
+        "text": "A list of what you are missing and what to do if something happens."
+      },
+      {
+        "title": "Do one thing at a time",
+        "text": "Tick things off and print the plan. Put it up on the fridge."
+      }
+    ],
+    "whyTitle": "Why a plan of your own?",
+    "whyText": "The authorities give the same advice to everyone. But a family with a baby, an older person living alone in the countryside and a student need different things. The plan is based on your household.",
+    "crisesTitle": "This can happen",
+    "numbersTitle": "Important numbers"
+  },
+  "footer": {
+    "disclaimer": "Vararedo is a complement to information from the authorities, not a replacement. Always follow advice from the authorities and your municipality.",
+    "source": "The advice is based on information from the Swedish Civil Defence and Resilience Agency (MCF)."
+  },
+  "crisis": {
+    "power_outage": {
+      "title": "Long power outage",
+      "text": "No electricity for several days. Heating, elevators and water may stop working."
+    },
+    "it_payment_mobile": {
+      "title": "Payments and mobile do not work",
+      "text": "Cards, Swish and the mobile network may be down."
+    },
+    "water_outage": {
+      "title": "No water from the tap",
+      "text": "The water may stop running or become unsafe to drink."
+    },
+    "extreme_weather": {
+      "title": "Severe weather",
+      "text": "Storm, flooding, heatwave or forest fire."
+    },
+    "war_heightened": {
+      "title": "War or heightened alert",
+      "text": "Sweden could end up in war or on heightened alert."
+    }
+  },
+  "form": {
+    "steps": {
+      "housing": "Your home",
+      "area": "Where do you live?",
+      "household": "Who lives at home?",
+      "needs": "Special needs",
+      "home": "What you have",
+      "crises": "What do you want to prepare for?",
+      "supplies": "Water and food at home",
+      "readiness": "Light, heat and plan",
+      "freeText": "Anything else we should know?",
+      "followUps": "A few last questions"
+    },
+    "housingType": {
+      "label": "What kind of home do you live in?",
+      "apartment": "Apartment",
+      "house": "House or terraced house",
+      "farm": "Farm",
+      "other": "Other"
+    },
+    "floor": {
+      "label": "Which floor do you live on?",
+      "ground": "Ground floor"
+    },
+    "elevator": {
+      "label": "Is there an elevator?"
+    },
+    "areaKind": {
+      "label": "What kind of area do you live in?",
+      "city": "City",
+      "town": "Smaller town",
+      "rural": "Countryside"
+    },
+    "address": {
+      "label": "Your address",
+      "hint": "Enter your street address or postcode and choose your address from the list. We only use it to find the nearest skyddsrum (public shelter).",
+      "placeholder": "Street address or postcode",
+      "useLocation": "Use my location",
+      "locating": "Getting location...",
+      "located": "Location found",
+      "locationFailed": "We could not get your location. Enter your address instead.",
+      "searching": "Searching...",
+      "pickPrompt": "Choose your address:",
+      "change": "Change",
+      "noResults": "We could not find an address. Try a postcode, or add the town.",
+      "searchFailed": "The search failed. Try again, or use your location.",
+      "pickRequired": "Press Search and choose your address from the list, or clear the field."
+    },
+    "adults": {
+      "label": "How many adults live at home?"
+    },
+    "seniors": {
+      "label": "How many of the adults are over 70?"
+    },
+    "children": {
+      "label": "Do any children under 18 live at home?",
+      "add": "Add a child",
+      "remove": "Remove",
+      "age": "Age",
+      "child": "Child {n}",
+      "newborn": "Under 1 month",
+      "oneMonth": "1 month",
+      "months": "{n} months",
+      "years": "{n} years"
+    },
+    "pets": {
+      "label": "Do you have pets?",
+      "which": "Which animals?",
+      "dog": "Dog",
+      "cat": "Cat",
+      "other": "Other animal"
+    },
+    "needs": {
+      "label": "Does any of this apply to someone in the household?",
+      "hint": "Choose everything that applies.",
+      "medicineNeedsCooling": "Medicine that must be kept cold",
+      "powerDependentAids": "Aids that need electricity",
+      "reducedMobility": "Difficulty walking or climbing stairs",
+      "specialDiet": "Special diet, for example an allergy",
+      "none": "None of these"
+    },
+    "heating": {
+      "label": "How is your home heated?",
+      "district": "District heating",
+      "electric": "Electricity",
+      "wood": "Wood or wood stove",
+      "other": "Other or don't know"
+    },
+    "car": {
+      "label": "Do you have a car?"
+    },
+    "cash": {
+      "label": "Do you have cash at home?"
+    },
+    "radio": {
+      "label": "Do you have a radio that runs on batteries or a hand crank?"
+    },
+    "crises": {
+      "label": "Choose one or more.",
+      "all": "All of these"
+    },
+    "days": {
+      "none": "Nothing extra",
+      "oneTwo": "1-2 days",
+      "threeSix": "3-6 days",
+      "week": "A week or more"
+    },
+    "waterDays": {
+      "label": "How long would the drinking water you have at home last?",
+      "hint": "Only count water in bottles or jerrycans, not the tap."
+    },
+    "foodDays": {
+      "label": "How long would the food at home last without shopping?"
+    },
+    "alternativeHeat": {
+      "label": "Can you keep warm without electricity?",
+      "hint": "For example blankets, sleeping bags or a wood stove."
+    },
+    "lightAndPower": {
+      "label": "Do you have a flashlight and a power bank?"
+    },
+    "householdPlan": {
+      "label": "Have you decided where to meet and who calls whom?"
+    },
+    "knowsShelter": {
+      "label": "Do you know where the nearest skyddsrum (public shelter) is?"
+    },
+    "freeText": {
+      "label": "Tell us about anything in your household that we have not asked about.",
+      "hint": "For example, something that would make a crisis harder for you. Do not write diagnoses or names.",
+      "placeholder": "Write here, or press Next to skip."
+    },
+    "followUps": {
+      "loading": "We are looking at your answers...",
+      "intro": "Based on what you wrote, we have a few more questions."
+    }
+  },
+  "rules": {
+    "toddler_supplies_week": "Do you have formula or baby food and diapers at home for at least a week?",
+    "has_well": "Do you have your own well?",
+    "well_pump_needs_power": "Does the well pump need electricity to work?",
+    "has_backup_power": "Do you have backup power, for example a generator?",
+    "pet_food_week": "Do you have food for your pets for at least a week?"
+  },
+  "result": {
+    "title": "Your plan",
+    "loading": "We are making your plan. It takes a few seconds.",
+    "writing": "We are writing your plan. It takes about 20 seconds. You can start reading while it is being written.",
+    "error": "We could not make the plan right now. Try again in a little while.",
+    "retry": "Try again",
+    "noProfile": "We cannot find any answers. Start by answering the questions.",
+    "goToForm": "Go to the questions",
+    "print": "Print the plan",
+    "edit": "Change my answers",
+    "scoreTitle": "How prepared you are",
+    "scoreOf": "out of 100",
+    "scoreLow": "You have a lot left to do. Start with what is first on the list.",
+    "scoreMid": "You have a good start. A few important things are missing.",
+    "scoreHigh": "You are well prepared. Check the list once a year.",
+    "summaryTitle": "What matters most for you",
+    "missingTitle": "What you are missing",
+    "missingHint": "Tick things off when you have got them.",
+    "missingDone": "{done} of {total} done",
+    "priority": {
+      "1": "Get first",
+      "2": "Get next",
+      "3": "Good to have"
+    },
+    "actionTitle": "Do this if something happens",
+    "phase": {
+      "now": "Right now",
+      "first_hour": "The first hour",
+      "first_day": "The first day",
+      "first_week": "The first week"
+    },
+    "riskTitle": "How vulnerable you are",
+    "level": {
+      "low": "Low risk",
+      "medium": "Medium risk",
+      "high": "High risk"
+    },
+    "shelterTitle": "Nearest skyddsrum (public shelter)",
+    "shelterDistance": "about {distance} away",
+    "shelterAddressLoading": "Getting address...",
+    "shelterProperty": "Property {property}",
+    "shelterDirections": "Show directions",
+    "shelterCapacity": "{n} places",
+    "shelterMissing": "We do not know where you live, so we cannot show the nearest skyddsrum (public shelter). Change your answers and enter your address, or press Use my location.",
+    "shelterLimited": "Temporary restriction",
+    "shelterNote": "Check the signs on site. Data from MCF.",
+    "contactsTitle": "Important numbers",
+    "call": "Call {number}"
+  },
+  "contacts": {
+    "emergency": "Emergency number, if life is in danger",
+    "crisis_info": "Information during accidents and crises",
+    "healthcare": "Healthcare advice",
+    "police": "The Police, when it is not urgent",
+    "poison": "The Poisons Information Centre",
+    "p4": "Sveriges Radio P4, listen during a crisis",
+    "krisinformation": "Krisinformation.se, information from the authorities"
+  }
+}
