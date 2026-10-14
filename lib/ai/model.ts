@@ -2,8 +2,8 @@ import { anthropic } from "@ai-sdk/anthropic";
 
 // Modellerna kan bytas via env utan kodändring (t.ex. PLAN_MODEL=claude-haiku-4-5 om svarstiden blir för lång).
 // OBS: CLAUDE.md nämner claude-haiku-5-5, men den finns inte i Anthropics modelltabell. Haiku 4.5 används tills vidare.
-export const PLAN_MODEL_ID = process.env.PLAN_MODEL ?? "claude-sonnet-5-5";
-export const FOLLOWUP_MODEL_ID = process.env.FOLLOWUP_MODEL ?? "claude-haiku-4-5";
+export const PLAN_MODEL_ID = process.env.PLAN_MODEL || "claude-sonnet-5-5";
+export const FOLLOWUP_MODEL_ID = process.env.FOLLOWUP_MODEL || "claude-haiku-4-5";
 
 /**
  * Claude 5-modellerna (Sonnet 5.5 m.fl.) avvisar icke-standard temperature med 400 och kan inte köras utan

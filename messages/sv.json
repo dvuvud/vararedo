@@ -124,7 +124,9 @@
       "remove": "Ta bort",
       "age": "Ålder",
       "child": "Barn {n}",
-      "underOne": "Under 1 år",
+      "newborn": "Under 1 månad",
+      "oneMonth": "1 månad",
+      "months": "{n} månader",
       "years": "{n} år"
     },
     "pets": {

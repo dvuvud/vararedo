@@ -45,6 +45,13 @@ const COUNTED_STEPS = STEPS.length - 1;
 
 type Errors = Record<string, true>;
 
+// Bebisar anges i månader (sparas som andel av år, t.ex. 8 mån = 8/12), äldre barn i hela år.
+// Backend gör om åldrar under 3 år till månader, så planen kan skriva "8 månader".
+const AGE_OPTIONS = [
+  ...Array.from({ length: 12 }, (_, m) => ({ value: m / 12, months: m as number | undefined, years: 0 })),
+  ...Array.from({ length: 17 }, (_, i) => ({ value: i + 1, months: undefined, years: i + 1 })),
+];
+
 // Var regelfrågorna visas: i samma steg som svaret som utlöser dem. Nya regler hamnar i "home".
 type RuleStep = "housing" | "area" | "household" | "home";
 const RULE_STEP: Record<string, RuleStep> = {
@@ -483,9 +490,15 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
                             }}
                             className="h-14 w-full rounded-xl border-2 border-input bg-card px-3 text-lg"
                           >
-                            {Array.from({ length: 18 }, (_, a) => (
-                              <option key={a} value={a}>
-                                {a === 0 ? t.children.underOne : fill(t.children.years, { n: a })}
+                            {AGE_OPTIONS.map((o) => (
+                              <option key={o.value} value={o.value}>
+                                {o.months !== undefined
+                                  ? o.months === 0
+                                    ? t.children.newborn
+                                    : o.months === 1
+                                      ? t.children.oneMonth
+                                      : fill(t.children.months, { n: o.months })
+                                  : fill(t.children.years, { n: o.years })}
                               </option>
                             ))}
                           </select>
