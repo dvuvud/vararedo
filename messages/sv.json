@@ -1,1 +1,9 @@
-{}
+{
+  "rules": {
+    "toddler_supplies_week": "Har ni ersättning eller välling och blöjor hemma för minst en vecka?",
+    "has_well": "Har ni egen brunn?",
+    "well_pump_needs_power": "Behöver brunnspumpen el för att fungera?",
+    "has_backup_power": "Har ni reservkraft, till exempel ett elverk?",
+    "pet_food_week": "Har ni foder till era husdjur för minst en vecka?"
+  }
+}

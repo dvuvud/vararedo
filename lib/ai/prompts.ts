@@ -61,6 +61,8 @@ ${TONE}
 
 REGLER:
 - Ställ max 3 frågor. Ställ bara en fråga om svaret skulle ändra planen. Om inget är oklart, returnera en tom lista.
+- Varje fråga är EN kort fråga som slutar med frågetecken. Inga råd, påståenden eller förklaringar i frågan, de kommer i planen.
+- Frågan ska gå att svara på utan förkunskap och svaret ska kunna ändra planen. Ställ inga frågor om hur husdjur eller andra själva klarar sig.
 - Fråga aldrig om sådant som redan framgår av profilen eller reglerna. Fråga inte om diagnoser eller känsliga personuppgifter.
 - type: "yesno" för ja/nej, "number" för antal, "choice" med 2-5 options, "text" bara när inget annat går.
 - extractedNeeds: max 5 korta formuleringar av ovanliga behov du tolkat ur fritexten.

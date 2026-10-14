@@ -173,9 +173,9 @@ Fakta om hemberedskap hämtas från MCF:s råd (vatten, mat, värme, information
 ## Status och API-kontrakt (uppdatera när något ändras)
 
 Kontraktet mellan spåren ligger i `lib/ai/schemas.ts`. Ändra det inte utan att säga till.
-Byggt hittills: steg 1 (projekt, scheman), `/api/plan` (live, testad mot Sonnet 5.5), `/api/followups`
-(byggd, otestad live), `lib/calc/*`, närmaste skyddsrum i `lib/data/shelters.ts`, cache.
-Inte byggt än: `/api/shelters`, `lib/form/rules.ts`, `/api/save`, cron, all frontend, `messages/*.json` (tomma).
+Byggt och testat live: steg 1 (projekt, scheman), `/api/plan`, `/api/followups`, `/api/shelters`, `lib/calc/*`,
+`lib/data/shelters.ts`, `lib/form/rules.ts`, cache.
+Inte byggt än: `/api/save`, cron, all frontend, `messages/*.json` (bara `sv.json` har `rules.*`, resten är tomma).
 
 ### POST /api/plan
 Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard). Typer: `PlanRequest`, `PlanResponse`, `PlanStreamEvent`.
@@ -195,6 +195,21 @@ Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard
 ### POST /api/followups
 Body: `{ profile }`. Svar: `FollowUp` (`extractedNeeds`, `questions`). Tom fritext, saknad nyckel eller fel ger
 `{extractedNeeds:[], questions:[]}` med status 200, så frontend ska hoppa över steget när `questions` är tom.
+Tar ca 8 s (Haiku 4.5). Frågornas `id` är modellens egna (t.ex. `q1`), svaren går till `profile.followUpAnswers[id]`.
+Rendera efter `type`: `yesno` (ja/nej), `number`, `choice` (`options`, 2-5 st) eller `text`.
+
+### Regelstyrda frågor (`lib/form/rules.ts`)
+Rena funktioner, används av formuläret på klienten och av servern. Ingen AI.
+- `visibleRules(state, answers)` returnerar de frågor som ska visas för en delvis ifylld profil (`FormState`). Kör om vid varje ändring.
+- `pruneAnswers(state, answers)` tar bort svar på frågor som inte längre visas. Kör innan profilen skickas.
+- Varje fråga har `id`, `type` (`yesno`, `number` eller `choice`) och `labelKey`. Texten finns i `messages/sv.json` under `rules.<id>`.
+  Svaret sparas i `profile.ruleAnswers[id]`. Nya språkfiler måste ha samma `rules.*`-nycklar.
+- Regler: barn under 3 år (`toddler_supplies_week`), landsbygd (`has_well`, och `well_pump_needs_power` om brunn),
+  villa eller gård (`has_backup_power`), husdjur (`pet_food_week`). Lägg nya regler i `RULES` i filen.
+
+### GET /api/shelters?lat=&lon=&n=3
+Svar: `{ shelters: Shelter[], notice }`, `n` 1-10. Ogiltiga koordinater ger 400 `{ error }`. Sorterat på avstånd. Ingen AI.
+Planen får redan närmaste skyddsrum i `facts.nearestShelters`, så anropa detta bara för kartan eller "använd min position".
 
 ### Skyddsrum
 `Shelter` har `property` (fastighetsbeteckning, ingen gatuadress finns i MCF-datan), `capacity`, `limited`
