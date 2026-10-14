@@ -74,6 +74,9 @@ radio, kontanter, hushållets plan (mötesplats, vem ringer vem), känner till n
 Kända förgreningar löses med regler: barn under 3 år ger frågor om ersättning och blöjor,
 landsbygd ger fråga om brunn, villa ger fråga om reservkraft, husdjur ger fråga om foder.
 
+### Frontend design
+Hämta inspiration från www.mcf.se. Dvs från myndigheten för civilt försvars egna hemsida.
+
 ### Adaptiva följdfrågor (AI)
 - Indata: grundsvar + fritextfältet "Berätta om något i ditt hushåll som vi inte frågat om".
 - Modellen tolkar kombinationer och ovanliga behov som reglerna inte fångar och ställer max 3 frågor.
