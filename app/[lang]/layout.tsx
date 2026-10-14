@@ -1,19 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Inter, Noto_Sans_Arabic } from "next/font/google";
 import { notFound } from "next/navigation";
 import { LANGS, RTL_LANGS, type Lang } from "@/lib/ai/schemas";
+import { getDictionary, isLang } from "@/lib/i18n";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin", "latin-ext"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-
-export const metadata: Metadata = {
-  title: "Beredd",
-  description: "En personlig krisberedskapsplan för just ditt hushåll.",
-};
+const inter = Inter({ variable: "--font-inter", subsets: ["latin", "latin-ext", "cyrillic"] });
+// Arabiska, persiska och sorani skrivs med arabiskt alfabet
+const notoArabic = Noto_Sans_Arabic({ variable: "--font-arabic", subsets: ["arabic"] });
 
 export function generateStaticParams() {
   return LANGS.map((lang) => ({ lang }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ lang: string }> }): Promise<Metadata> {
+  const { lang } = await params;
+  if (!isLang(lang)) return {};
+  const dict = await getDictionary(lang);
+  return { title: dict.meta.title, description: dict.meta.description };
 }
 
 export default async function LangLayout({
@@ -24,11 +28,11 @@ export default async function LangLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
-  if (!(LANGS as readonly string[]).includes(lang)) notFound();
+  if (!isLang(lang)) notFound();
   const dir = RTL_LANGS.includes(lang as Lang) ? "rtl" : "ltr";
 
   return (
-    <html lang={lang} dir={dir} className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}>
+    <html lang={lang} dir={dir} className={`${inter.variable} ${notoArabic.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );

@@ -1,9 +1,262 @@
 {
+  "meta": {
+    "title": "Vararedo: din plan för en kris",
+    "description": "Svara på några enkla frågor och få en personlig plan för hur ditt hushåll klarar en kris."
+  },
+  "common": {
+    "appName": "Vararedo",
+    "language": "Språk",
+    "next": "Nästa",
+    "back": "Tillbaka",
+    "done": "Visa min plan",
+    "yes": "Ja",
+    "no": "Nej",
+    "optional": "Frivilligt",
+    "stepOf": "Steg {current} av {total}",
+    "answerRequired": "Välj ett svar här för att gå vidare.",
+    "fixErrors": "Någon fråga saknar svar. Den är markerad med rött.",
+    "startOver": "Börja om från början",
+    "decrease": "Minska",
+    "increase": "Öka"
+  },
+  "landing": {
+    "title": "Klarar ditt hushåll en vecka utan ström eller vatten?",
+    "lead": "Svara på några enkla frågor om ditt hem. Du får en plan för just er: vad ni behöver ha hemma och vad ni gör först.",
+    "cta": "Gör min plan",
+    "ctaNote": "Tar ungefär 5 minuter. Gratis. Du behöver inte logga in.",
+    "howTitle": "Så fungerar det",
+    "how": [
+      {
+        "title": "Svara på frågor",
+        "text": "Om ditt boende, vilka som bor hemma och vad ni har."
+      },
+      {
+        "title": "Få din plan",
+        "text": "En lista med det ni saknar och vad ni gör om något händer."
+      },
+      {
+        "title": "Gör en sak i taget",
+        "text": "Bocka av och skriv ut planen. Häng den på kylskåpet."
+      }
+    ],
+    "whyTitle": "Varför en egen plan?",
+    "whyText": "Myndigheterna ger samma råd till alla. Men en familj med en bebis, en äldre person som bor ensam på landet och en student behöver olika saker. Planen utgår från ert hushåll.",
+    "crisesTitle": "Det här kan hända",
+    "numbersTitle": "Viktiga nummer"
+  },
+  "footer": {
+    "disclaimer": "Vararedo är ett komplement till myndigheternas information, inte en ersättning. Följ alltid råd från myndigheter och din kommun.",
+    "source": "Råden bygger på information från Myndigheten för civilt försvar (MCF)."
+  },
+  "crisis": {
+    "power_outage": {
+      "title": "Långt strömavbrott",
+      "text": "Ingen ström i flera dagar. Värme, hiss och vatten kan sluta fungera."
+    },
+    "it_payment_mobile": {
+      "title": "Betalning och mobil fungerar inte",
+      "text": "Kort, Swish och mobilnätet kan ligga nere."
+    },
+    "water_outage": {
+      "title": "Inget vatten i kranen",
+      "text": "Vattnet kan försvinna eller bli otjänligt att dricka."
+    },
+    "extreme_weather": {
+      "title": "Svårt väder",
+      "text": "Storm, översvämning, värmebölja eller skogsbrand."
+    },
+    "war_heightened": {
+      "title": "Krig eller höjd beredskap",
+      "text": "Sverige kan hamna i krig eller i höjd beredskap."
+    }
+  },
+  "form": {
+    "steps": {
+      "housing": "Ditt boende",
+      "area": "Var bor du?",
+      "household": "Vilka bor hemma?",
+      "needs": "Särskilda behov",
+      "home": "Det här har ni",
+      "crises": "Vad vill du förbereda dig för?",
+      "supplies": "Vatten och mat hemma",
+      "readiness": "Ljus, värme och plan",
+      "freeText": "Något mer vi borde veta?",
+      "followUps": "Några sista frågor"
+    },
+    "housingType": {
+      "label": "Hur bor du?",
+      "apartment": "Lägenhet",
+      "house": "Villa eller radhus",
+      "farm": "Gård",
+      "other": "Annat"
+    },
+    "floor": {
+      "label": "Vilken våning bor du på?",
+      "ground": "Bottenvåning"
+    },
+    "elevator": {
+      "label": "Finns det hiss?"
+    },
+    "areaKind": {
+      "label": "Vilket område bor du i?",
+      "city": "Stad",
+      "town": "Mindre ort",
+      "rural": "Landsbygd"
+    },
+    "address": {
+      "label": "Din adress",
+      "hint": "Vi använder den bara för att hitta närmaste skyddsrum.",
+      "placeholder": "Gata och ort",
+      "useLocation": "Använd min position",
+      "locating": "Hämtar position...",
+      "located": "Position hittad",
+      "locationFailed": "Det gick inte att hämta din position. Skriv adressen i stället."
+    },
+    "adults": {
+      "label": "Hur många vuxna bor hemma?"
+    },
+    "seniors": {
+      "label": "Hur många av de vuxna är över 70 år?"
+    },
+    "children": {
+      "label": "Bor det barn under 18 år hemma?",
+      "add": "Lägg till ett barn",
+      "remove": "Ta bort",
+      "age": "Ålder",
+      "child": "Barn {n}",
+      "underOne": "Under 1 år",
+      "years": "{n} år"
+    },
+    "pets": {
+      "label": "Har ni husdjur?",
+      "which": "Vilka djur?",
+      "dog": "Hund",
+      "cat": "Katt",
+      "other": "Annat djur"
+    },
+    "needs": {
+      "label": "Gäller något av detta någon i hushållet?",
+      "hint": "Välj allt som stämmer.",
+      "medicineNeedsCooling": "Medicin som måste förvaras kallt",
+      "powerDependentAids": "Hjälpmedel som behöver ström",
+      "reducedMobility": "Svårt att gå eller ta trappor",
+      "specialDiet": "Särskild kost, till exempel allergi",
+      "none": "Inget av detta"
+    },
+    "heating": {
+      "label": "Hur värms ditt hem?",
+      "district": "Fjärrvärme",
+      "electric": "El",
+      "wood": "Ved eller kamin",
+      "other": "Annat eller vet inte"
+    },
+    "car": {
+      "label": "Har ni bil?"
+    },
+    "cash": {
+      "label": "Har ni kontanter hemma?"
+    },
+    "radio": {
+      "label": "Har ni en radio som går på batteri eller vev?"
+    },
+    "crises": {
+      "label": "Välj en eller flera.",
+      "all": "Allt detta"
+    },
+    "days": {
+      "none": "Inget extra",
+      "oneTwo": "1-2 dagar",
+      "threeSix": "3-6 dagar",
+      "week": "En vecka eller mer"
+    },
+    "waterDays": {
+      "label": "Hur länge räcker dricksvattnet ni har hemma?",
+      "hint": "Räkna bara vatten i flaskor eller dunkar, inte kranen."
+    },
+    "foodDays": {
+      "label": "Hur länge räcker maten hemma utan att handla?"
+    },
+    "alternativeHeat": {
+      "label": "Kan ni hålla värmen utan el?",
+      "hint": "Till exempel filtar, sovsäckar eller en kamin."
+    },
+    "lightAndPower": {
+      "label": "Har ni ficklampa och powerbank?"
+    },
+    "householdPlan": {
+      "label": "Har ni bestämt var ni möts och vem som ringer vem?"
+    },
+    "knowsShelter": {
+      "label": "Vet du var närmaste skyddsrum finns?"
+    },
+    "freeText": {
+      "label": "Berätta om något i ditt hushåll som vi inte har frågat om.",
+      "hint": "Till exempel något som gör en kris svårare för er. Skriv inga diagnoser eller namn.",
+      "placeholder": "Skriv här, eller tryck Nästa för att hoppa över."
+    },
+    "followUps": {
+      "loading": "Vi tittar på dina svar...",
+      "intro": "Utifrån det du skrev har vi några frågor till."
+    }
+  },
   "rules": {
     "toddler_supplies_week": "Har ni ersättning eller välling och blöjor hemma för minst en vecka?",
     "has_well": "Har ni egen brunn?",
     "well_pump_needs_power": "Behöver brunnspumpen el för att fungera?",
     "has_backup_power": "Har ni reservkraft, till exempel ett elverk?",
     "pet_food_week": "Har ni foder till era husdjur för minst en vecka?"
+  },
+  "result": {
+    "title": "Er plan",
+    "loading": "Vi gör er plan. Det tar några sekunder.",
+    "error": "Det gick inte att göra planen just nu. Försök igen om en liten stund.",
+    "retry": "Försök igen",
+    "noProfile": "Vi hittar inga svar. Börja med att svara på frågorna.",
+    "goToForm": "Till frågorna",
+    "print": "Skriv ut planen",
+    "edit": "Ändra mina svar",
+    "scoreTitle": "Så beredda är ni",
+    "scoreOf": "av 100",
+    "scoreLow": "Ni har mycket kvar att göra. Börja med det som står först i listan.",
+    "scoreMid": "Ni har en bra början. Några viktiga saker saknas.",
+    "scoreHigh": "Ni är väl förberedda. Kontrollera listan en gång om året.",
+    "summaryTitle": "Det viktigaste för er",
+    "missingTitle": "Det här saknar ni",
+    "missingHint": "Bocka av när ni har skaffat något.",
+    "missingDone": "{done} av {total} klara",
+    "priority": {
+      "1": "Skaffa först",
+      "2": "Skaffa sedan",
+      "3": "Bra att ha"
+    },
+    "actionTitle": "Gör så här om något händer",
+    "phase": {
+      "now": "Redan nu",
+      "first_hour": "Första timmen",
+      "first_day": "Första dygnet",
+      "first_week": "Första veckan"
+    },
+    "riskTitle": "Så sårbara är ni",
+    "level": {
+      "low": "Låg risk",
+      "medium": "Medelrisk",
+      "high": "Hög risk"
+    },
+    "shelterTitle": "Närmaste skyddsrum",
+    "shelterDistance": "Ca {distance} fågelvägen",
+    "shelterCapacity": "{n} platser",
+    "shelterLimited": "Tillfällig begränsning",
+    "shelterNote": "Kontrollera skyltning på plats. Data från MCF.",
+    "contactsTitle": "Viktiga nummer",
+    "call": "Ring {number}"
+  },
+  "contacts": {
+    "emergency": "Nödnummer, vid fara för liv",
+    "crisis_info": "Information vid olyckor och kriser",
+    "healthcare": "Sjukvårdsrådgivning",
+    "police": "Polisen, när det inte är akut",
+    "poison": "Giftinformationscentralen",
+    "p4": "Sveriges Radio P4, lyssna vid kris",
+    "krisinformation": "Krisinformation.se, myndigheternas information"
   }
 }

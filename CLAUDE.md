@@ -1,4 +1,4 @@
-# Beredd: personlig krisberedskapsplan
+# Vararedo: personlig krisberedskapsplan
 
 Hackathonprojekt hos Esatto (svenskt techbolag inom webb, e-handel och AI). Två utvecklare, 3-4 timmar.
 Tävlingskrav: generativ AI ska vara central, och systemet ska göra världen till en bättre plats.
@@ -175,7 +175,9 @@ Fakta om hemberedskap hämtas från MCF:s råd (vatten, mat, värme, information
 Kontraktet mellan spåren ligger i `lib/ai/schemas.ts`. Ändra det inte utan att säga till.
 Byggt och testat live: steg 1 (projekt, scheman), `/api/plan`, `/api/followups`, `/api/shelters`, `lib/calc/*`,
 `lib/data/shelters.ts`, `lib/form/rules.ts`, cache.
-Inte byggt än: `/api/save`, cron, all frontend, `messages/*.json` (bara `sv.json` har `rules.*`, resten är tomma).
+Frontend (spår B): landning, formulär i steg (`components/form/PlanWizard.tsx`, använder `lib/form/rules.ts`),
+resultatsida (`components/result/ResultView.tsx`), svensk ordlista i `messages/sv.json` (övriga språk faller tillbaka på svenska).
+Inte byggt än: `/api/save`, cron, geokodning av adress, karta, översättningar.
 
 ### POST /api/plan
 Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard). Typer: `PlanRequest`, `PlanResponse`, `PlanStreamEvent`.
