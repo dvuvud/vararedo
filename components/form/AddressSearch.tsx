@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AlertCircle, Loader2, MapPin, Pencil, Search } from "lucide-react";
 import type { Dict } from "@/lib/i18n";
 
@@ -8,9 +8,9 @@ export type PickedAddress = { label: string; lat: number; lon: number };
 type Candidate = PickedAddress;
 
 /**
- * Adress eller postnummer i ett fält. Sökningen sker först vid Enter eller knapptryckning
- * (Nominatims villkor förbjuder sökning per tangenttryckning). Användaren väljer sedan sin
- * adress i listan, så vi aldrig gissar fel stad och det syns att det blev rätt.
+ * Adress eller postnummer i ett fält. Förslagen visas medan man skriver när servern har en
+ * autocomplete-tjänst (GEOAPIFY_API_KEY). Annars, eller vid Enter och knapptryck, görs en explicit sökning.
+ * Användaren väljer alltid sin adress i listan, så vi aldrig gissar fel stad och det syns att det blev rätt.
  */
 export function AddressSearch({
   t,
@@ -30,9 +30,44 @@ export function AddressSearch({
   const [results, setResults] = useState<Candidate[] | null>(null);
   const [status, setStatus] = useState<"idle" | "busy" | "empty" | "error">("idle");
 
+  // Live-sökning medan man skriver: "unknown" tills första svaret, "no" om servern saknar autocomplete-tjänst
+  const live = useRef<"unknown" | "yes" | "no">("unknown");
+  const requestId = useRef(0);
+
+  useEffect(() => {
+    const q = query.trim();
+    if (confirmed || q.length < 3 || live.current === "no") return;
+    const id = ++requestId.current;
+    const ctrl = new AbortController();
+    const timer = setTimeout(async () => {
+      try {
+        const res = await fetch(`/api/geocode?q=${encodeURIComponent(q)}&suggest=5&live=1`, { signal: ctrl.signal });
+        if (!res.ok) return;
+        const body = (await res.json()) as { candidates?: Candidate[]; live?: boolean };
+        if (body.live === false) {
+          live.current = "no";
+          return;
+        }
+        live.current = "yes";
+        // Ignorera svar på en sökning som redan är ersatt av nyare text
+        if (id === requestId.current && body.candidates?.length) {
+          setResults(body.candidates);
+          setStatus("idle");
+        }
+      } catch {
+        // Avbruten eller nätverksfel: användaren kan fortfarande trycka Sök
+      }
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+      ctrl.abort();
+    };
+  }, [query, confirmed]);
+
   const search = async () => {
     const q = query.trim();
     if (q.length < 3) return;
+    requestId.current++;
     setStatus("busy");
     setResults(null);
     try {

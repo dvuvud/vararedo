@@ -2,10 +2,13 @@
 //   GET /api/geocode?q=Storgatan 1, Uppsala  ->  { lat, lon }        (adress till position, första träffen)
 //   GET /api/geocode?q=Linnégatan 12&suggest=5 -> { candidates: [{ label, lat, lon }] }
 //                                                  (flera kandidater, användaren väljer. Postnummer fungerar i q)
+//   ...&live=1  anropas medan användaren skriver. Kräver GEOAPIFY_API_KEY, annars svarar vi
+//               { candidates: [], live: false } och klienten faller tillbaka på sökknappen.
 //   GET /api/geocode?lat=57.7&lon=11.97      ->  { address }         (position till adress, t.ex. för skyddsrum)
 // 404 om inget hittas, 502 vid nätverksfel.
-// Kandidatsökningen ska bara anropas på explicit sökning (Enter eller knapp), aldrig per tangenttryckning:
-// Nominatims användarvillkor förbjuder autocomplete medan man skriver.
+// Med GEOAPIFY_API_KEY används Geoapify för kandidater (byggt för autocomplete). Utan nyckel, eller om Geoapify
+// misslyckas på en explicit sökning, används Nominatim. Nominatim anropas aldrig medan man skriver (live=1):
+// dess användarvillkor förbjuder autocomplete.
 // Nominatim kräver en egen User-Agent och högst ett anrop per sekund, så anropen köas och svaren cachas.
 
 export type Candidate = { label: string; lat: number; lon: number };
@@ -84,6 +87,47 @@ function candidateLabel(r: SearchResult): string {
   return r.display_name.split(",").slice(0, 3).map((x) => x.trim()).join(", ");
 }
 
+const GEOAPIFY_KEY = process.env.GEOAPIFY_API_KEY?.trim();
+
+type GeoapifyResult = {
+  formatted?: string;
+  lat: number;
+  lon: number;
+  result_type?: string;
+};
+
+// Företag och intressepunkter ("Specsavers Linnégatan, ...") ska inte visas som hemadresser
+const GEOAPIFY_TYPES = new Set(["building", "street", "postcode", "suburb", "district", "locality", "city", "county"]);
+
+async function geoapifyCandidates(q: string, n: number): Promise<Candidate[]> {
+  const url = new URL("https://api.geoapify.com/v1/geocode/autocomplete");
+  const isPostcode = /^\d{3} \d{2}$/.test(q);
+  url.search = new URLSearchParams({
+    // "413 01" ger inga träffar utan type=postcode, "41301" fungerar
+    text: isPostcode ? q.replace(" ", "") : q,
+    ...(isPostcode ? { type: "postcode" } : {}),
+    filter: "countrycode:se",
+    lang: "sv",
+    limit: String(Math.min(10, n * 2)),
+    format: "json",
+    apiKey: GEOAPIFY_KEY ?? "",
+  }).toString();
+  const res = await fetch(url, { signal: AbortSignal.timeout(6000) });
+  if (!res.ok) throw new Error(`geoapify ${res.status}`);
+  const { results = [] } = (await res.json()) as { results?: GeoapifyResult[] };
+  const seen = new Set<string>();
+  const out: Candidate[] = [];
+  for (const r of results) {
+    if (r.result_type && !GEOAPIFY_TYPES.has(r.result_type)) continue;
+    const label = r.formatted?.replace(/,\s*(Sverige|Sweden)$/i, "").trim();
+    if (!label || seen.has(label)) continue;
+    seen.add(label);
+    out.push({ label, lat: r.lat, lon: r.lon });
+    if (out.length === n) break;
+  }
+  return out;
+}
+
 // "41301" och "413 01" ska båda fungera som postnummer
 function normalizeQuery(q: string): string {
   return /^\d{3}\s?\d{2}$/.test(q) ? `${q.replace(/\s/g, "").slice(0, 3)} ${q.replace(/\s/g, "").slice(3)}` : q;
@@ -96,9 +140,32 @@ export async function GET(req: Request) {
   const lat = Number(params.get("lat"));
   const lon = Number(params.get("lon"));
   const isReverse = params.has("lat") && params.has("lon");
+  const live = params.get("live") === "1";
 
   if (isReverse ? !Number.isFinite(lat) || !Number.isFinite(lon) : q.length < 3) {
     return Response.json({ error: "Adress eller position saknas" }, { status: 400 });
+  }
+
+  if (!isReverse && suggest > 0) {
+    // Live-sökning medan man skriver är bara tillåten med Geoapify
+    if (live && !GEOAPIFY_KEY) return Response.json({ candidates: [], live: false });
+    if (GEOAPIFY_KEY) {
+      const gKey = `g${suggest}:${q.toLowerCase()}`;
+      try {
+        if (!cache.has(gKey)) {
+          const candidates = await geoapifyCandidates(q, suggest);
+          cache.set(gKey, candidates.length > 0 ? { candidates } : null);
+        }
+        const hit = cache.get(gKey);
+        return hit
+          ? Response.json({ ...hit, live: true }, { headers: { "cache-control": "public, max-age=86400" } })
+          : Response.json({ error: "Hittades inte" }, { status: 404 });
+      } catch (e) {
+        console.error("[api/geocode] geoapify", e);
+        // Vid live-sökning ger vi upp tyst. Vid explicit sökning faller vi vidare till Nominatim nedan.
+        if (live) return Response.json({ candidates: [], live: true });
+      }
+    }
   }
 
   // 5 decimaler räcker (ca 1 m) och gör att samma skyddsrum alltid träffar cachen

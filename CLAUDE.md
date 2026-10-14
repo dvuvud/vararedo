@@ -225,10 +225,16 @@ Ingen AI, Nominatim med kö (1 anrop per sekund) och cache. Tre lägen:
   404 om inget hittas. Anropa bara vid Enter eller knapptryckning, aldrig per tangenttryckning (Nominatims villkor).
 - `?lat=&lon=` ger `{ address }` (omvänd uppslagning, används av "Använd min position" och skyddsrumskorten).
 
-UX-beslut för adressen: ett fält för adress eller postnummer, explicit sökning, användaren väljer sin adress i listan
-(`components/form/AddressSearch.tsx`). Inskriven men ovald adress blockerar steget "area", så vi gissar aldrig fel stad.
-Position från enheten visas som läsbar adress via omvänd uppslagning. Nya `form.address.*`-nycklar ligger bara i `sv.json`,
-övriga språk faller tillbaka på svenska tills de översatts.
+Leverantörer: med `GEOAPIFY_API_KEY` (server-side, valfri) används Geoapify för kandidater och för "medan man skriver".
+Utan nyckel används Nominatim, och `live=1` svarar `{ candidates: [], live: false }` så att klienten bara använder sökknappen.
+Lägg `&live=1` på anrop som sker under skrivning. Nominatim anropas aldrig med `live=1` (deras villkor förbjuder det).
+Postnummer med mellanslag (`413 01`) skickas som `type=postcode` till Geoapify, företag och intressepunkter filtreras bort.
+
+UX-beslut för adressen: ett fält för adress eller postnummer, förslag medan man skriver (debounce 300 ms, minst 3 tecken,
+gamla svar ignoreras) och en sökknapp som reserv (`components/form/AddressSearch.tsx`). Användaren väljer sin adress i listan.
+Inskriven men ovald adress blockerar steget "area", så vi gissar aldrig fel stad. Position från enheten visas som läsbar
+adress via omvänd uppslagning. Nya `form.address.*`-nycklar ligger bara i `sv.json`, övriga språk faller tillbaka på svenska.
+Känt: sökning på bara gata och nummer rankar inte alltid användarens stad först. Att lägga till ort eller postnummer löser det.
 
 ### Integritet och cache
 Adress och koordinater skickas aldrig till modellen (`aiSafeProfile` i `lib/ai/prompts.ts`). Modellen ser bara

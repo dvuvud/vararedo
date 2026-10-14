@@ -105,7 +105,7 @@
     },
     "address": {
       "label": "Din adress",
-      "hint": "Skriv gatuadress eller bara postnummer och tryck Sök. Välj sedan din adress i listan. Vi använder den bara för att hitta närmaste skyddsrum.",
+      "hint": "Skriv gatuadress eller postnummer och välj din adress i listan. Vi använder den bara för att hitta närmaste skyddsrum.",
       "placeholder": "Gatuadress eller postnummer",
       "useLocation": "Använd min position",
       "locating": "Hämtar position...",
