@@ -17,7 +17,10 @@
     "fixErrors": "Någon fråga saknar svar. Den är markerad med rött.",
     "startOver": "Börja om från början",
     "decrease": "Minska",
-    "increase": "Öka"
+    "increase": "Öka",
+    "startOverConfirm": "Alla dina svar raderas. Vill du börja om?",
+    "startOverYes": "Ja, börja om",
+    "cancel": "Avbryt"
   },
   "landing": {
     "title": "Klarar ditt hushåll en vecka utan ström eller vatten?",

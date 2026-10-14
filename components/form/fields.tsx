@@ -28,7 +28,7 @@ export function Question({
       id={id}
       aria-describedby={hint ? hintId : undefined}
       aria-invalid={error ? true : undefined}
-      className={cn("scroll-mt-28 space-y-3", error && "rounded-xl border-s-4 border-destructive ps-3")}
+      className="scroll-mt-28 space-y-3"
     >
       <legend className="text-xl font-semibold leading-snug">{label}</legend>
       {hint && (

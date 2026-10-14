@@ -155,6 +155,7 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
   const [followUps, setFollowUps] = useState<FollowUpQuestion[]>([]);
   const [busy, setBusy] = useState(false);
   const [locating, setLocating] = useState<"idle" | "busy" | "ok" | "fail">("idle");
+  const [confirmReset, setConfirmReset] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const firstRender = useRef(true);
 
@@ -258,11 +259,19 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
     else setStepIndex((i) => i - 1);
   };
 
+  // Nollställer allt: utkast, steg, följdfrågor och status. Utkastet sparas om direkt av effekten ovan.
   const startOver = () => {
     localStorage.removeItem(DRAFT_KEY);
     setDraft(EMPTY_DRAFT);
     setStepIndex(0);
     setErrors({});
+    setFollowUps([]);
+    setBusy(false);
+    setLocating("idle");
+    setConfirmReset(false);
+    // ?step= från en tidigare länk ska inte hoppa tillbaka
+    router.replace(`/${lang}/plan/new`);
+    window.scrollTo({ top: 0 });
   };
 
   const locateMe = () => {
@@ -719,11 +728,38 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
           )}
         </div>
 
-        {stepIndex === 0 && (
-          <button type="button" onClick={startOver} className="mt-10 text-base text-muted-foreground underline">
-            {c.startOver}
-          </button>
-        )}
+        {/* Börja om finns på alla steg, med en bekräftelse eftersom alla svar raderas */}
+        <div className="mt-10">
+          {confirmReset ? (
+            <div role="alertdialog" aria-label={c.startOverConfirm} className="space-y-3 rounded-xl border-2 border-border bg-card p-4">
+              <p className="text-base font-medium">{c.startOverConfirm}</p>
+              <div className="flex gap-3">
+                <button
+                  type="button"
+                  onClick={startOver}
+                  className="min-h-12 flex-1 rounded-xl bg-primary px-4 text-base font-semibold text-primary-foreground"
+                >
+                  {c.startOverYes}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setConfirmReset(false)}
+                  className="min-h-12 flex-1 rounded-xl border-2 border-primary px-4 text-base font-semibold text-primary hover:bg-secondary"
+                >
+                  {c.cancel}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button
+              type="button"
+              onClick={() => setConfirmReset(true)}
+              className="min-h-11 text-base text-muted-foreground underline"
+            >
+              {c.startOver}
+            </button>
+          )}
+        </div>
       </main>
 
       {/* Fast knapprad längst ner: alltid inom räckhåll för tummen på mobil */}
