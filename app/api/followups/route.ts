@@ -50,7 +50,10 @@ export async function POST(req: Request) {
     // Ämnesdomaren jämför bara mot (1) formulärets smala frågor och (2) tidigare följdfrågor. Mot formulärets breda
     // ämnen (särskilda behov m.m.) blev den för strikt och tog bort riktiga fördjupningar, t.ex. hur många dagar
     // medicinen räcker.
-    const kept = await dropSameTopic(unique, [...narrowFormQuestions(profile), ...alreadyAsked]);
+    const judged = await dropSameTopic(unique, [...narrowFormQuestions(profile), ...alreadyAsked]);
+    // Hellre för många frågor än för få: tar domaren bort allt behåller vi modellens frågor (utom exakta dubbletter,
+    // som redan är borta). Det går bara att tappa frågor här, aldrig fler följdfrågor än modellen föreslog.
+    const kept = judged.length === 0 ? unique : judged;
     // DEBUG_FOLLOWUPS=1 visar vad modellen föreslog och vad filtren tog bort (felsökning av "inga följdfrågor")
     if (process.env.DEBUG_FOLLOWUPS) {
       const names = (qs: { question: string }[]) => qs.map((q) => q.question);

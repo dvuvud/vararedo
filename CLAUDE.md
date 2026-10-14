@@ -210,7 +210,9 @@ risker, vad som behövs) men inte upprepa, (2) exakta dubbletter tas bort i kod,
 (`dropSameTopic`) tar bort frågor som är omformuleringar av formulärets **smala** frågor (`NARROW_QUESTIONS`: dagar
 vatten och mat, radio, kontanter, regelfrågorna m.fl.) eller av tidigare följdfrågor. Breda ämnen som särskilda behov
 ligger medvetet INTE i domarens lista: en första version jämförde mot allt och tog bort riktiga fördjupningar, så en
-användare som skrev "jag har diabetes" fick inga följdfrågor. Misslyckas domaren behålls frågorna.
+användare som skrev "jag har diabetes" fick inga följdfrågor. Misslyckas domaren behålls frågorna. **Principen är hellre för många följdfrågor än för få**: domaren behåller vid tveksamhet,
+och tar den bort alla frågor behålls modellens förslag (efter exakt dubblettfilter). Prompten ber om fördjupande frågor,
+helst tre, så fort fritexten nämner något som kan påverka planen. Max är fortfarande 3 (`followUpSchema`).
 Nya smala formulärfrågor ska läggas i både `FIXED_TOPICS` och `NARROW_QUESTIONS`. Felsök med `DEBUG_FOLLOWUPS=1`
 (loggar vad modellen föreslog och vad varje filter tog bort).
 Rendera efter `type`: `yesno` (ja/nej), `number`, `choice` (`options`, 2-5 st) eller `text`.

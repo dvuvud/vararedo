@@ -94,7 +94,7 @@ export async function dropSameTopic<T extends { question: string }>(
       ...modelSettings(FOLLOWUP_MODEL_ID),
       output: Output.object({ schema: sameTopicSchema }),
       system:
-        "Du jämför nya frågor med sådant som redan har frågats. En NY fråga är en dubblett bara om den frågar om exakt samma sak som en tidigare fråga eller ett tidigare ämne, så att svaret inte skulle ge någon ny information (till exempel en omformulering). Formuläret frågar bara ja eller nej om breda ämnen. En fråga som går djupare in på en specifik detalj är INTE en dubblett: till exempel hur många dagar, hur mycket, hur man gör eller vem det gäller, även om huvudämnet (medicin, hjälpmedel, barn, husdjur) finns i listan. Returnera index (börjar på 0) för varje ny fråga som är en dubblett. Returnera en tom lista om alla nya frågor ger ny information.",
+        "Du jämför nya frågor med sådant som redan har frågats. En NY fråga är en dubblett bara om den frågar om exakt samma sak som en tidigare fråga eller ett tidigare ämne, så att svaret inte skulle ge någon ny information (till exempel en omformulering). Formuläret frågar bara ja eller nej om breda ämnen. En fråga som går djupare in på en specifik detalj är INTE en dubblett: till exempel hur många dagar, hur mycket, hur man gör eller vem det gäller, även om huvudämnet (medicin, hjälpmedel, barn, husdjur) finns i listan. Returnera index (börjar på 0) för varje ny fråga som är en dubblett. Returnera en tom lista om alla nya frågor ger ny information. Vid tveksamhet är det INTE en dubblett: det är bättre att fråga en gång för mycket än att missa något.",
       prompt: JSON.stringify({
         nyaFrågor: questions.map((q, i) => ({ index: i, fråga: q.question })),
         redanFrågat: alreadyAsked,
