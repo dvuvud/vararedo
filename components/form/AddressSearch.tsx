@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { AlertCircle, Loader2, MapPin, Pencil, Search } from "lucide-react";
+import { AlertCircle, Loader2, MapPin, Pencil } from "lucide-react";
 import type { Dict } from "@/lib/i18n";
 
 export type PickedAddress = { label: string; lat: number; lon: number };
@@ -9,7 +9,7 @@ type Candidate = PickedAddress;
 
 /**
  * Adress eller postnummer i ett fält. Förslagen visas medan man skriver när servern har en
- * autocomplete-tjänst (GEOAPIFY_API_KEY). Annars, eller vid Enter och knapptryck, görs en explicit sökning.
+ * autocomplete-tjänst (GEOAPIFY_API_KEY). Annars, eller vid Enter, görs en explicit sökning.
  * Användaren väljer alltid sin adress i listan, så vi aldrig gissar fel stad och det syns att det blev rätt.
  */
 export function AddressSearch({
@@ -110,7 +110,7 @@ export function AddressSearch({
 
   return (
     <div className="space-y-3">
-      <div className="flex gap-2">
+      <div className="relative">
         <input
           type="text"
           inputMode="search"
@@ -125,26 +125,21 @@ export function AddressSearch({
             setStatus("idle");
           }}
           onKeyDown={(e) => {
+            // Enter söker direkt, som reserv när förslag medan man skriver inte är tillgängliga
             if (e.key === "Enter") {
               e.preventDefault();
               void search();
             }
           }}
-          className="h-14 min-w-0 flex-1 rounded-xl border-2 border-input bg-card px-4 text-lg placeholder:text-muted-foreground"
+          className="h-14 w-full rounded-xl border-2 border-input bg-card ps-4 pe-12 text-lg placeholder:text-muted-foreground"
         />
-        <button
-          type="button"
-          onClick={() => void search()}
-          disabled={status === "busy" || query.trim().length < 3}
-          className="flex h-14 shrink-0 items-center justify-center gap-2 rounded-xl bg-primary px-5 text-lg font-semibold text-primary-foreground disabled:opacity-50"
-        >
-          {status === "busy" ? (
-            <Loader2 aria-hidden className="size-5 animate-spin" />
-          ) : (
-            <Search aria-hidden className="size-5" />
-          )}
-          <span>{status === "busy" ? t.searching : t.search}</span>
-        </button>
+        {status === "busy" && (
+          <Loader2
+            aria-label={t.searching}
+            role="status"
+            className="absolute end-4 top-1/2 size-5 -translate-y-1/2 animate-spin text-muted-foreground"
+          />
+        )}
       </div>
 
       {results && (
