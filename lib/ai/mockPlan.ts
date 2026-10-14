@@ -41,6 +41,6 @@ export const MOCK_FACTS: ComputedFacts = {
     },
   },
   nearestShelters: [
-    { id: "demo-1", address: "Exempelgatan 1", municipality: "Göteborg", lat: 57.7089, lon: 11.9746, capacity: 200, distanceMeters: 450 },
+    { id: "demo-1", property: "Exempel 1:1", lat: 57.7089, lon: 11.9746, capacity: 200, limited: false, distanceMeters: 450 },
   ],
 };

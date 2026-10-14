@@ -20,7 +20,7 @@ Om en funktion inte gör planen mer personlig eller mer handlingsbar: bygg den i
 - Next.js (App Router) + TypeScript, deploy på Vercel
 - Tailwind + shadcn/ui
 - AI: Vercel AI SDK (`ai`, `@ai-sdk/anthropic`) + Zod, nyckel i `ANTHROPIC_API_KEY`
-  - `claude-haiku-5-5` för följdfrågor (snabbhet)
+  - `claude-haiku-4-5` för följdfrågor (snabbhet). `claude-haiku-5-5` finns inte i Anthropics modelltabell.
   - `claude-sonnet-5-5` för planen (kvalitet). Byt till Haiku om svarstiden blir för lång.
 - Lagring: Upstash Redis via Vercel Marketplace (endast för e-post/token-flödet)
 - E-post: Resend
@@ -98,7 +98,7 @@ export const followUpSchema = z.object({
 
 ## Plangenerering
 
-Endpoint: `POST /api/plan`, `streamObject` så att planen skrivs fram på skärmen.
+Endpoint: `POST /api/plan`, `streamText` + `Output.object` (AI SDK v7, ersätter `streamObject`) så att planen skrivs fram på skärmen. Se "Status och API-kontrakt" nedan för strömformatet.
 
 Ordning i routen:
 1. Normalisera profilen och räkna fram allt deterministiskt i `lib/calc/`:
@@ -132,7 +132,7 @@ export const planSchema = z.object({
 
 ## Determinism ("samma input ska ge samma resultat")
 
-- `temperature: 0`, ingen extended thinking.
+- `temperature: 0` på modeller som tillåter det. Sonnet 5.5 svarar 400 på icke-standard temperature och kan inte köras utan thinking, så `lib/ai/model.ts` skickar `thinking: between_tools` + `effort: low` och ingen temperature. Determinismen kommer då från cachen och strama scheman.
 - Strama scheman: enums, `.max()` på listor, fasta kategorier.
 - All matematik i kod. Modellen refererar till uträknade värden via nycklar.
 - Cache: hasha normaliserad profil (sorterade nycklar, inklusive språk) med SHA-256 och spara svaret.
@@ -169,6 +169,47 @@ ge personliga råd (t.ex. trappor vid rörelsenedsättning).
 Material ligger i `docs/inspiration/` (Krishanteringsbladet, Kommunbladet). Läs dem innan du
 bygger resultatsidan och tonen: ta struktur, rubriker och lugn saklig stil därifrån.
 Fakta om hemberedskap hämtas från MCF:s råd (vatten, mat, värme, information, kommunikation).
+
+## Status och API-kontrakt (uppdatera när något ändras)
+
+Kontraktet mellan spåren ligger i `lib/ai/schemas.ts`. Ändra det inte utan att säga till.
+Byggt hittills: steg 1 (projekt, scheman), `/api/plan` (live, testad mot Sonnet 5.5), `/api/followups`
+(byggd, otestad live), `lib/calc/*`, närmaste skyddsrum i `lib/data/shelters.ts`, cache.
+Inte byggt än: `/api/shelters`, `lib/form/rules.ts`, `/api/save`, cron, all frontend, `messages/*.json` (tomma).
+
+### POST /api/plan
+Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard). Typer: `PlanRequest`, `PlanResponse`, `PlanStreamEvent`.
+- `stream: false`: ett JSON-svar `PlanResponse = { plan, facts, contacts }`. Enklast att börja koppla formuläret mot.
+- `stream: true`: NDJSON, en JSON per rad (`content-type: application/x-ndjson`), i ordning:
+  `{type:"facts", facts, contacts, cached}` (ca 1 s, innehåller poäng, mängder och skyddsrum, kan visas direkt),
+  `{type:"partial", plan}` (många, `plan` är `DeepPartial<Plan>`, listelement kan vara `undefined`),
+  sist `{type:"done", plan}` eller `{type:"error", message}`. `message` är redan användarvänligt, visa den som den är.
+- Läs strömmen med `fetch` + `body.getReader()`, dela på `\n`. Ingen extra paketberoende behövs.
+- Tider (Sonnet 5.5, hushåll med barn): facts 0,8 s, första text 3 s, klar efter ca 19 s. Cachad profil: ca 35 ms.
+- Utan `ANTHROPIC_API_KEY` i dev returneras mockplanen (`lib/ai/mockPlan.ts`) men med riktiga `facts`.
+- `quantityRef` i `plan.missing` är alltid en nyckel som finns i `facts.quantities`, eller utelämnad. Slå upp värdet där.
+  Visa aldrig en egen siffra för mängder. Nycklar: `persons`, `water_per_day_l`, `water_total_l`, `water_missing_l`,
+  `food_days_target`, `food_days_missing`, och bara vid behov `diapers_total`, `infants`, `pet_food_days`.
+- Planen har max 10 poster i `missing` och 3-4 handlingar per fas (styrs av prompten, schemat tillåter 15 och 6).
+
+### POST /api/followups
+Body: `{ profile }`. Svar: `FollowUp` (`extractedNeeds`, `questions`). Tom fritext, saknad nyckel eller fel ger
+`{extractedNeeds:[], questions:[]}` med status 200, så frontend ska hoppa över steget när `questions` är tom.
+
+### Skyddsrum
+`Shelter` har `property` (fastighetsbeteckning, ingen gatuadress finns i MCF-datan), `capacity`, `limited`
+(tillfällig begränsning), `distanceMeters`, `lat`, `lon`. Visa "Kontrollera skyltning på plats. Data från MCF."
+`facts.nearestShelters` är tom om profilen saknar `area.lat` och `area.lon`.
+
+### Att veta
+- Cachen (`lib/ai/cache.ts`) är en in-memory `Map`: töms vid omstart och delas inte mellan Vercel-instanser.
+  Förvärm demoprofilerna precis före presentation, eller byt till Redis.
+- Modeller byts via env: `PLAN_MODEL`, `FOLLOWUP_MODEL` (se `.env.example`). Haiku 4.5 är bara ca 5 s snabbare på planen.
+- Post-processning i `/api/plan` tar bort tankstreck och ogiltiga `quantityRef`. Prompterna ligger i `lib/ai/prompts.ts`
+  (tonen är skriven där eftersom skillen `kris-tonalitet` ännu inte finns i `.claude/skills/`).
+- Åldrar skickas till modellen som färdiga etiketter (`childrenAgeLabels`), så modellen räknar aldrig om dem.
+- Next 16: `params` är en `Promise`, läs `node_modules/next/dist/docs/` innan ni gör något ovanligt. `AGENTS.md` säger samma sak.
+- Testa API:t: `npm run dev`, sedan `curl -X POST localhost:3000/api/plan -H 'content-type: application/json' -d @docs/exempelprofil.json`.
 
 ## Skills
 

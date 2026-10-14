@@ -1,0 +1,17 @@
+{
+  "stream": false,
+  "profile": {
+    "lang": "sv",
+    "housing": { "type": "apartment", "floor": 6, "hasElevator": false },
+    "area": { "kind": "city", "lat": 57.7089, "lon": 11.9746 },
+    "household": { "adults": 2, "childrenAges": [0.7], "seniors70plus": 0, "pets": [] },
+    "specialNeeds": { "medicineNeedsCooling": false, "powerDependentAids": false, "reducedMobility": false, "specialDiet": false },
+    "heating": "district",
+    "hasCar": false,
+    "hasCashAtHome": false,
+    "hasBatteryOrCrankRadio": false,
+    "crises": ["power_outage", "water_outage"],
+    "selfAssessment": { "waterDays": 2, "foodDays": 2, "alternativeHeat": false, "lightAndPower": false, "radio": false, "cash": false, "householdPlan": false, "knowsShelter": false },
+    "freeText": "Vår son har allergi mot mjölkprotein och vi bor ovanför en äldre granne som är rullstolsburen."
+  }
+}

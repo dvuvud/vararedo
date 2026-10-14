@@ -135,11 +135,11 @@ export type Quantity = z.infer<typeof quantitySchema>;
 
 export const shelterSchema = z.object({
   id: z.string(),
-  address: z.string(),
-  municipality: z.string().optional(),
+  property: z.string(), // fastighetsbeteckning från MCF, inte gatuadress
   lat: z.number(),
   lon: z.number(),
-  capacity: z.number().int().optional(),
+  capacity: z.number().int(), // antal platser
+  limited: z.boolean(), // MCF-status "tillfällig begränsning"
   distanceMeters: z.number(),
 });
 export type Shelter = z.infer<typeof shelterSchema>;
@@ -149,7 +149,7 @@ export const computedFactsSchema = z.object({
   quantities: z.record(z.string(), quantitySchema),
   score: z.object({
     total: z.number().min(0).max(100),
-    byCategory: z.record(z.enum(CATEGORIES), z.number().min(0).max(100)),
+    byCategory: z.partialRecord(z.enum(CATEGORIES), z.number().min(0).max(100)),
   }),
   nearestShelters: z.array(shelterSchema).max(3),
 });
@@ -190,11 +190,29 @@ export type Plan = z.infer<typeof planSchema>;
 
 // ---------- API-kontrakt ----------
 
-export const planRequestSchema = z.object({ profile: profileSchema });
-export type PlanRequest = z.infer<typeof planRequestSchema>;
+export const planRequestSchema = z.object({
+  profile: profileSchema,
+  // true (standard): NDJSON-ström, se PlanStreamEvent. false: ett JSON-svar (PlanResponse).
+  stream: z.boolean().default(true),
+});
+export type PlanRequest = z.input<typeof planRequestSchema>;
 
 export type PlanResponse = {
   plan: Plan;
   facts: ComputedFacts;
   contacts: readonly { id: string; name: string; number?: string; url?: string }[];
 };
+
+// Händelser i NDJSON-strömmen från POST /api/plan (en JSON per rad).
+export type PlanStreamEvent =
+  | { type: "facts"; facts: ComputedFacts; contacts: PlanResponse["contacts"]; cached: boolean }
+  | { type: "partial"; plan: DeepPartial<Plan> }
+  | { type: "done"; plan: Plan }
+  | { type: "error"; message: string };
+
+// Under strömning kan listelement vara undefined tills de börjat skrivas.
+export type DeepPartial<T> = T extends readonly (infer U)[]
+  ? (DeepPartial<U> | undefined)[]
+  : T extends object
+    ? { [K in keyof T]?: DeepPartial<T[K]> }
+    : T;
