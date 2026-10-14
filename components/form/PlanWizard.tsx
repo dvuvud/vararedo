@@ -593,11 +593,6 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
           {step === "crises" && (
             <Question id="crises" label={t.crises.label} error={err("crises")}>
               <div className="grid gap-3">
-                <CheckCard
-                  label={t.crises.all}
-                  checked={draft.crises.length === CRISIS_TYPES.length}
-                  onChange={(on) => set({ crises: on ? [...CRISIS_TYPES] : [] })}
-                />
                 {CRISIS_TYPES.map((k) => (
                   <CheckCard
                     key={k}
@@ -611,6 +606,12 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
                     }
                   />
                 ))}
+                {/* "Allt detta" sist: att välja allt är ett komplett svar, så steget går vidare direkt */}
+                <CheckCard
+                  label={t.crises.all}
+                  checked={draft.crises.length === CRISIS_TYPES.length}
+                  onChange={(on) => (on ? choose({ crises: [...CRISIS_TYPES] }) : set({ crises: [] }))}
+                />
               </div>
             </Question>
           )}
