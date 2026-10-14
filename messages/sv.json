@@ -209,6 +209,7 @@
   "result": {
     "title": "Er plan",
     "loading": "Vi gör er plan. Det tar några sekunder.",
+    "writing": "Vi skriver er plan. Det tar ungefär 20 sekunder. Ni kan börja läsa medan den skrivs.",
     "error": "Det gick inte att göra planen just nu. Försök igen om en liten stund.",
     "retry": "Försök igen",
     "noProfile": "Vi hittar inga svar. Börja med att svara på frågorna.",
