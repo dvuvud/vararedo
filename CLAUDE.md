@@ -177,7 +177,7 @@ Byggt och testat live: steg 1 (projekt, scheman), `/api/plan`, `/api/followups`,
 `lib/data/shelters.ts`, `lib/form/rules.ts`, cache.
 Frontend (spår B): landning, formulär i steg (`components/form/PlanWizard.tsx`, använder `lib/form/rules.ts`),
 resultatsida (`components/result/ResultView.tsx`), svensk ordlista i `messages/sv.json` (övriga språk faller tillbaka på svenska).
-Inte byggt än: `/api/save`, cron, geokodning av adress, karta, översättningar.
+Inte byggt än: `/api/save`, cron, karta, översättningar.
 
 ### POST /api/plan
 Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard). Typer: `PlanRequest`, `PlanResponse`, `PlanStreamEvent`.
@@ -212,6 +212,10 @@ Rena funktioner, används av formuläret på klienten och av servern. Ingen AI.
 ### GET /api/shelters?lat=&lon=&n=3
 Svar: `{ shelters: Shelter[], notice }`, `n` 1-10. Ogiltiga koordinater ger 400 `{ error }`. Sorterat på avstånd. Ingen AI.
 Planen får redan närmaste skyddsrum i `facts.nearestShelters`, så anropa detta bara för kartan eller "använd min position".
+
+### GET /api/geocode?q=<adress>
+Nominatim (OpenStreetMap), bara Sverige. Svar `{ lat, lon }`, 404 om adressen inte hittas, 502 vid nätverksfel.
+Formuläret anropar den när man skickar in om det finns en adress men ingen position. Cachas i minnet, max 1 anrop/s mot Nominatim.
 
 ### Skyddsrum
 `Shelter` har `property` (fastighetsbeteckning, ingen gatuadress finns i MCF-datan), `capacity`, `limited`

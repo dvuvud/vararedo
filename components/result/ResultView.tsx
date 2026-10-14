@@ -16,6 +16,7 @@ import type { Dict } from "@/lib/i18n";
 import { fill } from "@/lib/format";
 import { CHECKED_KEY, PROFILE_KEY } from "@/lib/form/storage";
 import { ScoreRing } from "@/components/ScoreRing";
+import { ShelterCard } from "./ShelterCard";
 import { cn } from "@/lib/utils";
 
 type State =
@@ -69,9 +70,6 @@ function loadChecked(profile: string | null): string[] {
   }
 }
 
-function formatDistance(m: number) {
-  return m < 1000 ? `${Math.round(m / 10) * 10} m` : `${(m / 1000).toFixed(1)} km`;
-}
 
 const LEVEL_STYLE = {
   high: "bg-destructive/10 text-destructive",
@@ -342,32 +340,28 @@ export default function ResultView({ lang, dict, contacts }: { lang: Lang; dict:
         </Section>
       )}
 
-      {(plan.shelterAdvice || facts.nearestShelters.length > 0) && (
-        <Section title={t.shelterTitle}>
-          {plan.shelterAdvice && <p className="text-lg">{plan.shelterAdvice}</p>}
-          <ul className="space-y-3">
-            {facts.nearestShelters.map((s) => (
-              <li key={s.id} className="flex gap-3 rounded-2xl border border-border bg-card p-4">
-                <MapPin aria-hidden className="mt-1 size-6 shrink-0 text-primary" />
-                <div>
-                  <p className="text-lg font-semibold">
-                    {fill(t.shelterDistance, { distance: formatDistance(s.distanceMeters) })}
-                  </p>
-                  <p className="text-base text-muted-foreground">
-                    {fill(t.shelterCapacity, { n: s.capacity })} · {s.property}
-                  </p>
-                  {s.limited && (
-                    <p className="mt-1 inline-block rounded-full bg-warning/10 px-3 py-0.5 text-base font-semibold text-warning">
-                      {t.shelterLimited}
-                    </p>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-          <p className="text-base text-muted-foreground">{t.shelterNote}</p>
-        </Section>
-      )}
+      <Section title={t.shelterTitle}>
+        {plan.shelterAdvice && <p className="text-lg">{plan.shelterAdvice}</p>}
+        {/* Utan adress eller position finns inga skyddsrum att visa: säg det och visa hur man fixar det */}
+        {facts.nearestShelters.length === 0 && (
+          <div className="space-y-3 rounded-2xl bg-secondary p-4 print:hidden">
+            <p className="text-lg">{t.shelterMissing}</p>
+            <Link
+              href={`/${lang}/plan/new?step=area`}
+              className="inline-flex min-h-14 items-center gap-2 rounded-xl border-2 border-primary bg-card px-5 text-lg font-semibold text-primary"
+            >
+              <MapPin aria-hidden className="size-5" />
+              {t.edit}
+            </Link>
+          </div>
+        )}
+        <ul className="space-y-3">
+          {facts.nearestShelters.map((s) => (
+            <ShelterCard key={s.id} shelter={s} t={t} />
+          ))}
+        </ul>
+        <p className="text-base text-muted-foreground">{t.shelterNote}</p>
+      </Section>
 
       <Section title={t.contactsTitle}>{contacts}</Section>
     </main>

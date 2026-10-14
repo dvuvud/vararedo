@@ -246,8 +246,12 @@
       "high": "Hög risk"
     },
     "shelterTitle": "Närmaste skyddsrum",
-    "shelterDistance": "Ca {distance} fågelvägen",
+    "shelterDistance": "ca {distance} bort",
+    "shelterAddressLoading": "Hämtar adress...",
+    "shelterProperty": "Fastighet {property}",
+    "shelterDirections": "Visa vägen dit",
     "shelterCapacity": "{n} platser",
+    "shelterMissing": "Vi vet inte var ni bor, så vi kan inte visa närmaste skyddsrum. Ändra era svar och skriv er adress, eller tryck på Använd min position.",
     "shelterLimited": "Tillfällig begränsning",
     "shelterNote": "Kontrollera skyltning på plats. Data från MCF.",
     "contactsTitle": "Viktiga nummer",

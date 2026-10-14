@@ -79,7 +79,10 @@ function loadSaved(): { draft: Draft; step: number } {
     const raw = localStorage.getItem(DRAFT_KEY);
     if (raw) {
       const saved = JSON.parse(raw) as { draft: Partial<Draft>; step: number };
-      return { draft: { ...EMPTY_DRAFT, ...saved.draft }, step: Math.min(saved.step ?? 0, COUNTED_STEPS - 1) };
+      // ?step=area öppnar ett visst steg direkt, t.ex. från resultatsidan när adress saknas
+      const wanted = STEPS.indexOf(new URLSearchParams(location.search).get("step") as Step);
+      const step = wanted >= 0 && wanted < COUNTED_STEPS ? wanted : Math.min(saved.step ?? 0, COUNTED_STEPS - 1);
+      return { draft: { ...EMPTY_DRAFT, ...saved.draft }, step };
     }
   } catch {
     // Trasigt sparat utkast: börja om
@@ -194,7 +197,26 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
   const setRule = (id: string, v: RuleAnswer) => choose({ ruleAnswers: { ...draft.ruleAnswers, [id]: v } });
   const err = (id: string) => (errors[id] ? c.answerRequired : undefined);
 
-  const submit = (d: Draft) => {
+  // Inskriven adress utan position: slå upp koordinater så att planen kan visa närmaste skyddsrum.
+  // Misslyckas uppslagningen blir planen ändå klar, bara utan skyddsrum.
+  const geocode = async (d: Draft): Promise<Draft> => {
+    if (d.lat !== undefined || !d.address.trim()) return d;
+    try {
+      const res = await fetch(`/api/geocode?q=${encodeURIComponent(d.address.trim())}`, {
+        signal: AbortSignal.timeout(10000),
+      });
+      if (!res.ok) return d;
+      const { lat, lon } = (await res.json()) as { lat: number; lon: number };
+      set({ lat, lon });
+      return { ...d, lat, lon };
+    } catch {
+      return d;
+    }
+  };
+
+  const submit = async (draftIn: Draft) => {
+    setBusy(true);
+    const d = await geocode(draftIn);
     const profile = profileSchema.parse(toProfile({ ...d, ruleAnswers: pruneAnswers(formState(d), d.ruleAnswers) }, lang));
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
     router.push(`/${lang}/plan/result`);
@@ -222,7 +244,7 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
     } finally {
       setBusy(false);
     }
-    submit(draft);
+    void submit(draft);
   };
 
   const next = () => {
@@ -234,11 +256,11 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
     }
     if (step === "freeText") {
       if (draft.freeText.trim()) void fetchFollowUps();
-      else submit(draft);
+      else void submit(draft);
       return;
     }
     if (step === "followUps") {
-      submit(draft);
+      void submit(draft);
       return;
     }
     setStepIndex((i) => i + 1);
