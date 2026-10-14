@@ -208,7 +208,9 @@
     },
     "followUps": {
       "loading": "Przeglądamy twoje odpowiedzi...",
-      "intro": "Na podstawie tego, co napisałeś, mamy jeszcze kilka pytań."
+      "intro": "Na podstawie tego, co napisałeś, mamy jeszcze kilka pytań.",
+      "loadingTitle": "Czytamy Twoje odpowiedzi",
+      "loadingText": "Sztuczna inteligencja przygotowuje kilka ostatnich pytań na podstawie tego, co napisałeś lub napisałaś. To potrwa kilka sekund."
     }
   },
   "rules": {

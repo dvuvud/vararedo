@@ -208,7 +208,9 @@
     },
     "followUps": {
       "loading": "Vi tittar på dina svar...",
-      "intro": "Utifrån det du skrev har vi några frågor till."
+      "intro": "Utifrån det du skrev har vi några frågor till.",
+      "loadingTitle": "Vi läser dina svar",
+      "loadingText": "En AI tar fram några sista frågor utifrån det du skrivit. Det tar några sekunder."
     }
   },
   "rules": {

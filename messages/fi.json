@@ -208,7 +208,9 @@
     },
     "followUps": {
       "loading": "Tarkastelemme vastauksiasi...",
-      "intro": "Kirjoittamasi perusteella meillä on vielä muutama kysymys."
+      "intro": "Kirjoittamasi perusteella meillä on vielä muutama kysymys.",
+      "loadingTitle": "Luemme vastauksesi",
+      "loadingText": "Tekoäly laatii muutaman viimeisen kysymyksen kirjoittamasi perusteella. Se vie muutaman sekunnin."
     }
   },
   "rules": {

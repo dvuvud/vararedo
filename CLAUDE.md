@@ -176,8 +176,9 @@ Fakta om hemberedskap hämtas från MCF:s råd (vatten, mat, värme, information
 Kontraktet mellan spåren ligger i `lib/ai/schemas.ts`. Ändra det inte utan att säga till.
 Byggt och testat live: steg 1 (projekt, scheman), `/api/plan`, `/api/followups`, `/api/shelters`, `/api/geocode`,
 `lib/calc/*`, `lib/data/shelters.ts`, `lib/form/rules.ts`, cache. Frontend finns (landning, formulär, resultat).
-Språkval: `proxy.ts` skickar `/` till rätt språk (cookie `lang`, annars `Accept-Language`, annars `sv`). Landningssidan har
-synliga språkchips (`components/LangChips.tsx`). Språkväljaren sätter cookien via `rememberLang`.
+Språkval: `proxy.ts` skickar `/` till rätt språk (cookie `lang`, annars `Accept-Language`, annars `sv`). Språkväljaren i headern
+(`LangSwitcher`) sätter cookien via `rememberLang`. Synliga språkchips på landningen provades och togs bort på beslut.
+Formuläret visar en helskärms-laddningsskärm (`busy` i `PlanWizard.tsx`) medan AI:s följdfrågor hämtas och när planen skickas vidare.
 Frontend (spår B): landning, formulär i steg (`components/form/PlanWizard.tsx`, använder `lib/form/rules.ts`),
 resultatsida (`components/result/ResultView.tsx`), svensk ordlista i `messages/sv.json` (övriga språk är översatta med `scripts/translate-messages.mjs`).
 Inte byggt än: `/api/save`, cron, karta. Översättningar finns för alla elva språk (maskinöversatta, ej språkgranskade).
@@ -275,7 +276,7 @@ Utskrift visar allt öppet (`hidden print:block`). Lägg nya sektioner efter sam
 - Testa API:t: `npm run dev`, sedan `curl -X POST localhost:3000/api/plan -H 'content-type: application/json' -d @docs/exempelprofil.json`.
 
 ### Översättningar (`messages/<lang>.json`)
-Alla elva språk är fullt översatta (189 nycklar), men av AI och inte granskade av någon som kan språket. Granska särskilt
+Alla elva språk är fullt översatta (191 nycklar), men av AI och inte granskade av någon som kan språket. Granska särskilt
 `so`, `ku` och `bs` före demo. Svenska (`sv.json`) är källan och `lib/i18n.ts` faller tillbaka på svenska för nycklar som saknas.
 - Lägg alltid nya texter i `sv.json` först. Kör sedan `node --env-file=.env.local scripts/translate-messages.mjs`
   (alla språk) eller med språkkoder, t.ex. `... ar fa`. Utan `--force` översätts bara nycklar som saknas. `--force` översätter om allt.

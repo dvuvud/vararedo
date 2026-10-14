@@ -208,7 +208,9 @@
     },
     "followUps": {
       "loading": "Pregledamo vaše odgovore...",
-      "intro": "Na osnovu onoga što ste napisali imamo još nekoliko pitanja."
+      "intro": "Na osnovu onoga što ste napisali imamo još nekoliko pitanja.",
+      "loadingTitle": "Čitamo vaše odgovore",
+      "loadingText": "Umjetna inteligencija priprema nekoliko posljednjih pitanja na osnovu onoga što ste napisali. To traje nekoliko sekundi."
     }
   },
   "rules": {

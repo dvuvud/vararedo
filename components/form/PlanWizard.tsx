@@ -155,6 +155,8 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
   const [errors, setErrors] = useState<Errors>({});
   const [followUps, setFollowUps] = useState<FollowUpQuestion[]>([]);
   const [busy, setBusy] = useState(false);
+  // Vad vi väntar på: AI:s följdfrågor (steg nio) eller att planen ska skickas vidare
+  const [busyKind, setBusyKind] = useState<"followUps" | "submit">("submit");
   const [locating, setLocating] = useState<"idle" | "busy" | "ok" | "fail">("idle");
   const [confirmReset, setConfirmReset] = useState(false);
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -203,6 +205,7 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
 
   const submit = async (draftIn: Draft) => {
     setBusy(true);
+    setBusyKind("submit");
     const d = draftIn;
     const profile = profileSchema.parse(toProfile({ ...d, ruleAnswers: pruneAnswers(formState(d), d.ruleAnswers) }, lang));
     localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
@@ -212,6 +215,7 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
   // AI:s följdfrågor. Fel eller inga frågor: hoppa över steget och visa planen direkt.
   const fetchFollowUps = async () => {
     setBusy(true);
+    setBusyKind("followUps");
     try {
       const profile = toProfile({ ...draft, followUpAnswers: {} }, lang);
       // Det som redan frågats i tidigare omgångar (om man gått tillbaka och framåt) ska inte frågas igen
@@ -340,6 +344,30 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
 
   const shownStep = Math.min(stepIndex + 1, COUNTED_STEPS);
   const isLast = step === "followUps" || (step === "freeText" && !draft.freeText.trim());
+
+  // Laddningsskärm medan vi väntar på AI:s följdfrågor. Hela vyn byts ut så att det inte går att missa
+  // att något pågår, och så att knappar och formulär inte kan röras under tiden.
+  if (busy) {
+    const forFollowUps = busyKind === "followUps";
+    return (
+      <main className="mx-auto flex w-full max-w-xl flex-1 flex-col items-center justify-center gap-6 px-4 py-16 text-center">
+        <div aria-hidden className="relative flex size-24 items-center justify-center">
+          <span className="absolute inset-0 rounded-full bg-primary/10 motion-safe:animate-ping" />
+          <span className="absolute inset-3 rounded-full bg-primary/10" />
+          <Sparkles className="relative size-10 text-primary" />
+        </div>
+        <div role="status" aria-live="polite" className="space-y-3">
+          <h1 className="text-2xl font-bold text-primary sm:text-3xl">
+            {forFollowUps ? t.followUps.loadingTitle : dict.result.title}
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            {forFollowUps ? t.followUps.loadingText : dict.result.loading}
+          </p>
+        </div>
+        <Loader2 aria-hidden className="size-7 animate-spin text-primary motion-reduce:animate-none" />
+      </main>
+    );
+  }
 
   return (
     <div className="flex flex-1 flex-col">

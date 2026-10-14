@@ -208,7 +208,9 @@
     },
     "followUps": {
       "loading": "Waxaan eegaynaa jawaabahaaga...",
-      "intro": "Iyadoo la raacayo wixii aad qortay, waxaan haysannaa dhowr su'aalood oo kale."
+      "intro": "Iyadoo la raacayo wixii aad qortay, waxaan haysannaa dhowr su'aalood oo kale.",
+      "loadingTitle": "Waan akhrinaynaa jawaabahaaga",
+      "loadingText": "AI ayaa diyaarinaysa su'aalo dhowr ah oo ugu dambeeya iyadoo ku salaysan wixii aad qortay. Waxay qaadanaysaa dhowr ilbiriqsi."
     }
   },
   "rules": {

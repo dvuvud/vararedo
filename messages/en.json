@@ -208,7 +208,9 @@
     },
     "followUps": {
       "loading": "We are looking at your answers...",
-      "intro": "Based on what you wrote, we have a few more questions."
+      "intro": "Based on what you wrote, we have a few more questions.",
+      "loadingTitle": "We are reading your answers",
+      "loadingText": "An AI is preparing a few final questions based on what you wrote. It takes a few seconds."
     }
   },
   "rules": {
