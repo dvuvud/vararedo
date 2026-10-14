@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, type ReactNode } from "react";
-import { AlertCircle, Check, Minus, Plus } from "lucide-react";
+import { AlertCircle, Check, ChevronDown, Minus, Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 // Hela kortet är klickbart och minst 56 px högt: lätt att träffa med tummen och tydligt för ovana användare.
@@ -174,5 +174,47 @@ export function Stepper({
         <Plus aria-hidden className="size-6" />
       </button>
     </div>
+  );
+}
+
+/**
+ * Rullgardin med samma platta utseende överallt. `appearance-none` tar bort webbläsarens egen gradient
+ * och pil, så den ritas separat. Den är fortfarande en vanlig <select>, så den fungerar likadant på
+ * telefoner (egen väljare) och med skärmläsare. Chevronen ligger på rätt sida även i höger-till-vänster.
+ */
+export function SelectField({
+  value,
+  onChange,
+  children,
+  size = "lg",
+  className,
+  ...rest
+}: {
+  value: string | number;
+  onChange: (value: string) => void;
+  children: ReactNode;
+  size?: "md" | "lg";
+  className?: string;
+  "aria-label"?: string;
+  id?: string;
+}) {
+  return (
+    <span className={cn("relative block", className)}>
+      <select
+        {...rest}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        className={cn(
+          "w-full appearance-none border-input bg-card bg-none ps-3 pe-10 text-foreground",
+          size === "lg" ? "h-14 rounded-xl border-2 text-lg" : "h-11 rounded-lg border text-base",
+        )}
+      >
+        {children}
+      </select>
+      <ChevronDown
+        aria-hidden
+        className="pointer-events-none absolute end-3 top-1/2 size-5 -translate-y-1/2 text-muted-foreground"
+      />
+    </span>
   );
 }

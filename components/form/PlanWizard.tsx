@@ -24,7 +24,7 @@ import { EMPTY_DRAFT, toProfile, type Draft } from "@/lib/form/draft";
 import { pruneAnswers, visibleRules, type FormState, type RuleAnswer, type RuleQuestion } from "@/lib/form/rules";
 import { DRAFT_KEY, PROFILE_KEY } from "@/lib/form/storage";
 import { AddressSearch } from "./AddressSearch";
-import { ChoiceCards, CheckCard, Question, Stepper, YesNo } from "./fields";
+import { ChoiceCards, CheckCard, Question, SelectField, Stepper, YesNo } from "./fields";
 
 
 const STEPS = [
@@ -503,14 +503,13 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
                           <span className="mb-1 block text-base font-medium">
                             {fill(t.children.child, { n: i + 1 })}: {t.children.age}
                           </span>
-                          <select
+                          <SelectField
                             value={age}
-                            onChange={(e) => {
+                            onChange={(v) => {
                               const ages = [...draft.childrenAges];
-                              ages[i] = Number(e.target.value);
+                              ages[i] = Number(v);
                               set({ childrenAges: ages });
                             }}
-                            className="h-14 w-full rounded-xl border-2 border-input bg-card px-3 text-lg"
                           >
                             {AGE_OPTIONS.map((o) => (
                               <option key={o.value} value={o.value}>
@@ -523,7 +522,7 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
                                   : fill(t.children.years, { n: o.years })}
                               </option>
                             ))}
-                          </select>
+                          </SelectField>
                         </label>
                         {draft.childrenAges.length > 1 && (
                           <button
