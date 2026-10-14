@@ -1,6 +1,6 @@
 import { generateText, Output } from "ai";
 import { FOLLOWUP_MODEL_ID, hasApiKey, modelSettings } from "@/lib/ai/model";
-import { askedInForm, dropRepeated, dropSameTopic } from "@/lib/ai/askedTopics";
+import { askedInForm, dropRepeated, dropSameTopic, narrowFormQuestions } from "@/lib/ai/askedTopics";
 import { aiSafeProfile, followUpSystemPrompt } from "@/lib/ai/prompts";
 import { followUpSchema, profileSchema, type FollowUp } from "@/lib/ai/schemas";
 import { z } from "zod";
@@ -47,9 +47,23 @@ export async function POST(req: Request) {
       result.questions.map((q) => ({ ...q, question: clean(q.question) })),
       asked,
     );
+    // Ämnesdomaren jämför bara mot (1) formulärets smala frågor och (2) tidigare följdfrågor. Mot formulärets breda
+    // ämnen (särskilda behov m.m.) blev den för strikt och tog bort riktiga fördjupningar, t.ex. hur många dagar
+    // medicinen räcker.
+    const kept = await dropSameTopic(unique, [...narrowFormQuestions(profile), ...alreadyAsked]);
+    // DEBUG_FOLLOWUPS=1 visar vad modellen föreslog och vad filtren tog bort (felsökning av "inga följdfrågor")
+    if (process.env.DEBUG_FOLLOWUPS) {
+      const names = (qs: { question: string }[]) => qs.map((q) => q.question);
+      console.log("[followups]", JSON.stringify({
+        modellen: names(result.questions),
+        efterExaktDubblett: names(unique),
+        efterÄmnesdomare: names(kept),
+        behov: result.extractedNeeds,
+      }, null, 1));
+    }
     return Response.json({
       extractedNeeds: result.extractedNeeds.map(clean),
-      questions: await dropSameTopic(unique, asked),
+      questions: kept,
     } satisfies FollowUp);
   } catch (err) {
     console.error("[api/followups]", err);

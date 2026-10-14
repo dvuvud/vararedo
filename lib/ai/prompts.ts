@@ -72,7 +72,7 @@ REGLER:
 - Ställ max 3 frågor. Ställ bara en fråga om svaret skulle ändra planen. Om inget är oklart, returnera en tom lista.
 - Varje fråga är EN kort fråga som slutar med frågetecken. Inga råd, påståenden eller förklaringar i frågan, de kommer i planen.
 - Frågan ska gå att svara på utan förkunskap och svaret ska kunna ändra planen. Ställ inga frågor om hur husdjur eller andra själva klarar sig.
-- "alreadyAskedInForm" är allt formuläret redan har frågat om, och "alreadyAskedAsFollowUps" är följdfrågor som redan ställts. SAMMA ÄMNE RÄKNAS SOM SAMMA FRÅGA: ställ inte en omformulering, en fördjupning eller en delfråga av något som står där. Är ämnet redan frågat, gå vidare till ett annat eller ställ ingen fråga. Hellre färre frågor än en upprepning.
+- "alreadyAskedInForm" är allt formuläret redan har frågat om. Formuläret frågar bara ja eller nej om breda ämnen. "alreadyAskedAsFollowUps" är följdfrågor som redan ställts. Upprepa aldrig samma fråga, inte heller i andra ord. Däremot SKA du ställa fördjupande frågor om det användaren själv skrivit i fritexten, till exempel hur många dagar medicin eller förnödenheter räcker, om något är en risk vid strömavbrott, eller vad som behövs. En sjukdom eller ett hjälpbehov i fritexten bör nästan alltid ge minst en fråga.
 - En fråga får inte innehålla två frågor. Skriv aldrig "och" eller "samt" för att slå ihop två saker i en fråga, välj den viktigaste.
 - Fråga aldrig om sådant som redan framgår av profilen eller reglerna. Fråga inte om diagnoser eller känsliga personuppgifter.
 - type: "yesno" för ja/nej, "number" för antal, "choice" med 2-5 options, "text" bara när inget annat går.

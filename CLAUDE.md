@@ -205,9 +205,14 @@ Tar ca 4 till 6 s (Haiku 4.5). Frågornas `id` är modellens egna (t.ex. `q1`) o
 `profile.followUpAnswers` med **frågetexten som nyckel** (planen får då veta vad som frågades).
 Body kan även ha `alreadyAsked: string[]` (frågetexter från tidigare omgångar, t.ex. om man gått bakåt och framåt).
 Upprepade frågor stoppas i tre led: (1) prompten får `alreadyAskedInForm` (alla fasta formulärämnen och regelfrågor, se
-`lib/ai/askedTopics.ts`) och `alreadyAskedAsFollowUps`, (2) exakta dubbletter tas bort i kod, (3) ett snabbt domaranrop
-(`dropSameTopic`) tar bort frågor som rör samma ämne med andra ord. Misslyckas domaren behålls frågorna. Nya fasta
-formulärfrågor ska läggas i `FIXED_TOPICS` där, annars kan AI:n fråga om dem igen.
+`lib/ai/askedTopics.ts`) och `alreadyAskedAsFollowUps`, och uppmanas att FÖRDJUPA det användaren skrivit (antal dagar,
+risker, vad som behövs) men inte upprepa, (2) exakta dubbletter tas bort i kod, (3) ett snabbt domaranrop
+(`dropSameTopic`) tar bort frågor som är omformuleringar av formulärets **smala** frågor (`NARROW_QUESTIONS`: dagar
+vatten och mat, radio, kontanter, regelfrågorna m.fl.) eller av tidigare följdfrågor. Breda ämnen som särskilda behov
+ligger medvetet INTE i domarens lista: en första version jämförde mot allt och tog bort riktiga fördjupningar, så en
+användare som skrev "jag har diabetes" fick inga följdfrågor. Misslyckas domaren behålls frågorna.
+Nya smala formulärfrågor ska läggas i både `FIXED_TOPICS` och `NARROW_QUESTIONS`. Felsök med `DEBUG_FOLLOWUPS=1`
+(loggar vad modellen föreslog och vad varje filter tog bort).
 Rendera efter `type`: `yesno` (ja/nej), `number`, `choice` (`options`, 2-5 st) eller `text`.
 
 ### Regelstyrda frågor (`lib/form/rules.ts`)
