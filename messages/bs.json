@@ -180,9 +180,11 @@
       "threeSix": "3-6 dana",
       "week": "Sedmicu ili duže"
     },
-    "waterDays": {
-      "label": "Koliko dugo vam traje voda za piće koju imate kod kuće?",
-      "hint": "Računajte samo vodu u bocama ili kanisterima, ne iz slavine."
+    "waterLiters": {
+      "label": "Otprilike koliko litara pitke vode imate kod kuće?",
+      "hint": "Računajte samo vodu u bocama ili kanisterima, ne onu iz slavine. U domaćinstvu ste {persons} i trebate {total} litara za sedam dana (3 litre po osobi dnevno).",
+      "unit": "{n} litara",
+      "lasts": "To vam je dovoljno za otprilike {days} dana."
     },
     "foodDays": {
       "label": "Koliko dugo vam traje hrana kod kuće bez kupovine?"

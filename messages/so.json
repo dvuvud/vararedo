@@ -180,9 +180,11 @@
       "threeSix": "3-6 maalmood",
       "week": "Hal usbuuc ama in ka badan"
     },
-    "waterDays": {
-      "label": "Intee in le'eg ayay biyaha cabbitaanka ee guriga ku jira ku filan yihiin?",
-      "hint": "Tiri oo keliya biyaha dhalooyinka ama jerikanka ku jira, ma aha tuubada."
+    "waterLiters": {
+      "label": "Qiyaastii immisa litir oo biyo cabbitaan ah ayaad guriga ku haysaan?",
+      "hint": "Tirinta ku dar kaliya biyaha dhalooyinka ama bidoonnada ku jira, ee ha ku darin biyaha tuubada. Waxaad tahay {persons} qof guriga, waxaadna u baahan tihiin {total} litir hal usbuuc (3 litir qof walba maalintii).",
+      "unit": "{n} litir",
+      "lasts": "Tani waxay idinku filan tahay qiyaastii {days} maalmood."
     },
     "foodDays": {
       "label": "Intee in le'eg ayay cuntada guriga ku jirta ku filan tahay iyadoo aan wax la iibsan?"

@@ -195,7 +195,9 @@ Body: `{ profile: Profile, stream?: boolean }` (`stream` är `true` som standard
 - Utan `ANTHROPIC_API_KEY` i dev returneras mockplanen (`lib/ai/mockPlan.ts`) men med riktiga `facts`.
 - `quantityRef` i `plan.missing` är alltid en nyckel som finns i `facts.quantities`, eller utelämnad. Slå upp värdet där.
   Visa aldrig en egen siffra för mängder. Nycklar: `persons`, `water_per_day_l`, `water_total_l`, `water_missing_l`,
-  `food_days_target`, `food_days_missing`, och bara vid behov `diapers_total`, `infants`, `pet_food_days`.
+  `food_days_target`, `food_days_missing`, och bara vid behov `water_have_l`, `diapers_total`, `infants`, `pet_food_days`.
+- Vatten frågas i liter (`selfAssessment.waterLiters`, valfri i schemat). Formuläret räknar fram `waterDays` ur den,
+  och `water_missing_l` och poängen bygger på exakta liter när fältet finns.
 - Planen har max 10 poster i `missing` och 3-4 handlingar per fas (styrs av prompten, schemat tillåter 15 och 6).
 
 ### POST /api/followups

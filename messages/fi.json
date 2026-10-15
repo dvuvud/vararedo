@@ -180,9 +180,11 @@
       "threeSix": "3-6 päivää",
       "week": "Viikko tai enemmän"
     },
-    "waterDays": {
-      "label": "Kuinka pitkään kotona oleva juomavesi riittää?",
-      "hint": "Laske vain pulloissa tai kanistereissa oleva vesi, ei hanavettä."
+    "waterLiters": {
+      "label": "Kuinka monta litraa juomavettä teillä on kotona?",
+      "hint": "Laske mukaan vain pulloissa tai kanistereissa oleva vesi, ei hanavettä. Taloudessanne on {persons} henkilöä, ja tarvitsette {total} litraa viikoksi (3 litraa henkilöä kohti vuorokaudessa).",
+      "unit": "{n} litraa",
+      "lasts": "Se riittää teille noin {days} vuorokaudeksi."
     },
     "foodDays": {
       "label": "Kuinka pitkään kotona oleva ruoka riittää ilman kaupassa käyntiä?"

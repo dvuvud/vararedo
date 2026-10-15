@@ -9,6 +9,11 @@ export function householdSize(p: Profile): number {
   return p.household.adults + p.household.childrenAges.length;
 }
 
+/** Hela dygn som vattnet räcker för hushållet, max 14 (schemats gräns). */
+export function waterDaysFromLiters(liters: number, persons: number): number {
+  return Math.min(14, Math.floor(liters / (Math.max(1, persons) * WATER_L_PER_PERSON_DAY)));
+}
+
 /** Alla mängder är deterministiska. Planens `quantityRef` pekar på nycklarna här. */
 export function computeQuantities(p: Profile): Record<string, Quantity> {
   const persons = householdSize(p);
@@ -17,8 +22,15 @@ export function computeQuantities(p: Profile): Record<string, Quantity> {
   q.persons = { value: persons, unit: "st" };
   q.water_per_day_l = { value: persons * WATER_L_PER_PERSON_DAY, unit: "l" };
   q.water_total_l = { value: persons * WATER_L_PER_PERSON_DAY * TARGET_DAYS, unit: "l" };
-  const waterDaysMissing = Math.max(0, TARGET_DAYS - p.selfAssessment.waterDays);
-  q.water_missing_l = { value: persons * WATER_L_PER_PERSON_DAY * waterDaysMissing, unit: "l" };
+  const liters = p.selfAssessment.waterLiters;
+  if (liters !== undefined) {
+    // Exakt liter från formuläret, så det som saknas inte avrundas till hela dygn
+    q.water_have_l = { value: liters, unit: "l" };
+    q.water_missing_l = { value: Math.max(0, q.water_total_l.value - liters), unit: "l" };
+  } else {
+    const waterDaysMissing = Math.max(0, TARGET_DAYS - p.selfAssessment.waterDays);
+    q.water_missing_l = { value: persons * WATER_L_PER_PERSON_DAY * waterDaysMissing, unit: "l" };
+  }
 
   q.food_days_target = { value: TARGET_DAYS, unit: "dagar" };
   q.food_days_missing = { value: Math.max(0, TARGET_DAYS - p.selfAssessment.foodDays), unit: "dagar" };

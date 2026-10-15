@@ -21,7 +21,8 @@ import {
 import { CRISIS_TYPES, followUpSchema, profileSchema, type FollowUpQuestion, type Lang } from "@/lib/ai/schemas";
 import type { Dict } from "@/lib/i18n";
 import { fill } from "@/lib/format";
-import { EMPTY_DRAFT, toProfile, type Draft } from "@/lib/form/draft";
+import { TARGET_DAYS, WATER_L_PER_PERSON_DAY, waterDaysFromLiters } from "@/lib/calc/quantities";
+import { EMPTY_DRAFT, householdPersons, toProfile, type Draft } from "@/lib/form/draft";
 import { pruneAnswers, visibleRules, type FormState, type RuleAnswer, type RuleQuestion } from "@/lib/form/rules";
 import { DRAFT_KEY, PROFILE_KEY } from "@/lib/form/storage";
 import { AddressSearch } from "./AddressSearch";
@@ -130,7 +131,6 @@ function validate(step: Step, d: Draft): Errors {
       need("crises", d.crises.length > 0);
       break;
     case "supplies":
-      need("waterDays", d.waterDays !== undefined);
       need("foodDays", d.foodDays !== undefined);
       break;
     case "readiness":
@@ -299,6 +299,9 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
       { timeout: 10000 },
     );
   };
+
+  const persons = householdPersons(draft);
+  const waterTarget = persons * WATER_L_PER_PERSON_DAY * TARGET_DAYS;
 
   const dayOptions = [
     { value: 0, label: t.days.none },
@@ -670,8 +673,24 @@ export default function PlanWizard({ lang, dict }: { lang: Lang; dict: Dict }) {
 
           {step === "supplies" && (
             <>
-              <Question id="waterDays" label={t.waterDays.label} hint={t.waterDays.hint} error={err("waterDays")}>
-                <ChoiceCards value={draft.waterDays} onChange={(v) => choose({ waterDays: v })} options={dayOptions} />
+              <Question
+                id="waterLiters"
+                label={t.waterLiters.label}
+                hint={fill(t.waterLiters.hint, { persons, total: waterTarget })}
+              >
+                <Stepper
+                  value={draft.waterLiters ?? 0}
+                  onChange={(v) => set({ waterLiters: v })}
+                  min={0}
+                  max={500}
+                  step={5}
+                  format={(v) => fill(t.waterLiters.unit, { n: v })}
+                  decreaseLabel={c.decrease}
+                  increaseLabel={c.increase}
+                />
+                <p aria-live="polite" className="text-base text-muted-foreground">
+                  {fill(t.waterLiters.lasts, { days: waterDaysFromLiters(draft.waterLiters ?? 0, persons) })}
+                </p>
               </Question>
               <Question id="foodDays" label={t.foodDays.label} error={err("foodDays")}>
                 <ChoiceCards value={draft.foodDays} onChange={(v) => choose({ foodDays: v })} options={dayOptions} />

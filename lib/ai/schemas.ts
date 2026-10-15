@@ -90,6 +90,8 @@ export const profileSchema = z.object({
   // Självskattning, driver beredskapspoängen
   selfAssessment: z.object({
     waterDays: z.number().int().min(0).max(14),
+    // Liter dricksvatten hemma. waterDays räknas fram ur den i formuläret.
+    waterLiters: z.number().int().min(0).max(1000).optional(),
     foodDays: z.number().int().min(0).max(14),
     alternativeHeat: z.boolean(),
     lightAndPower: z.boolean(),

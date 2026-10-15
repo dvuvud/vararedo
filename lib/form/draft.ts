@@ -1,4 +1,5 @@
 import type { CrisisType, Lang, Profile } from "@/lib/ai/schemas";
+import { waterDaysFromLiters } from "@/lib/calc/quantities";
 
 type Answer = boolean | number | string;
 
@@ -25,7 +26,7 @@ export type Draft = {
   hasRadio?: boolean;
   crises: CrisisType[];
   ruleAnswers: Record<string, Answer>;
-  waterDays?: number;
+  waterLiters?: number;
   foodDays?: number;
   alternativeHeat?: boolean;
   lightAndPower?: boolean;
@@ -53,6 +54,7 @@ export const EMPTY_DRAFT: Draft = {
 // Bygger profilen som skickas till /api/plan. Valideras med profileSchema innan anrop.
 export function toProfile(d: Draft, lang: Lang): Profile {
   const isApartment = d.housingType === "apartment";
+  const waterLiters = d.waterLiters ?? 0;
   return {
     lang,
     housing: {
@@ -79,7 +81,8 @@ export function toProfile(d: Draft, lang: Lang): Profile {
     crises: d.crises,
     ruleAnswers: d.ruleAnswers,
     selfAssessment: {
-      waterDays: d.waterDays ?? 0,
+      waterDays: waterDaysFromLiters(waterLiters, householdPersons(d)),
+      waterLiters,
       foodDays: d.foodDays ?? 0,
       alternativeHeat: d.alternativeHeat ?? false,
       lightAndPower: d.lightAndPower ?? false,
@@ -92,4 +95,8 @@ export function toProfile(d: Draft, lang: Lang): Profile {
     ...(d.freeText.trim() ? { freeText: d.freeText.trim() } : {}),
     followUpAnswers: d.followUpAnswers,
   };
+}
+
+export function householdPersons(d: Draft): number {
+  return d.adults + (d.hasChildren ? d.childrenAges.length : 0);
 }

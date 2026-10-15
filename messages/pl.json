@@ -180,9 +180,11 @@
       "threeSix": "3-6 dni",
       "week": "Tydzień lub dłużej"
     },
-    "waterDays": {
-      "label": "Na jak długo wystarczy wody pitnej, którą macie w domu?",
-      "hint": "Policz tylko wodę w butelkach lub kanistrach, nie z kranu."
+    "waterLiters": {
+      "label": "Ile mniej więcej litrów wody pitnej macie w domu?",
+      "hint": "Liczcie tylko wodę w butelkach lub kanistrach, nie tę z kranu. W waszym gospodarstwie domowym jest {persons} osób i potrzebujecie {total} litrów na tydzień (3 litry na osobę na dobę).",
+      "unit": "{n} l",
+      "lasts": "To wystarczy mniej więcej na {days} dób."
     },
     "foodDays": {
       "label": "Na jak długo wystarczy jedzenia w domu bez robienia zakupów?"

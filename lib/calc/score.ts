@@ -1,5 +1,5 @@
 import { CATEGORIES, type Category, type Profile } from "@/lib/ai/schemas";
-import { TARGET_DAYS } from "./quantities";
+import { householdSize, TARGET_DAYS, WATER_L_PER_PERSON_DAY } from "./quantities";
 
 // Vikter summerar till 100. Kategorier utan självskattning (t.ex. hygien) ingår inte i poängen.
 const WEIGHTS: Partial<Record<Category, number>> = {
@@ -18,7 +18,10 @@ const pct = (days: number) => Math.round((Math.min(days, TARGET_DAYS) / TARGET_D
 export function computeScore(p: Profile) {
   const s = p.selfAssessment;
   const byCategory: Partial<Record<Category, number>> = {
-    water: pct(s.waterDays),
+    water:
+      s.waterLiters !== undefined
+        ? Math.round(Math.min(1, s.waterLiters / (householdSize(p) * WATER_L_PER_PERSON_DAY * TARGET_DAYS)) * 100)
+        : pct(s.waterDays),
     food: pct(s.foodDays),
     heat: s.alternativeHeat || p.heating === "wood" ? 100 : 0,
     light_power: s.lightAndPower ? 100 : 0,

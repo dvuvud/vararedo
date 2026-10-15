@@ -180,9 +180,11 @@
       "threeSix": "3-6 dagar",
       "week": "En vecka eller mer"
     },
-    "waterDays": {
-      "label": "Hur länge räcker dricksvattnet ni har hemma?",
-      "hint": "Räkna bara vatten i flaskor eller dunkar, inte kranen."
+    "waterLiters": {
+      "label": "Ungefär hur många liter dricksvatten har ni hemma?",
+      "hint": "Räkna bara vatten i flaskor eller dunkar, inte kranen. Ni är {persons} i hushållet och behöver {total} liter för en vecka (3 liter per person och dygn).",
+      "unit": "{n} liter",
+      "lasts": "Det räcker ungefär {days} dygn för er."
     },
     "foodDays": {
       "label": "Hur länge räcker maten hemma utan att handla?"
